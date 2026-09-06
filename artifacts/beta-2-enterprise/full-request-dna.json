@@ -1,7 +1,7 @@
 {
   "schemaVersion": "2.1.0",
   "traceId": "TX-847392-ENTERPRISE-PROD",
-  "timestamp": "2026-09-06T17:34:42.199Z",
+  "timestamp": "2026-09-06T17:37:25.955Z",
   "client": {
     "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) Chrome/122.0.0.0",
     "httpVersion": "HTTP/2.0",
@@ -88,8 +88,8 @@
   "mq": {
     "queueManager": "QM_PAYMENTS_01",
     "queueName": "DEV.CHECKOUT.IN",
-    "messageId": "MSG-1788716082200-56",
-    "correlationId": "CORREL-1788716082200",
+    "messageId": "MSG-1788716245956-5255",
+    "correlationId": "CORREL-1788716245956",
     "queueDepth": 14,
     "channelStatus": "RUNNING",
     "channelName": "TO.WAS.PAYMENTS.SVRCONN",
@@ -110,7 +110,7 @@
   "externalGateway": {
     "provider": "Stripe-Gateway-US",
     "endpointUri": "https://api.stripe.com/v1/charges",
-    "idempotencyKey": "IDEM-1788716082200",
+    "idempotencyKey": "IDEM-1788716245956",
     "httpStatus": 504,
     "tlsVersion": "TLSv1.3",
     "cipherSuite": "TLS_AES_128_GCM_SHA256",
@@ -189,7 +189,7 @@
   },
   "epistemicAudit": {
     "ledgerIndex": 0,
-    "cryptographicBlockHash": "ea226a3aa4790bfebc667eecfec1fb013fcc89bdda4ad61910346de928c43bb1",
+    "cryptographicBlockHash": "01b81eb284121bb6965ecf56b29b1d8a473057c5f0d826390bcb5bb586f1e0b2",
     "overallRti": 98.7
   }
 }

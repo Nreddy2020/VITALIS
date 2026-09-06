@@ -20,7 +20,7 @@ class EvidenceEnvelope {
     epistemic = {},
     security = {}
   }) {
-    if (!traceId) throw new Error("EvidenceEnvelope requires a valid traceId");
+    const assignedTraceId = traceId || `UNASSOCIATED-${Date.now()}-${crypto.randomBytes(3).toString('hex')}`;
     if (!component.type || !component.name) throw new Error("EvidenceEnvelope requires component.type and component.name");
 
     const id = evidenceId || `ev-${Date.now()}-${crypto.randomBytes(4).toString('hex')}`;
@@ -28,8 +28,8 @@ class EvidenceEnvelope {
 
     return {
       evidenceId: id,
-      traceId,
-      requestId: requestId || `req-${traceId}`,
+      traceId: assignedTraceId,
+      requestId: requestId || `req-${assignedTraceId}`,
       spanId: spanId || `span-${id}`,
       parentSpanId,
 

@@ -28,24 +28,32 @@ class TemporalCorrelator {
     const stagePrecedence = {
       "CLIENT-BROWSER": 1,
       "BROWSER": 1,
+      "CLIENT": 1,
       "DNS-RESOLVER": 2,
       "DNS": 2,
       "PERIMETER-FIREWALL": 3,
       "FIREWALL": 3,
       "F5-BIG-IP": 4,
       "F5": 4,
+      "LOAD_BALANCER": 4,
       "IBM-HTTP-SERVER": 5,
       "IHS": 5,
+      "WEB_SERVER": 5,
       "WEBSPHERE-COREAPP": 6,
       "WEBSPHERE": 6,
+      "APP_SERVER": 6,
       "IBM-MQ-SERIES": 7,
       "IBM-MQ": 7,
+      "MESSAGE_BROKER": 7,
       "IBM-DB2-CLUSTER": 8,
       "DB2": 8,
+      "DATABASE": 8,
       "EXTERNAL-PAYMENT-GATEWAY": 9,
       "STRIPE-GATEWAY": 9,
+      "EXTERNAL_GATEWAY": 9,
       "RETURN-JOURNEY-EGRESS": 10,
-      "RETURN-EGRESS": 10
+      "RETURN-EGRESS": 10,
+      "CLIENT_RETURN": 10
     };
 
     return [...envelopes].sort((a, b) => {

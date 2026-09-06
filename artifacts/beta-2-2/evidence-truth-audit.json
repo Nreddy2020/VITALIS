@@ -2,10 +2,10 @@
   "traceId": "TX-847392-BETA-2-2",
   "envelopes": [
     {
-      "evidenceId": "ev-1788716084346-0b10ddce",
+      "evidenceId": "ev-1788716246017-7cd24434",
       "traceId": "TX-847392-BETA-2-2",
       "requestId": "req-TX-847392-BETA-2-2",
-      "spanId": "span-ev-1788716084346-0b10ddce",
+      "spanId": "span-ev-1788716246017-7cd24434",
       "parentSpanId": null,
       "component": {
         "type": "F5",
@@ -17,7 +17,7 @@
       "event": {
         "type": "WAF_ROUTING",
         "phase": "FORWARD",
-        "timestamp": "2026-09-06T17:34:44.346Z",
+        "timestamp": "2026-09-06T17:37:26.018Z",
         "durationMs": 18,
         "status": "SUCCESS"
       },
@@ -45,7 +45,7 @@
         "collectionMethod": "OUT_OF_BAND",
         "observed": true,
         "confidence": 1,
-        "collectionTimestamp": "2026-09-06T17:34:44.347Z"
+        "collectionTimestamp": "2026-09-06T17:37:26.018Z"
       },
       "epistemic": {
         "classification": "OBSERVED",
@@ -60,10 +60,10 @@
       }
     },
     {
-      "evidenceId": "ev-1788716084347-200e89b6",
+      "evidenceId": "ev-1788716246018-db5ccdd6",
       "traceId": "TX-847392-BETA-2-2",
       "requestId": "req-TX-847392-BETA-2-2",
-      "spanId": "span-ev-1788716084347-200e89b6",
+      "spanId": "span-ev-1788716246018-db5ccdd6",
       "parentSpanId": null,
       "component": {
         "type": "IHS",
@@ -75,7 +75,7 @@
       "event": {
         "type": "PLUGIN_FORWARD",
         "phase": "FORWARD",
-        "timestamp": "2026-09-06T17:34:44.347Z",
+        "timestamp": "2026-09-06T17:37:26.018Z",
         "durationMs": 21,
         "status": "SUCCESS"
       },
@@ -103,7 +103,7 @@
         "collectionMethod": "OUT_OF_BAND",
         "observed": true,
         "confidence": 1,
-        "collectionTimestamp": "2026-09-06T17:34:44.347Z"
+        "collectionTimestamp": "2026-09-06T17:37:26.018Z"
       },
       "epistemic": {
         "classification": "OBSERVED",
@@ -118,10 +118,10 @@
       }
     },
     {
-      "evidenceId": "ev-1788716084347-26cff22b",
+      "evidenceId": "ev-1788716246018-b7fbc078",
       "traceId": "TX-847392-BETA-2-2",
       "requestId": "req-TX-847392-BETA-2-2",
-      "spanId": "span-ev-1788716084347-26cff22b",
+      "spanId": "span-ev-1788716246018-b7fbc078",
       "parentSpanId": null,
       "component": {
         "type": "WEBSPHERE",
@@ -133,7 +133,7 @@
       "event": {
         "type": "SERVLET_EXECUTION",
         "phase": "FORWARD",
-        "timestamp": "2026-09-06T17:34:44.347Z",
+        "timestamp": "2026-09-06T17:37:26.018Z",
         "durationMs": 51,
         "status": "DEGRADED"
       },
@@ -161,7 +161,7 @@
         "collectionMethod": "OUT_OF_BAND",
         "observed": true,
         "confidence": 1,
-        "collectionTimestamp": "2026-09-06T17:34:44.347Z"
+        "collectionTimestamp": "2026-09-06T17:37:26.018Z"
       },
       "epistemic": {
         "classification": "OBSERVED",
@@ -176,10 +176,10 @@
       }
     },
     {
-      "evidenceId": "ev-1788716084347-363bde4a",
+      "evidenceId": "ev-1788716246018-1c666729",
       "traceId": "TX-847392-BETA-2-2",
       "requestId": "req-TX-847392-BETA-2-2",
-      "spanId": "span-ev-1788716084347-363bde4a",
+      "spanId": "span-ev-1788716246018-1c666729",
       "parentSpanId": null,
       "component": {
         "type": "DB2",
@@ -191,7 +191,7 @@
       "event": {
         "type": "SQL_EXECUTION",
         "phase": "FORWARD",
-        "timestamp": "2026-09-06T17:34:44.347Z",
+        "timestamp": "2026-09-06T17:37:26.018Z",
         "durationMs": 3982,
         "status": "FAILED"
       },
@@ -219,7 +219,7 @@
         "collectionMethod": "OUT_OF_BAND",
         "observed": true,
         "confidence": 1,
-        "collectionTimestamp": "2026-09-06T17:34:44.347Z"
+        "collectionTimestamp": "2026-09-06T17:37:26.018Z"
       },
       "epistemic": {
         "classification": "OBSERVED",
@@ -243,18 +243,18 @@
     "durationMs": 3960
   },
   "causalClaim": {
-    "claimId": "claim-1788716084348-66c425",
+    "claimId": "claim-1788716246019-73ebcf",
     "traceId": "TX-847392-BETA-2-2",
-    "timestamp": "2026-09-06T17:34:44.348Z",
+    "timestamp": "2026-09-06T17:37:26.019Z",
     "type": "ROOT_CAUSE_CANDIDATE",
     "statement": "IBM-DB2-CLUSTER-PRIMARY lock contention & connection pool saturation caused the request failure cascade",
     "classification": "INFERRED",
     "confidence": 0.824,
     "supportingEvidence": [
-      "ev-1788716084346-0b10ddce",
-      "ev-1788716084347-200e89b6",
-      "ev-1788716084347-26cff22b",
-      "ev-1788716084347-363bde4a"
+      "ev-1788716246017-7cd24434",
+      "ev-1788716246018-db5ccdd6",
+      "ev-1788716246018-b7fbc078",
+      "ev-1788716246018-1c666729"
     ],
     "contradictingEvidence": [],
     "falsifiability": [
@@ -280,9 +280,9 @@
     ]
   },
   "unknownClaim": {
-    "claimId": "claim-1788716084348-2bdd72",
+    "claimId": "claim-1788716246020-a355ba",
     "traceId": "TX-INCOMPLETE-TEST",
-    "timestamp": "2026-09-06T17:34:44.348Z",
+    "timestamp": "2026-09-06T17:37:26.020Z",
     "type": "ROOT_CAUSE_CANDIDATE",
     "statement": "Unable to determine root cause: 0 evidence envelopes received",
     "classification": "UNKNOWN",
@@ -297,20 +297,32 @@
   },
   "impact": {
     "traceId": "TX-847392-BETA-2-2",
-    "timestamp": "2026-09-06T17:34:44.348Z",
+    "timestamp": "2026-09-06T17:37:26.020Z",
     "businessOperation": "CHECKOUT_PAYMENT_CART",
     "technicalStatus": "UNHEALTHY",
-    "businessOutcome": "FAILED",
+    "businessOutcome": "FAILED_TIMEOUT",
     "customerImpact": "CUSTOMER_CHECKOUT_TIMEOUT_HTTP_504",
+    "transactionBreakdown": {
+      "totalAffectedRequests": 12438,
+      "failedRequests": 5223,
+      "timedOutRequests": 4726,
+      "pendingRequests": 1865,
+      "successfulRetries": 621,
+      "duplicateRiskTransactions": 124,
+      "reversedTransactions": 0
+    },
     "financialExposure": {
       "currency": "INR",
       "estimatedAtRisk": 23010300,
       "formattedExposure": "INR 23,010,300",
-      "confidence": "ESTIMATED_PENDING_SETTLEMENT_RECONCILIATION"
+      "confirmedLossUsd": 0,
+      "reconciledExposureUsd": 23010300,
+      "exposureClassification": "ESTIMATED_PENDING_SETTLEMENT_RECONCILIATION",
+      "settlementStatus": "UNSETTLED"
     },
     "operationalRisk": {
       "retryStormRisk": "HIGH",
-      "duplicatePaymentRisk": "POSSIBLE_PREVENTED_BY_IDEMPOTENCY",
+      "duplicatePaymentRisk": "POSSIBLE_GUARDED_BY_IDEMPOTENCY",
       "complianceReportingRequired": true
     }
   }
