@@ -1,0 +1,50 @@
+[
+  {
+    "index": 0,
+    "conclusionId": "LEDGER-1788715380499-0",
+    "traceId": "TX-847392",
+    "timestamp": "2026-09-06T17:23:00.499Z",
+    "modelVersion": "v2.0-BETA-CANONICAL",
+    "provenance": "INFERRED",
+    "primaryHypothesis": "DB2 Contention & Performance Thrombosis",
+    "confidence": 99.4,
+    "supportingEvidence": [
+      "DB2 span duration = 3,982ms (156x higher than Golden Baseline 18ms)",
+      "Lock wait duration = 2,100ms on PID #99142",
+      "HikariCP connection pool saturation = 98% (98/100 connections in use)",
+      "WebSphere CoreApp v2.4.1 deployed 14 minutes earlier",
+      "DB host CPU utilization is moderate (62%, confirming lock wait vs core burnout)"
+    ],
+    "contradictingEvidence": [
+      "DB CPU normal (62%)"
+    ],
+    "correlatedChanges": [
+      {
+        "id": "CHG-2026-0819-01",
+        "timestamp": "21:30:00 UTC",
+        "minutesAgo": 14,
+        "type": "DEPLOYMENT",
+        "service": "WebSphere-CoreApp",
+        "version": "v2.4.1",
+        "commit": "8a4f91e",
+        "description": "Introduced batch inventory lock query on checkout path without index on sku_id.",
+        "author": "deploy-pipeline@bank.corp"
+      },
+      {
+        "id": "CHG-2026-0819-02",
+        "timestamp": "04:00:00 UTC",
+        "minutesAgo": 1080,
+        "type": "CERTIFICATE_RENEWAL",
+        "service": "ReportMicroservice",
+        "version": "N/A",
+        "commit": "N/A",
+        "description": "Auto-renewal cron job hit API rate limit; X.509 cert expired.",
+        "author": "cert-manager@k8s.internal"
+      }
+    ],
+    "sourceTelemetrySummary": "{}",
+    "previousHash": "0000000000000000000000000000000000000000000000000000000000000000",
+    "hash": "6a2078a798d3d12a342cc12fba3be5e6759e34d0d9a39569b0384ceb28d619c5",
+    "canonicalPayload": "{\"conclusionId\":\"LEDGER-1788715380499-0\",\"confidence\":99.4,\"contradictingEvidence\":[\"DB CPU normal (62%)\"],\"correlatedChanges\":[{\"author\":\"deploy-pipeline@bank.corp\",\"commit\":\"8a4f91e\",\"description\":\"Introduced batch inventory lock query on checkout path without index on sku_id.\",\"id\":\"CHG-2026-0819-01\",\"minutesAgo\":14,\"service\":\"WebSphere-CoreApp\",\"timestamp\":\"21:30:00 UTC\",\"type\":\"DEPLOYMENT\",\"version\":\"v2.4.1\"},{\"author\":\"cert-manager@k8s.internal\",\"commit\":\"N/A\",\"description\":\"Auto-renewal cron job hit API rate limit; X.509 cert expired.\",\"id\":\"CHG-2026-0819-02\",\"minutesAgo\":1080,\"service\":\"ReportMicroservice\",\"timestamp\":\"04:00:00 UTC\",\"type\":\"CERTIFICATE_RENEWAL\",\"version\":\"N/A\"}],\"index\":0,\"modelVersion\":\"v2.0-BETA-CANONICAL\",\"previousHash\":\"0000000000000000000000000000000000000000000000000000000000000000\",\"primaryHypothesis\":\"DB2 Contention & Performance Thrombosis\",\"provenance\":\"INFERRED\",\"sourceTelemetrySummary\":\"{}\",\"supportingEvidence\":[\"DB2 span duration = 3,982ms (156x higher than Golden Baseline 18ms)\",\"Lock wait duration = 2,100ms on PID #99142\",\"HikariCP connection pool saturation = 98% (98/100 connections in use)\",\"WebSphere CoreApp v2.4.1 deployed 14 minutes earlier\",\"DB host CPU utilization is moderate (62%, confirming lock wait vs core burnout)\"],\"timestamp\":\"2026-09-06T17:23:00.499Z\",\"traceId\":\"TX-847392\"}"
+  }
+]

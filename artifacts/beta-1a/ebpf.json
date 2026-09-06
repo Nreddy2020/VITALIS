@@ -1,0 +1,8 @@
+{
+  "socketTcpRetransmits": 0,
+  "kernelSocketWaitMs": 2.1,
+  "processId": 44102,
+  "processLineage": "systemd -> websphere-node -> java -> db2client",
+  "networkRttMs": 0.8,
+  "status": "CONVERGED_WITH_OTEL"
+}

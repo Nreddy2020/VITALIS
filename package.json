@@ -8,7 +8,8 @@
     "test": "node tests/verify_alpha_gates.js",
     "test:runner": "node tests/runner.js --all",
     "test:erg": "node tests/erg_validation_controller.js",
-    "test:beta": "node tests/beta_1a_validation_runner.js"
+    "test:beta": "node tests/beta_1a_validation_runner.js",
+    "test:beta21": "node tests/beta_2_1_enterprise_validation.js"
   },
   "keywords": [
     "observability",

@@ -1,0 +1,51 @@
+[
+  {
+    "node": "Client",
+    "service": "Client-Web",
+    "durationMs": 12,
+    "status": "OK",
+    "source_type": "REAL"
+  },
+  {
+    "node": "F5-LB",
+    "service": "F5-BIG-IP",
+    "durationMs": 18,
+    "status": "OK",
+    "source_type": "REAL"
+  },
+  {
+    "node": "IHS",
+    "service": "IBM-HTTP-Server",
+    "durationMs": 21,
+    "status": "OK",
+    "source_type": "REAL"
+  },
+  {
+    "node": "WebSphere",
+    "service": "WebSphere-CoreApp",
+    "durationMs": 51,
+    "status": "OK",
+    "source_type": "REAL"
+  },
+  {
+    "node": "IBM-MQ",
+    "service": "IBM-MQ-Series",
+    "durationMs": 14,
+    "status": "OK",
+    "source_type": "REAL"
+  },
+  {
+    "node": "DB2",
+    "service": "IBM-DB2-Cluster",
+    "durationMs": 3982,
+    "status": "DEGRADED",
+    "source_type": "REAL"
+  },
+  {
+    "node": "Stripe-Gateway",
+    "service": "Payment-Gateway-US",
+    "durationMs": 0,
+    "status": "UNREACHED",
+    "source_type": "REAL"
+  }
+]

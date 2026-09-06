@@ -1,0 +1,79 @@
+{
+  "journeyName": "Payments & Checkout",
+  "overallRti": 98.7,
+  "dimensions": {
+    "structural": {
+      "score": 100,
+      "confidence": 99,
+      "evidence_count": 8,
+      "coverage_gap": "0%",
+      "last_updated": "21:30:00 UTC",
+      "source_types": [
+        "REAL",
+        "LEARNED"
+      ]
+    },
+    "performance": {
+      "score": 99.2,
+      "confidence": 98,
+      "evidence_count": 14,
+      "coverage_gap": "0.8% async queue wait",
+      "last_updated": "21:30:00 UTC",
+      "source_types": [
+        "REAL"
+      ]
+    },
+    "semantic": {
+      "score": 100,
+      "confidence": 99,
+      "evidence_count": 6,
+      "coverage_gap": "0%",
+      "last_updated": "21:30:00 UTC",
+      "source_types": [
+        "REAL"
+      ]
+    },
+    "dependency": {
+      "score": 98.4,
+      "confidence": 95,
+      "evidence_count": 12,
+      "coverage_gap": "1.6% external gateway retry",
+      "last_updated": "21:30:00 UTC",
+      "source_types": [
+        "REAL"
+      ]
+    },
+    "infrastructure": {
+      "score": 99,
+      "confidence": 97,
+      "evidence_count": 24,
+      "coverage_gap": "1.0% kernel socket stats",
+      "last_updated": "21:30:00 UTC",
+      "source_types": [
+        "REAL",
+        "eBPF"
+      ]
+    },
+    "change": {
+      "score": 100,
+      "confidence": 96,
+      "evidence_count": 4,
+      "coverage_gap": "0%",
+      "last_updated": "21:30:00 UTC",
+      "source_types": [
+        "REAL",
+        "GIT"
+      ]
+    },
+    "causal": {
+      "score": 96,
+      "confidence": 91,
+      "evidence_count": 9,
+      "coverage_gap": "4.0% lock escalation log",
+      "last_updated": "21:30:00 UTC",
+      "source_types": [
+        "INFERRED"
+      ]
+    }
+  }
+}

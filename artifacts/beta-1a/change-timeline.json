@@ -1,0 +1,24 @@
+[
+  {
+    "id": "CHG-2026-0819-01",
+    "timestamp": "21:30:00 UTC",
+    "minutesAgo": 14,
+    "type": "DEPLOYMENT",
+    "service": "WebSphere-CoreApp",
+    "version": "v2.4.1",
+    "commit": "8a4f91e",
+    "description": "Introduced batch inventory lock query on checkout path without index on sku_id.",
+    "author": "deploy-pipeline@bank.corp"
+  },
+  {
+    "id": "CHG-2026-0819-02",
+    "timestamp": "04:00:00 UTC",
+    "minutesAgo": 1080,
+    "type": "CERTIFICATE_RENEWAL",
+    "service": "ReportMicroservice",
+    "version": "N/A",
+    "commit": "N/A",
+    "description": "Auto-renewal cron job hit API rate limit; X.509 cert expired.",
+    "author": "cert-manager@k8s.internal"
+  }
+]

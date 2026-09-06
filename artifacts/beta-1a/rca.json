@@ -1,0 +1,77 @@
+{
+  "hasAnomalies": true,
+  "status": "DEVIATION_DETECTED",
+  "primaryDeviationHop": {
+    "node": "DB2",
+    "service": "IBM-DB2-Cluster",
+    "durationMs": 3982,
+    "status": "DEGRADED",
+    "source_type": "REAL"
+  },
+  "maxDeviationRatio": 221.22222222222223,
+  "confidence": 99.4,
+  "candidates": [
+    {
+      "rank": 1,
+      "title": "DB2 Contention & Performance Thrombosis",
+      "targetComponent": "DB2",
+      "confidence": 99.4,
+      "epistemicStatus": "INFERRED",
+      "scoringBreakdown": {
+        "formula": "15(base) + 30(ev) + 20(time) + 20(topo) + 25(dev) + 10(chg) - 1(contra) - 4(uncert) = 99.4%",
+        "evidenceStrength": 30,
+        "temporalCorrelation": 20,
+        "topologyCorrelation": 20,
+        "baselineDeviationScore": 25,
+        "changeCorrelationScore": 10,
+        "contradictingPenalty": 1,
+        "uncertaintyPenalty": 4
+      },
+      "supportingEvidence": [
+        "[OBSERVED] DB2 duration (3982ms) is 221x higher than Golden Baseline",
+        "[CORRELATED] Temporal alignment with DEPLOYMENT v2.4.1 (14m ago)",
+        "[CORRELATED] Upstream dependencies stalled awaiting DB2 response"
+      ],
+      "contradictingEvidence": [
+        "[OBSERVED] Network socket RTT remains low (0.8ms)"
+      ],
+      "blastRadius": "DB2 Downstream Transactors",
+      "recommendedAction": "Inspect DB2 lock queues, verify connection pool capacity, and validate recent configuration changes"
+    },
+    {
+      "rank": 2,
+      "title": "Downstream Timeout Invalidation & Pool Saturation at DB2",
+      "targetComponent": "DB2",
+      "confidence": 77.2,
+      "epistemicStatus": "INFERRED",
+      "supportingEvidence": [
+        "[OBSERVED] Latency surge triggered upstream timeout cascades",
+        "[CORRELATED] Downstream thread wait times elevated"
+      ],
+      "contradictingEvidence": [
+        "[OBSERVED] Primary delay origin resides at DB2 rather than network transport"
+      ],
+      "blastRadius": "Partial Tenant Degradation",
+      "recommendedAction": "Scale connection pool thresholds and isolate slow query fingerprints"
+    }
+  ],
+  "confidenceEnvelope": {
+    "whatWeKnow": [
+      "[OBSERVED] DB2 duration = 3982ms (221x Golden Baseline)",
+      "[OBSERVED] Change event v2.4.1 deployed 14m prior",
+      "[OBSERVED] Kernel socket TCP retransmits = 0"
+    ],
+    "whatWeThink": [
+      "[INFERRED] Performance thrombosis at DB2 induced by concurrency lock contention or resource exhaustion"
+    ],
+    "whatWeDontKnow": [
+      "[UNCERTAIN] Internal kernel lock escalation traces for Level-1 uninstrumented sub-processes"
+    ],
+    "whatWouldChangeOurMind": [
+      "[FALSIFIABILITY 1] DB2 lock wait duration measured < 50ms on real-time probe",
+      "[FALSIFIABILITY 2] Latency surge observed across requests entirely bypassing DB2",
+      "[FALSIFIABILITY 3] Kernel socket transport RTT > 3,000ms indicating physical network drop",
+      "[FALSIFIABILITY 4] Connection pool utilization confirmed < 10% during latency period"
+    ]
+  }
+}
