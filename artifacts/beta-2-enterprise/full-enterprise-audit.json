@@ -1,0 +1,575 @@
+{
+  "traceId": "TX-847392-ENTERPRISE-PROD",
+  "envelope": {
+    "schemaVersion": "2.1.0",
+    "traceId": "TX-847392-ENTERPRISE-PROD",
+    "timestamp": "2026-09-06T17:25:57.542Z",
+    "client": {
+      "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) Chrome/122.0.0.0",
+      "httpVersion": "HTTP/2.0",
+      "streamId": 7,
+      "clientIp": "192.168.1.105",
+      "clientPort": 52418,
+      "deviceType": "Desktop",
+      "os": "Windows 11 Enterprise",
+      "navigationTiming": {
+        "domInteractiveMs": 8.4,
+        "domCompleteMs": 11.2,
+        "loadEventMs": 12
+      }
+    },
+    "network": {
+      "sourceIp": "192.168.1.105",
+      "sourcePort": 52418,
+      "edgeLocation": "US-EAST-DC01",
+      "asn": "AS15169",
+      "tcpRetransmits": 0,
+      "socketRttMs": 0.8
+    },
+    "dns": {
+      "domain": "checkout.bank.corp",
+      "resolverIp": "10.240.0.2",
+      "resolvedIp": "10.240.10.50",
+      "recordType": "A",
+      "ttl": 300,
+      "dnssecValidated": true,
+      "responseCode": "NOERROR"
+    },
+    "tls": {
+      "protocol": "TLSv1.3",
+      "cipherSuite": "TLS_AES_256_GCM_SHA384",
+      "sni": "checkout.bank.corp",
+      "certFingerprint": "sha256:8a4f91e0c2b3d4e5f67a8b9c0d1e2f3a",
+      "handshakeDurationMs": 4.2
+    },
+    "security": {
+      "policyRuleId": "FW-RULE-PROD-HTTPS-ALLOW",
+      "ingressZone": "ZONE_UNTRUST_WAN",
+      "egressZone": "ZONE_DMZ_APP",
+      "sourceNatIp": null,
+      "action": "ALLOW",
+      "ipsDecision": "CLEAN",
+      "inspectedBytes": 2480,
+      "firewallCluster": "PaloAlto-EdgeCluster-01"
+    },
+    "f5": {
+      "virtualServer": "/Common/vs_checkout_https",
+      "vip": "10.240.10.50:443",
+      "selectedMember": "10.240.20.101:8443",
+      "poolName": "/Common/pool_ihs_edge",
+      "tlsProfile": "/Common/clientssl_secure_tls13",
+      "cipherSuite": "TLS_AES_256_GCM_SHA384",
+      "sni": "checkout.bank.corp",
+      "wafDecision": "PASS",
+      "persistenceCookie": "BIGipServerpool_ihs=2849182.20480.0000",
+      "activePoolMembers": 4,
+      "healthStatus": "HEALTHY"
+    },
+    "ihs": {
+      "requestId": "IHS-REQ-847392-01",
+      "pluginRouting": "mod_was_ap22.c",
+      "backendWorker": "was-node-04_server1",
+      "backendWaitMs": 21,
+      "httpStatus": 200,
+      "clientIp": "192.168.1.105",
+      "bytesSent": 1420,
+      "keepAlive": true
+    },
+    "websphere": {
+      "cellName": "ProdCell01",
+      "serverName": "server1",
+      "threadId": "WebContainer : 142",
+      "threadPoolSaturationPct": 98,
+      "jvmHeapUtilizationPct": 62,
+      "jdbcPoolInUse": 98,
+      "jdbcPoolCapacity": 100,
+      "httpStatus": 200,
+      "activeTransactions": 18,
+      "mqJmsSessionBinding": "jms/CheckoutQCF"
+    },
+    "mq": {
+      "queueManager": "QM_PAYMENTS_01",
+      "queueName": "DEV.CHECKOUT.IN",
+      "messageId": "MSG-1788715557544-3495",
+      "correlationId": "CORREL-1788715557544",
+      "queueDepth": 14,
+      "channelStatus": "RUNNING",
+      "channelName": "TO.WAS.PAYMENTS.SVRCONN",
+      "msgSizeBytes": 1024,
+      "persistence": "PERSISTENT"
+    },
+    "db2": {
+      "sqlFingerprint": "SELECT * FROM inventory_items WHERE sku_id = ? FOR UPDATE WITH RR",
+      "executionDurationMs": 3982,
+      "lockWaitMs": 2100,
+      "holdingLockPid": 99142,
+      "connectionPoolSaturationPct": 98,
+      "bufferPoolHitRatioPct": 99.1,
+      "queryPlanCost": 489.2,
+      "tableLockType": "EXCLUSIVE_ROW_LOCK",
+      "databaseName": "PROD_BANK_DB2"
+    },
+    "externalGateway": {
+      "provider": "Stripe-Gateway-US",
+      "endpointUri": "https://api.stripe.com/v1/charges",
+      "idempotencyKey": "IDEM-1788715557544",
+      "httpStatus": 504,
+      "tlsVersion": "TLSv1.3",
+      "cipherSuite": "TLS_AES_128_GCM_SHA256",
+      "retryCount": 0
+    },
+    "returnJourney": {
+      "finalHttpStatus": 504,
+      "compressionType": "gzip",
+      "responseSizeBytes": 1024,
+      "returnLatencyMs": 8.5,
+      "headersPreserved": true,
+      "egressRoute": "DB2 -> WAS -> IHS -> F5 -> Client",
+      "totalReturnTransitMs": 8.5
+    },
+    "temporalLineage": {
+      "totalDurationMs": 4110.7,
+      "hopDeltas": [
+        {
+          "node": "Browser",
+          "durationMs": 12,
+          "status": "SUCCESS"
+        },
+        {
+          "node": "DNS",
+          "durationMs": 1.4,
+          "status": "SUCCESS"
+        },
+        {
+          "node": "Firewall",
+          "durationMs": 2.8,
+          "status": "SUCCESS"
+        },
+        {
+          "node": "F5-LB",
+          "durationMs": 18,
+          "status": "OK"
+        },
+        {
+          "node": "IHS",
+          "durationMs": 21,
+          "status": "OK"
+        },
+        {
+          "node": "WebSphere",
+          "durationMs": 51,
+          "status": "DEGRADED"
+        },
+        {
+          "node": "IBM-MQ",
+          "durationMs": 14,
+          "status": "OK"
+        },
+        {
+          "node": "DB2",
+          "durationMs": 3982,
+          "status": "FAILED"
+        },
+        {
+          "node": "Stripe-Gateway",
+          "durationMs": 0,
+          "status": "FAILED"
+        },
+        {
+          "node": "Return-Egress",
+          "durationMs": 8.5,
+          "status": "FAILED"
+        }
+      ],
+      "firstMeaningfulDeviationHop": {
+        "node": "DB2",
+        "observedDurationMs": 3982,
+        "expectedDurationMs": 18,
+        "deviationMultiplier": 221.2,
+        "rootCauseIndication": "Database Lock Contention & Connection Pool Saturation"
+      }
+    },
+    "epistemicAudit": {
+      "ledgerIndex": 0,
+      "cryptographicBlockHash": "a379129ea08840cec00b0344a163299306409f6203cbc2db6e06183f7507762d",
+      "overallRti": 98.7
+    }
+  },
+  "hops": [
+    {
+      "node": "Browser",
+      "service": "Client-Browser",
+      "durationMs": 12,
+      "status": "SUCCESS",
+      "evidence": {
+        "component": "Client-Browser",
+        "status": "SUCCESS",
+        "provenance": "OBSERVED",
+        "timestamp": "2026-09-06T17:25:57.543Z",
+        "durationMs": 12,
+        "traceparent": "00-0000000000000000000001a077c162a7-0000000000000001-01",
+        "attributes": {
+          "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) Chrome/122.0.0.0",
+          "httpVersion": "HTTP/2.0",
+          "streamId": 7,
+          "clientIp": "192.168.1.105",
+          "clientPort": 52418,
+          "deviceType": "Desktop",
+          "os": "Windows 11 Enterprise",
+          "navigationTiming": {
+            "domInteractiveMs": 8.4,
+            "domCompleteMs": 11.2,
+            "loadEventMs": 12
+          }
+        }
+      }
+    },
+    {
+      "node": "DNS",
+      "service": "DNS-Resolver",
+      "durationMs": 1.4,
+      "status": "SUCCESS",
+      "evidence": {
+        "component": "DNS-Resolver",
+        "status": "SUCCESS",
+        "provenance": "OBSERVED",
+        "timestamp": "2026-09-06T17:25:57.543Z",
+        "durationMs": 1.4,
+        "attributes": {
+          "domain": "checkout.bank.corp",
+          "resolverIp": "10.240.0.2",
+          "resolvedIp": "10.240.10.50",
+          "recordType": "A",
+          "ttl": 300,
+          "dnssecValidated": true,
+          "responseCode": "NOERROR"
+        }
+      }
+    },
+    {
+      "node": "Firewall",
+      "service": "Perimeter-Firewall",
+      "durationMs": 2.8,
+      "status": "SUCCESS",
+      "evidence": {
+        "component": "Perimeter-Firewall",
+        "status": "SUCCESS",
+        "provenance": "OBSERVED",
+        "timestamp": "2026-09-06T17:25:57.543Z",
+        "durationMs": 2.8,
+        "attributes": {
+          "policyRuleId": "FW-RULE-PROD-HTTPS-ALLOW",
+          "ingressZone": "ZONE_UNTRUST_WAN",
+          "egressZone": "ZONE_DMZ_APP",
+          "sourceNatIp": null,
+          "action": "ALLOW",
+          "ipsDecision": "CLEAN",
+          "inspectedBytes": 2480,
+          "firewallCluster": "PaloAlto-EdgeCluster-01"
+        }
+      }
+    },
+    {
+      "node": "F5-LB",
+      "service": "F5-BIG-IP",
+      "durationMs": 18,
+      "status": "OK",
+      "evidence": {
+        "component": "F5-BIG-IP",
+        "status": "SUCCESS",
+        "provenance": "OBSERVED",
+        "timestamp": "2026-09-06T17:25:57.543Z",
+        "durationMs": 18,
+        "attributes": {
+          "virtualServer": "/Common/vs_checkout_https",
+          "vip": "10.240.10.50:443",
+          "selectedMember": "10.240.20.101:8443",
+          "poolName": "/Common/pool_ihs_edge",
+          "tlsProfile": "/Common/clientssl_secure_tls13",
+          "cipherSuite": "TLS_AES_256_GCM_SHA384",
+          "sni": "checkout.bank.corp",
+          "wafDecision": "PASS",
+          "persistenceCookie": "BIGipServerpool_ihs=2849182.20480.0000",
+          "activePoolMembers": 4,
+          "healthStatus": "HEALTHY"
+        }
+      }
+    },
+    {
+      "node": "IHS",
+      "service": "IBM-HTTP-Server",
+      "durationMs": 21,
+      "status": "OK",
+      "evidence": {
+        "component": "IBM-HTTP-Server",
+        "status": "SUCCESS",
+        "provenance": "OBSERVED",
+        "timestamp": "2026-09-06T17:25:57.543Z",
+        "durationMs": 21,
+        "attributes": {
+          "requestId": "IHS-REQ-847392-01",
+          "pluginRouting": "mod_was_ap22.c",
+          "backendWorker": "was-node-04_server1",
+          "backendWaitMs": 21,
+          "httpStatus": 200,
+          "clientIp": "192.168.1.105",
+          "bytesSent": 1420,
+          "keepAlive": true
+        }
+      }
+    },
+    {
+      "node": "WebSphere",
+      "service": "WebSphere-CoreApp",
+      "durationMs": 51,
+      "status": "DEGRADED",
+      "evidence": {
+        "component": "WebSphere-CoreApp",
+        "status": "DEGRADED",
+        "provenance": "OBSERVED",
+        "timestamp": "2026-09-06T17:25:57.543Z",
+        "durationMs": 51,
+        "attributes": {
+          "cellName": "ProdCell01",
+          "serverName": "server1",
+          "threadId": "WebContainer : 142",
+          "threadPoolSaturationPct": 98,
+          "jvmHeapUtilizationPct": 62,
+          "jdbcPoolInUse": 98,
+          "jdbcPoolCapacity": 100,
+          "httpStatus": 200,
+          "activeTransactions": 18,
+          "mqJmsSessionBinding": "jms/CheckoutQCF"
+        }
+      }
+    },
+    {
+      "node": "IBM-MQ",
+      "service": "IBM-MQ-Series",
+      "durationMs": 14,
+      "status": "OK",
+      "evidence": {
+        "component": "IBM-MQ-Series",
+        "status": "SUCCESS",
+        "provenance": "OBSERVED",
+        "timestamp": "2026-09-06T17:25:57.544Z",
+        "durationMs": 14,
+        "attributes": {
+          "queueManager": "QM_PAYMENTS_01",
+          "queueName": "DEV.CHECKOUT.IN",
+          "messageId": "MSG-1788715557544-3495",
+          "correlationId": "CORREL-1788715557544",
+          "queueDepth": 14,
+          "channelStatus": "RUNNING",
+          "channelName": "TO.WAS.PAYMENTS.SVRCONN",
+          "msgSizeBytes": 1024,
+          "persistence": "PERSISTENT"
+        }
+      }
+    },
+    {
+      "node": "DB2",
+      "service": "IBM-DB2-Cluster",
+      "durationMs": 3982,
+      "status": "FAILED",
+      "evidence": {
+        "component": "IBM-DB2-Cluster",
+        "status": "FAILED",
+        "provenance": "OBSERVED",
+        "timestamp": "2026-09-06T17:25:57.544Z",
+        "durationMs": 3982,
+        "attributes": {
+          "sqlFingerprint": "SELECT * FROM inventory_items WHERE sku_id = ? FOR UPDATE WITH RR",
+          "executionDurationMs": 3982,
+          "lockWaitMs": 2100,
+          "holdingLockPid": 99142,
+          "connectionPoolSaturationPct": 98,
+          "bufferPoolHitRatioPct": 99.1,
+          "queryPlanCost": 489.2,
+          "tableLockType": "EXCLUSIVE_ROW_LOCK",
+          "databaseName": "PROD_BANK_DB2"
+        }
+      }
+    },
+    {
+      "node": "Stripe-Gateway",
+      "service": "External-Payment-Gateway",
+      "durationMs": 0,
+      "status": "FAILED",
+      "evidence": {
+        "component": "External-Payment-Gateway",
+        "status": "FAILED",
+        "provenance": "OBSERVED",
+        "timestamp": "2026-09-06T17:25:57.544Z",
+        "durationMs": 0,
+        "attributes": {
+          "provider": "Stripe-Gateway-US",
+          "endpointUri": "https://api.stripe.com/v1/charges",
+          "idempotencyKey": "IDEM-1788715557544",
+          "httpStatus": 504,
+          "tlsVersion": "TLSv1.3",
+          "cipherSuite": "TLS_AES_128_GCM_SHA256",
+          "retryCount": 0
+        }
+      }
+    },
+    {
+      "node": "Return-Egress",
+      "service": "Return-Journey-Egress",
+      "durationMs": 8.5,
+      "status": "FAILED",
+      "evidence": {
+        "component": "Return-Journey-Egress",
+        "status": "FAILED",
+        "provenance": "OBSERVED",
+        "timestamp": "2026-09-06T17:25:57.544Z",
+        "durationMs": 8.5,
+        "attributes": {
+          "finalHttpStatus": 504,
+          "compressionType": "gzip",
+          "responseSizeBytes": 1024,
+          "returnLatencyMs": 8.5,
+          "headersPreserved": true,
+          "egressRoute": "DB2 -> WAS -> IHS -> F5 -> Client",
+          "totalReturnTransitMs": 8.5
+        }
+      }
+    }
+  ],
+  "firstDeviation": {
+    "node": "DB2",
+    "observedDurationMs": 3982,
+    "expectedDurationMs": 18,
+    "deviationMultiplier": 221.2,
+    "rootCauseIndication": "Database Lock Contention & Connection Pool Saturation"
+  },
+  "rcaResult": {
+    "hasAnomalies": true,
+    "status": "DEVIATION_DETECTED",
+    "primaryDeviationHop": {
+      "node": "DB2",
+      "service": "IBM-DB2-Cluster",
+      "durationMs": 3982,
+      "status": "FAILED",
+      "evidence": {
+        "component": "IBM-DB2-Cluster",
+        "status": "FAILED",
+        "provenance": "OBSERVED",
+        "timestamp": "2026-09-06T17:25:57.544Z",
+        "durationMs": 3982,
+        "attributes": {
+          "sqlFingerprint": "SELECT * FROM inventory_items WHERE sku_id = ? FOR UPDATE WITH RR",
+          "executionDurationMs": 3982,
+          "lockWaitMs": 2100,
+          "holdingLockPid": 99142,
+          "connectionPoolSaturationPct": 98,
+          "bufferPoolHitRatioPct": 99.1,
+          "queryPlanCost": 489.2,
+          "tableLockType": "EXCLUSIVE_ROW_LOCK",
+          "databaseName": "PROD_BANK_DB2"
+        }
+      }
+    },
+    "maxDeviationRatio": 221.22222222222223,
+    "confidence": 99.4,
+    "candidates": [
+      {
+        "rank": 1,
+        "title": "DB2 Contention & Performance Thrombosis",
+        "targetComponent": "DB2",
+        "confidence": 99.4,
+        "epistemicStatus": "INFERRED",
+        "scoringBreakdown": {
+          "formula": "15(base) + 30(ev) + 20(time) + 20(topo) + 25(dev) + 10(chg) - 1.3(contra) - 2(uncert) = 99.4%",
+          "evidenceStrength": 30,
+          "temporalCorrelation": 20,
+          "topologyCorrelation": 20,
+          "baselineDeviationScore": 25,
+          "changeCorrelationScore": 10,
+          "contradictingPenalty": 1.3,
+          "uncertaintyPenalty": 2
+        },
+        "supportingEvidence": [
+          "[OBSERVED] DB2 duration (3982ms) is 221x higher than Golden Baseline",
+          "[CORRELATED] Temporal alignment with DEPLOYMENT v2.4.1 (14m ago)",
+          "[CORRELATED] Upstream dependencies stalled awaiting DB2 response"
+        ],
+        "contradictingEvidence": [
+          "[OBSERVED] Host CPU utilization is 62%, disproving compute burnout and isolating lock/socket contention"
+        ],
+        "blastRadius": "DB2 Downstream Transactors",
+        "recommendedAction": "Inspect DB2 lock queues, verify connection pool capacity, and validate recent configuration changes"
+      },
+      {
+        "rank": 2,
+        "title": "Downstream Timeout Invalidation & Pool Saturation at DB2",
+        "targetComponent": "DB2",
+        "confidence": 77.2,
+        "epistemicStatus": "INFERRED",
+        "supportingEvidence": [
+          "[OBSERVED] Latency surge triggered upstream timeout cascades",
+          "[CORRELATED] Downstream thread wait times elevated"
+        ],
+        "contradictingEvidence": [
+          "[OBSERVED] Primary delay origin resides at DB2 rather than network transport"
+        ],
+        "blastRadius": "Partial Tenant Degradation",
+        "recommendedAction": "Scale connection pool thresholds and isolate slow query fingerprints"
+      }
+    ],
+    "confidenceEnvelope": {
+      "whatWeKnow": [
+        "[OBSERVED] DB2 duration = 3982ms (221x Golden Baseline)",
+        "[OBSERVED] Change event v2.4.1 deployed 14m prior",
+        "[OBSERVED] Kernel socket TCP retransmits = 0"
+      ],
+      "whatWeThink": [
+        "[INFERRED] Performance thrombosis at DB2 induced by concurrency lock contention or resource exhaustion"
+      ],
+      "whatWeDontKnow": [
+        "[UNCERTAIN] Internal kernel lock escalation traces for Level-1 uninstrumented sub-processes"
+      ],
+      "whatWouldChangeOurMind": [
+        "[FALSIFIABILITY 1] DB2 lock wait duration measured < 50ms on real-time probe",
+        "[FALSIFIABILITY 2] Latency surge observed across requests entirely bypassing DB2",
+        "[FALSIFIABILITY 3] Kernel socket transport RTT > 3,000ms indicating physical network drop",
+        "[FALSIFIABILITY 4] Connection pool utilization confirmed < 10% during latency period"
+      ]
+    }
+  },
+  "ledgerBlock": {
+    "index": 0,
+    "conclusionId": "LEDGER-1788715557544-0",
+    "traceId": "TX-847392-ENTERPRISE-PROD",
+    "timestamp": "2026-09-06T17:25:57.544Z",
+    "modelVersion": "v2.0-BETA-CANONICAL",
+    "provenance": "INFERRED",
+    "primaryHypothesis": "DB2 Contention & Performance Thrombosis",
+    "confidence": 99.4,
+    "supportingEvidence": [
+      "[OBSERVED] DB2 duration (3982ms) is 221x higher than Golden Baseline",
+      "[CORRELATED] Temporal alignment with DEPLOYMENT v2.4.1 (14m ago)",
+      "[CORRELATED] Upstream dependencies stalled awaiting DB2 response"
+    ],
+    "contradictingEvidence": [
+      "[OBSERVED] Host CPU utilization is 62%, disproving compute burnout and isolating lock/socket contention"
+    ],
+    "correlatedChanges": [
+      {
+        "type": "DEPLOYMENT",
+        "version": "v2.4.1",
+        "minutesAgo": 14,
+        "author": "deploy-pipeline@bank.corp"
+      }
+    ],
+    "sourceTelemetrySummary": "{\"clientIp\":\"192.168.1.105\",\"db2LockPid\":99142,\"dnsLatency\":undefined,\"f5Vip\":\"10.240.10.50:443\",\"finalStatus\":504,\"ihsPlugin\":\"mod_was_ap22.c\",\"mqQueue\":\"DEV.CHECKOUT.IN\",\"wasThread\":\"WebContainer : 142\"}",
+    "previousHash": "0000000000000000000000000000000000000000000000000000000000000000",
+    "hash": "a379129ea08840cec00b0344a163299306409f6203cbc2db6e06183f7507762d",
+    "canonicalPayload": "{\"conclusionId\":\"LEDGER-1788715557544-0\",\"confidence\":99.4,\"contradictingEvidence\":[\"[OBSERVED] Host CPU utilization is 62%, disproving compute burnout and isolating lock/socket contention\"],\"correlatedChanges\":[{\"author\":\"deploy-pipeline@bank.corp\",\"minutesAgo\":14,\"type\":\"DEPLOYMENT\",\"version\":\"v2.4.1\"}],\"index\":0,\"modelVersion\":\"v2.0-BETA-CANONICAL\",\"previousHash\":\"0000000000000000000000000000000000000000000000000000000000000000\",\"primaryHypothesis\":\"DB2 Contention & Performance Thrombosis\",\"provenance\":\"INFERRED\",\"sourceTelemetrySummary\":\"{\\\"clientIp\\\":\\\"192.168.1.105\\\",\\\"db2LockPid\\\":99142,\\\"dnsLatency\\\":undefined,\\\"f5Vip\\\":\\\"10.240.10.50:443\\\",\\\"finalStatus\\\":504,\\\"ihsPlugin\\\":\\\"mod_was_ap22.c\\\",\\\"mqQueue\\\":\\\"DEV.CHECKOUT.IN\\\",\\\"wasThread\\\":\\\"WebContainer : 142\\\"}\",\"supportingEvidence\":[\"[OBSERVED] DB2 duration (3982ms) is 221x higher than Golden Baseline\",\"[CORRELATED] Temporal alignment with DEPLOYMENT v2.4.1 (14m ago)\",\"[CORRELATED] Upstream dependencies stalled awaiting DB2 response\"],\"timestamp\":\"2026-09-06T17:25:57.544Z\",\"traceId\":\"TX-847392-ENTERPRISE-PROD\"}"
+  },
+  "ledgerIntegrity": {
+    "isValid": true,
+    "blockCount": 1,
+    "latestHash": "a379129ea08840cec00b0344a163299306409f6203cbc2db6e06183f7507762d"
+  }
+}

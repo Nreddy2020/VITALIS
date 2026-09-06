@@ -1,0 +1,195 @@
+{
+  "schemaVersion": "2.1.0",
+  "traceId": "TX-847392-ENTERPRISE-PROD",
+  "timestamp": "2026-09-06T17:25:57.542Z",
+  "client": {
+    "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) Chrome/122.0.0.0",
+    "httpVersion": "HTTP/2.0",
+    "streamId": 7,
+    "clientIp": "192.168.1.105",
+    "clientPort": 52418,
+    "deviceType": "Desktop",
+    "os": "Windows 11 Enterprise",
+    "navigationTiming": {
+      "domInteractiveMs": 8.4,
+      "domCompleteMs": 11.2,
+      "loadEventMs": 12
+    }
+  },
+  "network": {
+    "sourceIp": "192.168.1.105",
+    "sourcePort": 52418,
+    "edgeLocation": "US-EAST-DC01",
+    "asn": "AS15169",
+    "tcpRetransmits": 0,
+    "socketRttMs": 0.8
+  },
+  "dns": {
+    "domain": "checkout.bank.corp",
+    "resolverIp": "10.240.0.2",
+    "resolvedIp": "10.240.10.50",
+    "recordType": "A",
+    "ttl": 300,
+    "dnssecValidated": true,
+    "responseCode": "NOERROR"
+  },
+  "tls": {
+    "protocol": "TLSv1.3",
+    "cipherSuite": "TLS_AES_256_GCM_SHA384",
+    "sni": "checkout.bank.corp",
+    "certFingerprint": "sha256:8a4f91e0c2b3d4e5f67a8b9c0d1e2f3a",
+    "handshakeDurationMs": 4.2
+  },
+  "security": {
+    "policyRuleId": "FW-RULE-PROD-HTTPS-ALLOW",
+    "ingressZone": "ZONE_UNTRUST_WAN",
+    "egressZone": "ZONE_DMZ_APP",
+    "sourceNatIp": null,
+    "action": "ALLOW",
+    "ipsDecision": "CLEAN",
+    "inspectedBytes": 2480,
+    "firewallCluster": "PaloAlto-EdgeCluster-01"
+  },
+  "f5": {
+    "virtualServer": "/Common/vs_checkout_https",
+    "vip": "10.240.10.50:443",
+    "selectedMember": "10.240.20.101:8443",
+    "poolName": "/Common/pool_ihs_edge",
+    "tlsProfile": "/Common/clientssl_secure_tls13",
+    "cipherSuite": "TLS_AES_256_GCM_SHA384",
+    "sni": "checkout.bank.corp",
+    "wafDecision": "PASS",
+    "persistenceCookie": "BIGipServerpool_ihs=2849182.20480.0000",
+    "activePoolMembers": 4,
+    "healthStatus": "HEALTHY"
+  },
+  "ihs": {
+    "requestId": "IHS-REQ-847392-01",
+    "pluginRouting": "mod_was_ap22.c",
+    "backendWorker": "was-node-04_server1",
+    "backendWaitMs": 21,
+    "httpStatus": 200,
+    "clientIp": "192.168.1.105",
+    "bytesSent": 1420,
+    "keepAlive": true
+  },
+  "websphere": {
+    "cellName": "ProdCell01",
+    "serverName": "server1",
+    "threadId": "WebContainer : 142",
+    "threadPoolSaturationPct": 98,
+    "jvmHeapUtilizationPct": 62,
+    "jdbcPoolInUse": 98,
+    "jdbcPoolCapacity": 100,
+    "httpStatus": 200,
+    "activeTransactions": 18,
+    "mqJmsSessionBinding": "jms/CheckoutQCF"
+  },
+  "mq": {
+    "queueManager": "QM_PAYMENTS_01",
+    "queueName": "DEV.CHECKOUT.IN",
+    "messageId": "MSG-1788715557544-3495",
+    "correlationId": "CORREL-1788715557544",
+    "queueDepth": 14,
+    "channelStatus": "RUNNING",
+    "channelName": "TO.WAS.PAYMENTS.SVRCONN",
+    "msgSizeBytes": 1024,
+    "persistence": "PERSISTENT"
+  },
+  "db2": {
+    "sqlFingerprint": "SELECT * FROM inventory_items WHERE sku_id = ? FOR UPDATE WITH RR",
+    "executionDurationMs": 3982,
+    "lockWaitMs": 2100,
+    "holdingLockPid": 99142,
+    "connectionPoolSaturationPct": 98,
+    "bufferPoolHitRatioPct": 99.1,
+    "queryPlanCost": 489.2,
+    "tableLockType": "EXCLUSIVE_ROW_LOCK",
+    "databaseName": "PROD_BANK_DB2"
+  },
+  "externalGateway": {
+    "provider": "Stripe-Gateway-US",
+    "endpointUri": "https://api.stripe.com/v1/charges",
+    "idempotencyKey": "IDEM-1788715557544",
+    "httpStatus": 504,
+    "tlsVersion": "TLSv1.3",
+    "cipherSuite": "TLS_AES_128_GCM_SHA256",
+    "retryCount": 0
+  },
+  "returnJourney": {
+    "finalHttpStatus": 504,
+    "compressionType": "gzip",
+    "responseSizeBytes": 1024,
+    "returnLatencyMs": 8.5,
+    "headersPreserved": true,
+    "egressRoute": "DB2 -> WAS -> IHS -> F5 -> Client",
+    "totalReturnTransitMs": 8.5
+  },
+  "temporalLineage": {
+    "totalDurationMs": 4110.7,
+    "hopDeltas": [
+      {
+        "node": "Browser",
+        "durationMs": 12,
+        "status": "SUCCESS"
+      },
+      {
+        "node": "DNS",
+        "durationMs": 1.4,
+        "status": "SUCCESS"
+      },
+      {
+        "node": "Firewall",
+        "durationMs": 2.8,
+        "status": "SUCCESS"
+      },
+      {
+        "node": "F5-LB",
+        "durationMs": 18,
+        "status": "OK"
+      },
+      {
+        "node": "IHS",
+        "durationMs": 21,
+        "status": "OK"
+      },
+      {
+        "node": "WebSphere",
+        "durationMs": 51,
+        "status": "DEGRADED"
+      },
+      {
+        "node": "IBM-MQ",
+        "durationMs": 14,
+        "status": "OK"
+      },
+      {
+        "node": "DB2",
+        "durationMs": 3982,
+        "status": "FAILED"
+      },
+      {
+        "node": "Stripe-Gateway",
+        "durationMs": 0,
+        "status": "FAILED"
+      },
+      {
+        "node": "Return-Egress",
+        "durationMs": 8.5,
+        "status": "FAILED"
+      }
+    ],
+    "firstMeaningfulDeviationHop": {
+      "node": "DB2",
+      "observedDurationMs": 3982,
+      "expectedDurationMs": 18,
+      "deviationMultiplier": 221.2,
+      "rootCauseIndication": "Database Lock Contention & Connection Pool Saturation"
+    }
+  },
+  "epistemicAudit": {
+    "ledgerIndex": 0,
+    "cryptographicBlockHash": "a379129ea08840cec00b0344a163299306409f6203cbc2db6e06183f7507762d",
+    "overallRti": 98.7
+  }
+}

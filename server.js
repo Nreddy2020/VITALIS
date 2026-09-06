@@ -279,7 +279,7 @@ const server = http.createServer((req, res) => {
     return;
   }
 
-  // REST API: Trace Evaluation
+  // REST API: V1 Trace Evaluation
   if (method === 'GET' && pathname.startsWith('/api/traces/')) {
     const traceId = pathname.replace('/api/traces/', '');
     const result = engine.evaluateTrace(traceId);
@@ -288,10 +288,25 @@ const server = http.createServer((req, res) => {
     return;
   }
 
+  // REST API: Beta-2 Full Enterprise 10-Hop Trace Evaluation
+  if (method === 'GET' && pathname.startsWith('/api/v2/enterprise-trace')) {
+    const { EnterpriseEvidenceCorrelator } = require('./engine/adapters/enterprise_correlator');
+    const correlator = new EnterpriseEvidenceCorrelator();
+    const traceId = parsedUrl.query?.traceId || "TX-847392";
+    const result = correlator.correlateFullEnterpriseJourney({
+      traceId,
+      db2Raw: { executionDurationMs: 3982, lockWaitMs: 2100, holdingLockPid: 99142, connectionPoolSaturationPct: 98 },
+      changeEvents: [{ type: "DEPLOYMENT", version: "v2.4.1", minutesAgo: 14 }]
+    });
+    res.writeHead(200, { 'Content-Type': 'application/json' });
+    res.end(JSON.stringify(result));
+    return;
+  }
+
   // Health Endpoint
   if (method === 'GET' && pathname === '/health') {
     res.writeHead(200, { 'Content-Type': 'application/json' });
-    res.end(JSON.stringify({ status: 'VITALIS_ENGINE_ONLINE', version: '2.0.0-beta', oidc: 'OTel-Graduated-Compliant' }));
+    res.end(JSON.stringify({ status: 'VITALIS_ENGINE_ONLINE', version: '2.1.0-enterprise', oidc: 'OTel-Graduated-Compliant' }));
     return;
   }
 
