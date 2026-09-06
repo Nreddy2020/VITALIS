@@ -10,7 +10,8 @@
     "test:erg": "node tests/erg_validation_controller.js",
     "test:beta": "node tests/beta_1a_validation_runner.js",
     "test:beta21": "node tests/beta_2_1_enterprise_validation.js",
-    "test:enterprise": "node tests/test_full_enterprise_pipeline.js"
+    "test:enterprise": "node tests/test_full_enterprise_pipeline.js",
+    "test:beta22": "node tests/beta_2_2_evidence_truth_test.js"
   },
   "keywords": [
     "observability",

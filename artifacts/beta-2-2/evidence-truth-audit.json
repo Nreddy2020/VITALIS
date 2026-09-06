@@ -1,0 +1,303 @@
+{
+  "traceId": "TX-847392-BETA-2-2",
+  "envelopes": [
+    {
+      "evidenceId": "ev-1788715769897-5214eac1",
+      "traceId": "TX-847392-BETA-2-2",
+      "requestId": "req-TX-847392-BETA-2-2",
+      "spanId": "span-ev-1788715769897-5214eac1",
+      "parentSpanId": null,
+      "component": {
+        "type": "F5",
+        "name": "F5-BIG-IP-EDGE",
+        "environment": "production",
+        "region": "ap-south-1",
+        "cluster": "default-cluster"
+      },
+      "event": {
+        "type": "WAF_ROUTING",
+        "phase": "FORWARD",
+        "timestamp": "2026-09-06T17:29:29.897Z",
+        "durationMs": 18,
+        "status": "SUCCESS"
+      },
+      "measurements": {
+        "expectedDurationMs": 18,
+        "observedDurationMs": 18,
+        "lockWaitMs": 0,
+        "connectionPoolUtilization": 0,
+        "cpuUtilizationPct": null,
+        "socketRttMs": null,
+        "tcpRetransmits": 0
+      },
+      "identity": {
+        "sqlFingerprint": null,
+        "dbPid": null,
+        "correlationId": null,
+        "messageId": null,
+        "threadId": null,
+        "vip": "10.240.10.50:443",
+        "clientIp": null
+      },
+      "provenance": {
+        "sourceType": "NATIVE_ADAPTER",
+        "sourceSystem": "F5",
+        "collectionMethod": "OUT_OF_BAND",
+        "observed": true,
+        "confidence": 1,
+        "collectionTimestamp": "2026-09-06T17:29:29.898Z"
+      },
+      "epistemic": {
+        "classification": "OBSERVED",
+        "claim": "F5-BIG-IP-EDGE executed WAF_ROUTING",
+        "supportingEvidenceIds": [],
+        "falsifiabilityCriteria": []
+      },
+      "security": {
+        "containsPii": false,
+        "redactionApplied": true,
+        "tenantId": "default-tenant"
+      }
+    },
+    {
+      "evidenceId": "ev-1788715769898-2129a63a",
+      "traceId": "TX-847392-BETA-2-2",
+      "requestId": "req-TX-847392-BETA-2-2",
+      "spanId": "span-ev-1788715769898-2129a63a",
+      "parentSpanId": null,
+      "component": {
+        "type": "IHS",
+        "name": "IBM-HTTP-SERVER-01",
+        "environment": "production",
+        "region": "ap-south-1",
+        "cluster": "default-cluster"
+      },
+      "event": {
+        "type": "PLUGIN_FORWARD",
+        "phase": "FORWARD",
+        "timestamp": "2026-09-06T17:29:29.898Z",
+        "durationMs": 21,
+        "status": "SUCCESS"
+      },
+      "measurements": {
+        "expectedDurationMs": 21,
+        "observedDurationMs": 21,
+        "lockWaitMs": 0,
+        "connectionPoolUtilization": 0,
+        "cpuUtilizationPct": null,
+        "socketRttMs": null,
+        "tcpRetransmits": 0
+      },
+      "identity": {
+        "sqlFingerprint": null,
+        "dbPid": null,
+        "correlationId": null,
+        "messageId": null,
+        "threadId": null,
+        "vip": null,
+        "clientIp": null
+      },
+      "provenance": {
+        "sourceType": "NATIVE_ADAPTER",
+        "sourceSystem": "IHS",
+        "collectionMethod": "OUT_OF_BAND",
+        "observed": true,
+        "confidence": 1,
+        "collectionTimestamp": "2026-09-06T17:29:29.898Z"
+      },
+      "epistemic": {
+        "classification": "OBSERVED",
+        "claim": "IBM-HTTP-SERVER-01 executed PLUGIN_FORWARD",
+        "supportingEvidenceIds": [],
+        "falsifiabilityCriteria": []
+      },
+      "security": {
+        "containsPii": false,
+        "redactionApplied": true,
+        "tenantId": "default-tenant"
+      }
+    },
+    {
+      "evidenceId": "ev-1788715769898-0d78ed0d",
+      "traceId": "TX-847392-BETA-2-2",
+      "requestId": "req-TX-847392-BETA-2-2",
+      "spanId": "span-ev-1788715769898-0d78ed0d",
+      "parentSpanId": null,
+      "component": {
+        "type": "WEBSPHERE",
+        "name": "WAS-CORE-APP-04",
+        "environment": "production",
+        "region": "ap-south-1",
+        "cluster": "default-cluster"
+      },
+      "event": {
+        "type": "SERVLET_EXECUTION",
+        "phase": "FORWARD",
+        "timestamp": "2026-09-06T17:29:29.898Z",
+        "durationMs": 51,
+        "status": "DEGRADED"
+      },
+      "measurements": {
+        "expectedDurationMs": 51,
+        "observedDurationMs": 51,
+        "lockWaitMs": 0,
+        "connectionPoolUtilization": 0.98,
+        "cpuUtilizationPct": null,
+        "socketRttMs": null,
+        "tcpRetransmits": 0
+      },
+      "identity": {
+        "sqlFingerprint": null,
+        "dbPid": null,
+        "correlationId": null,
+        "messageId": null,
+        "threadId": "WebContainer : 142",
+        "vip": null,
+        "clientIp": null
+      },
+      "provenance": {
+        "sourceType": "NATIVE_ADAPTER",
+        "sourceSystem": "WEBSPHERE",
+        "collectionMethod": "OUT_OF_BAND",
+        "observed": true,
+        "confidence": 1,
+        "collectionTimestamp": "2026-09-06T17:29:29.898Z"
+      },
+      "epistemic": {
+        "classification": "OBSERVED",
+        "claim": "WAS-CORE-APP-04 executed SERVLET_EXECUTION",
+        "supportingEvidenceIds": [],
+        "falsifiabilityCriteria": []
+      },
+      "security": {
+        "containsPii": false,
+        "redactionApplied": true,
+        "tenantId": "default-tenant"
+      }
+    },
+    {
+      "evidenceId": "ev-1788715769898-a23c7a8a",
+      "traceId": "TX-847392-BETA-2-2",
+      "requestId": "req-TX-847392-BETA-2-2",
+      "spanId": "span-ev-1788715769898-a23c7a8a",
+      "parentSpanId": null,
+      "component": {
+        "type": "DB2",
+        "name": "IBM-DB2-CLUSTER-PRIMARY",
+        "environment": "production",
+        "region": "ap-south-1",
+        "cluster": "default-cluster"
+      },
+      "event": {
+        "type": "SQL_EXECUTION",
+        "phase": "FORWARD",
+        "timestamp": "2026-09-06T17:29:29.898Z",
+        "durationMs": 3982,
+        "status": "FAILED"
+      },
+      "measurements": {
+        "expectedDurationMs": 18,
+        "observedDurationMs": 3982,
+        "lockWaitMs": 3960,
+        "connectionPoolUtilization": 0.98,
+        "cpuUtilizationPct": 62,
+        "socketRttMs": null,
+        "tcpRetransmits": 0
+      },
+      "identity": {
+        "sqlFingerprint": "SELECT * FROM inventory_items FOR UPDATE",
+        "dbPid": "99142",
+        "correlationId": null,
+        "messageId": null,
+        "threadId": null,
+        "vip": null,
+        "clientIp": null
+      },
+      "provenance": {
+        "sourceType": "NATIVE_ADAPTER",
+        "sourceSystem": "DB2",
+        "collectionMethod": "OUT_OF_BAND",
+        "observed": true,
+        "confidence": 1,
+        "collectionTimestamp": "2026-09-06T17:29:29.898Z"
+      },
+      "epistemic": {
+        "classification": "OBSERVED",
+        "claim": "IBM-DB2-CLUSTER-PRIMARY executed SQL_EXECUTION",
+        "supportingEvidenceIds": [],
+        "falsifiabilityCriteria": []
+      },
+      "security": {
+        "containsPii": false,
+        "redactionApplied": true,
+        "tenantId": "default-tenant"
+      }
+    }
+  ],
+  "blockage": {
+    "found": true,
+    "blockageNode": "PID-99142-LOCK",
+    "blockedComponent": "DB2-PRIMARY",
+    "reason": "Exclusive Row Lock on inventory_items",
+    "lockPid": "99142",
+    "durationMs": 3960
+  },
+  "causalClaim": {
+    "claimId": "claim-1788715769899-70087d",
+    "traceId": "TX-847392-BETA-2-2",
+    "timestamp": "2026-09-06T17:29:29.899Z",
+    "type": "ROOT_CAUSE_CANDIDATE",
+    "statement": "IBM-DB2-CLUSTER-PRIMARY lock contention & connection pool saturation caused the request failure cascade",
+    "classification": "INFERRED",
+    "confidence": 0.824,
+    "supportingEvidence": [
+      "ev-1788715769897-5214eac1",
+      "ev-1788715769898-2129a63a",
+      "ev-1788715769898-0d78ed0d",
+      "ev-1788715769898-a23c7a8a"
+    ],
+    "contradictingEvidence": [],
+    "falsifiability": [
+      "Release IBM-DB2-CLUSTER-PRIMARY holding lock session and observe query latency reduction to < 25ms",
+      "Confirm upstream WebSphere worker thread saturation declines to < 40%",
+      "Confirm external payment gateway timeout rate returns to 0.0%",
+      "Re-run identical transaction payload and confirm nominal completion within 180ms"
+    ],
+    "status": "OPEN"
+  },
+  "unknownClaim": {
+    "claimId": "claim-1788715769899-9230ad",
+    "traceId": "TX-INCOMPLETE-TEST",
+    "timestamp": "2026-09-06T17:29:29.899Z",
+    "type": "ROOT_CAUSE_CANDIDATE",
+    "statement": "Unable to determine root cause: 0 evidence envelopes received",
+    "classification": "UNKNOWN",
+    "confidence": 0,
+    "supportingEvidence": [],
+    "contradictingEvidence": [],
+    "falsifiability": [
+      "Collect missing telemetry: Client, F5, IHS, WebSphere, DB2",
+      "Re-evaluate trace when full context is present"
+    ],
+    "status": "INSUFFICIENT_EVIDENCE"
+  },
+  "impact": {
+    "traceId": "TX-847392-BETA-2-2",
+    "timestamp": "2026-09-06T17:29:29.900Z",
+    "businessOperation": "CHECKOUT_PAYMENT_CART",
+    "technicalStatus": "UNHEALTHY",
+    "businessOutcome": "FAILED",
+    "customerImpact": "CUSTOMER_CHECKOUT_TIMEOUT_HTTP_504",
+    "financialExposure": {
+      "currency": "INR",
+      "estimatedAtRisk": 23010300,
+      "formattedExposure": "INR 23,010,300",
+      "confidence": "ESTIMATED_PENDING_SETTLEMENT_RECONCILIATION"
+    },
+    "operationalRisk": {
+      "retryStormRisk": "HIGH",
+      "duplicatePaymentRisk": "POSSIBLE_PREVENTED_BY_IDEMPOTENCY",
+      "complianceReportingRequired": true
+    }
+  }
+}
