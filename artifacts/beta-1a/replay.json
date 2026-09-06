@@ -1,0 +1,15 @@
+{
+  "packageId": "REPLAY-PKG-TX-847392-1787157450000",
+  "sourceTraceId": "TX-847392",
+  "replayedAt": "2026-08-19T16:37:30.000Z",
+  "originalDurationMs": 4086,
+  "replayedDurationMs": 142,
+  "simulatedFixApplied": true,
+  "isFixedSuccessful": true,
+  "comparison": {
+    "before": "3,982ms (504 Timeout)",
+    "after": "18ms (200 OK - Baseline Restored)",
+    "deltaMs": -3782
+  },
+  "sandboxResult": "READY_FOR_PRODUCTION_APPROVAL"
+}

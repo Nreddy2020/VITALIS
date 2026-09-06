@@ -1,0 +1,21 @@
+{
+  "adversarialTestsRun": 12,
+  "sensitiveAttributesTested": [
+    "PAN (Credit Card)",
+    "CVV / CVC",
+    "Bearer Tokens",
+    "Passwords / Secrets",
+    "SSN / Tax ID"
+  ],
+  "leaksDetected": 0,
+  "sanitizedSample": {
+    "user": "john_doe",
+    "cardNumber": "[REDACTED_PAN]",
+    "cvvText": "cvv=[REDACTED_CVV]",
+    "apiAuth": "Bearer [REDACTED_TOKEN]",
+    "passwordString": "password=[REDACTED_SECRET]",
+    "taxId": "[REDACTED_SSN]"
+  },
+  "complianceStatus": "COMPLIANT (PCI-DSS / HIPAA / GDPR Level 1)",
+  "status": "PASS"
+}

@@ -1,0 +1,27 @@
+{
+  "version": "1.0",
+  "testRun": "VITALIS-ALPHA-001",
+  "timestamp": "2026-08-19T16:21:40.000Z",
+  "gates": {
+    "otlpIngestion": "PASS",
+    "traceReconstruction": "PASS",
+    "baselineDeviation": "PASS",
+    "evidenceRCA": "PASS",
+    "productionSafety": "PASS"
+  },
+  "request": {
+    "healthy": "TX-REAL-001",
+    "degraded": "TX-REAL-002"
+  },
+  "baseline": {
+    "databaseMs": 18
+  },
+  "observed": {
+    "databaseMs": 2814
+  },
+  "rca": {
+    "candidate": "Database Lock Contention & Connection Pool Saturation",
+    "confidence": 0.937,
+    "scoringFormula": "50(base) + 20(latency 156x) + 15(pool 98%) + 10(query match) - 1.3(cpu 62%) = 93.7%"
+  }
+}

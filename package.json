@@ -1,0 +1,23 @@
+{
+  "name": "vitalis",
+  "version": "2.0.0-beta",
+  "description": "VITALIS — The Request Truth Engine | IT Circulatory Intelligence Platform",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js",
+    "test": "node tests/verify_alpha_gates.js",
+    "test:runner": "node tests/runner.js --all",
+    "test:erg": "node tests/erg_validation_controller.js",
+    "test:beta": "node tests/beta_1a_validation_runner.js"
+  },
+  "keywords": [
+    "observability",
+    "request-truth",
+    "opentelemetry",
+    "ebpf",
+    "causal-inference",
+    "vitalis"
+  ],
+  "author": "VITALIS Engineering",
+  "license": "Apache-2.0"
+}

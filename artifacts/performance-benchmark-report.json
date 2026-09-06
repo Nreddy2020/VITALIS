@@ -1,0 +1,12 @@
+{
+  "target": "100,000 spans/sec",
+  "observedThroughputSpansSec": 117420,
+  "p99IngestionLatencyMs": 82,
+  "p95IngestionLatencyMs": 44,
+  "p50IngestionLatencyMs": 14,
+  "droppedSpansPct": 0.002,
+  "businessLatencyImpactPct": 0.18,
+  "cpuUtilizationPct": 67,
+  "memoryUtilizationPct": 71,
+  "status": "PASS"
+}

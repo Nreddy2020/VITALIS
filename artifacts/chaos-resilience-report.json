@@ -1,0 +1,9 @@
+{
+  "scenario": "Downstream Storage Outage & Buffer Drain",
+  "downstreamStorageOnline": true,
+  "bufferedDuringOutage": 5000,
+  "sheddedOnOverflow": 1000,
+  "businessTransactionInterrupted": false,
+  "flushedSuccessfully": true,
+  "status": "PASS"
+}

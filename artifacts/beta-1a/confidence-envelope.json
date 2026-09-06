@@ -1,0 +1,24 @@
+{
+  "traceId": "TX-847392",
+  "whatWeKnow": [
+    "DB2 span duration = 3,982ms (156x higher than Golden Baseline 18ms)",
+    "Lock wait duration = 2,100ms on PID #99142",
+    "HikariCP connection pool saturation = 98% (98/100 connections in use)",
+    "WebSphere CoreApp v2.4.1 deployed 14 minutes earlier",
+    "DB host CPU utilization is moderate (62%, confirming lock wait vs core burnout)"
+  ],
+  "whatWeThink": [
+    "Strong temporal correlation: Deployment v2.4.1 introduced unindexed batch inventory query Q-847 causing row lock contention on inventory_items"
+  ],
+  "whatWeDontKnow": [
+    "Database internal lock escalation event log not captured by Level 1 probe"
+  ],
+  "whatWouldChangeOurMind": [
+    "DB2 lock wait duration observed < 50ms",
+    "Same 3,982ms latency observed in transactions without query fingerprint Q-847",
+    "Kernel eBPF socket round-trip time > 3,000ms (would indicate network transport failure)",
+    "Connection pool saturation dropping to 0% while query duration remains elevated"
+  ],
+  "calculatedConfidence": 93.7,
+  "businessImpact": "HIGH (12,438 checkout requests affected)"
+}
