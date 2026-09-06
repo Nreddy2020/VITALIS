@@ -3,7 +3,7 @@
   "envelope": {
     "schemaVersion": "2.1.0",
     "traceId": "TX-847392-ENTERPRISE-PROD",
-    "timestamp": "2026-09-06T17:32:27.494Z",
+    "timestamp": "2026-09-06T17:34:42.199Z",
     "client": {
       "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) Chrome/122.0.0.0",
       "httpVersion": "HTTP/2.0",
@@ -90,8 +90,8 @@
     "mq": {
       "queueManager": "QM_PAYMENTS_01",
       "queueName": "DEV.CHECKOUT.IN",
-      "messageId": "MSG-1788715947496-107",
-      "correlationId": "CORREL-1788715947496",
+      "messageId": "MSG-1788716082200-56",
+      "correlationId": "CORREL-1788716082200",
       "queueDepth": 14,
       "channelStatus": "RUNNING",
       "channelName": "TO.WAS.PAYMENTS.SVRCONN",
@@ -112,7 +112,7 @@
     "externalGateway": {
       "provider": "Stripe-Gateway-US",
       "endpointUri": "https://api.stripe.com/v1/charges",
-      "idempotencyKey": "IDEM-1788715947496",
+      "idempotencyKey": "IDEM-1788716082200",
       "httpStatus": 504,
       "tlsVersion": "TLSv1.3",
       "cipherSuite": "TLS_AES_128_GCM_SHA256",
@@ -191,7 +191,7 @@
     },
     "epistemicAudit": {
       "ledgerIndex": 0,
-      "cryptographicBlockHash": "1c8983b5905e69ab27b5b6e60c56985465bb48aa6d27ba5cd8c70598d40ce352",
+      "cryptographicBlockHash": "ea226a3aa4790bfebc667eecfec1fb013fcc89bdda4ad61910346de928c43bb1",
       "overallRti": 98.7
     }
   },
@@ -205,9 +205,9 @@
         "component": "Client-Browser",
         "status": "SUCCESS",
         "provenance": "OBSERVED",
-        "timestamp": "2026-09-06T17:32:27.495Z",
+        "timestamp": "2026-09-06T17:34:42.200Z",
         "durationMs": 12,
-        "traceparent": "00-0000000000000000000001a077c755e7-0000000000000001-01",
+        "traceparent": "00-0000000000000000000001a077c96418-0000000000000001-01",
         "attributes": {
           "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) Chrome/122.0.0.0",
           "httpVersion": "HTTP/2.0",
@@ -233,7 +233,7 @@
         "component": "DNS-Resolver",
         "status": "SUCCESS",
         "provenance": "OBSERVED",
-        "timestamp": "2026-09-06T17:32:27.495Z",
+        "timestamp": "2026-09-06T17:34:42.200Z",
         "durationMs": 1.4,
         "attributes": {
           "domain": "checkout.bank.corp",
@@ -255,7 +255,7 @@
         "component": "Perimeter-Firewall",
         "status": "SUCCESS",
         "provenance": "OBSERVED",
-        "timestamp": "2026-09-06T17:32:27.495Z",
+        "timestamp": "2026-09-06T17:34:42.200Z",
         "durationMs": 2.8,
         "attributes": {
           "policyRuleId": "FW-RULE-PROD-HTTPS-ALLOW",
@@ -278,7 +278,7 @@
         "component": "F5-BIG-IP",
         "status": "SUCCESS",
         "provenance": "OBSERVED",
-        "timestamp": "2026-09-06T17:32:27.495Z",
+        "timestamp": "2026-09-06T17:34:42.200Z",
         "durationMs": 18,
         "attributes": {
           "virtualServer": "/Common/vs_checkout_https",
@@ -304,7 +304,7 @@
         "component": "IBM-HTTP-Server",
         "status": "SUCCESS",
         "provenance": "OBSERVED",
-        "timestamp": "2026-09-06T17:32:27.495Z",
+        "timestamp": "2026-09-06T17:34:42.200Z",
         "durationMs": 21,
         "attributes": {
           "requestId": "IHS-REQ-847392-01",
@@ -327,7 +327,7 @@
         "component": "WebSphere-CoreApp",
         "status": "DEGRADED",
         "provenance": "OBSERVED",
-        "timestamp": "2026-09-06T17:32:27.496Z",
+        "timestamp": "2026-09-06T17:34:42.200Z",
         "durationMs": 51,
         "attributes": {
           "cellName": "ProdCell01",
@@ -352,13 +352,13 @@
         "component": "IBM-MQ-Series",
         "status": "SUCCESS",
         "provenance": "OBSERVED",
-        "timestamp": "2026-09-06T17:32:27.496Z",
+        "timestamp": "2026-09-06T17:34:42.200Z",
         "durationMs": 14,
         "attributes": {
           "queueManager": "QM_PAYMENTS_01",
           "queueName": "DEV.CHECKOUT.IN",
-          "messageId": "MSG-1788715947496-107",
-          "correlationId": "CORREL-1788715947496",
+          "messageId": "MSG-1788716082200-56",
+          "correlationId": "CORREL-1788716082200",
           "queueDepth": 14,
           "channelStatus": "RUNNING",
           "channelName": "TO.WAS.PAYMENTS.SVRCONN",
@@ -376,7 +376,7 @@
         "component": "IBM-DB2-Cluster",
         "status": "FAILED",
         "provenance": "OBSERVED",
-        "timestamp": "2026-09-06T17:32:27.496Z",
+        "timestamp": "2026-09-06T17:34:42.200Z",
         "durationMs": 3982,
         "attributes": {
           "sqlFingerprint": "SELECT * FROM inventory_items WHERE sku_id = ? FOR UPDATE WITH RR",
@@ -400,12 +400,12 @@
         "component": "External-Payment-Gateway",
         "status": "FAILED",
         "provenance": "OBSERVED",
-        "timestamp": "2026-09-06T17:32:27.496Z",
+        "timestamp": "2026-09-06T17:34:42.200Z",
         "durationMs": 0,
         "attributes": {
           "provider": "Stripe-Gateway-US",
           "endpointUri": "https://api.stripe.com/v1/charges",
-          "idempotencyKey": "IDEM-1788715947496",
+          "idempotencyKey": "IDEM-1788716082200",
           "httpStatus": 504,
           "tlsVersion": "TLSv1.3",
           "cipherSuite": "TLS_AES_128_GCM_SHA256",
@@ -422,7 +422,7 @@
         "component": "Return-Journey-Egress",
         "status": "FAILED",
         "provenance": "OBSERVED",
-        "timestamp": "2026-09-06T17:32:27.496Z",
+        "timestamp": "2026-09-06T17:34:42.200Z",
         "durationMs": 8.5,
         "attributes": {
           "finalHttpStatus": 504,
@@ -455,7 +455,7 @@
         "component": "IBM-DB2-Cluster",
         "status": "FAILED",
         "provenance": "OBSERVED",
-        "timestamp": "2026-09-06T17:32:27.496Z",
+        "timestamp": "2026-09-06T17:34:42.200Z",
         "durationMs": 3982,
         "attributes": {
           "sqlFingerprint": "SELECT * FROM inventory_items WHERE sku_id = ? FOR UPDATE WITH RR",
@@ -539,9 +539,9 @@
   },
   "ledgerBlock": {
     "index": 0,
-    "conclusionId": "LEDGER-1788715947496-0",
+    "conclusionId": "LEDGER-1788716082201-0",
     "traceId": "TX-847392-ENTERPRISE-PROD",
-    "timestamp": "2026-09-06T17:32:27.496Z",
+    "timestamp": "2026-09-06T17:34:42.201Z",
     "modelVersion": "v2.0-BETA-CANONICAL",
     "provenance": "INFERRED",
     "primaryHypothesis": "DB2 Contention & Performance Thrombosis",
@@ -564,12 +564,12 @@
     ],
     "sourceTelemetrySummary": "{\"clientIp\":\"192.168.1.105\",\"db2LockPid\":99142,\"dnsLatency\":undefined,\"f5Vip\":\"10.240.10.50:443\",\"finalStatus\":504,\"ihsPlugin\":\"mod_was_ap22.c\",\"mqQueue\":\"DEV.CHECKOUT.IN\",\"wasThread\":\"WebContainer : 142\"}",
     "previousHash": "0000000000000000000000000000000000000000000000000000000000000000",
-    "hash": "1c8983b5905e69ab27b5b6e60c56985465bb48aa6d27ba5cd8c70598d40ce352",
-    "canonicalPayload": "{\"conclusionId\":\"LEDGER-1788715947496-0\",\"confidence\":99.4,\"contradictingEvidence\":[\"[OBSERVED] Host CPU utilization is 62%, disproving compute burnout and isolating lock/socket contention\"],\"correlatedChanges\":[{\"author\":\"deploy-pipeline@bank.corp\",\"minutesAgo\":14,\"type\":\"DEPLOYMENT\",\"version\":\"v2.4.1\"}],\"index\":0,\"modelVersion\":\"v2.0-BETA-CANONICAL\",\"previousHash\":\"0000000000000000000000000000000000000000000000000000000000000000\",\"primaryHypothesis\":\"DB2 Contention & Performance Thrombosis\",\"provenance\":\"INFERRED\",\"sourceTelemetrySummary\":\"{\\\"clientIp\\\":\\\"192.168.1.105\\\",\\\"db2LockPid\\\":99142,\\\"dnsLatency\\\":undefined,\\\"f5Vip\\\":\\\"10.240.10.50:443\\\",\\\"finalStatus\\\":504,\\\"ihsPlugin\\\":\\\"mod_was_ap22.c\\\",\\\"mqQueue\\\":\\\"DEV.CHECKOUT.IN\\\",\\\"wasThread\\\":\\\"WebContainer : 142\\\"}\",\"supportingEvidence\":[\"[OBSERVED] DB2 duration (3982ms) is 221x higher than Golden Baseline\",\"[CORRELATED] Temporal alignment with DEPLOYMENT v2.4.1 (14m ago)\",\"[CORRELATED] Upstream dependencies stalled awaiting DB2 response\"],\"timestamp\":\"2026-09-06T17:32:27.496Z\",\"traceId\":\"TX-847392-ENTERPRISE-PROD\"}"
+    "hash": "ea226a3aa4790bfebc667eecfec1fb013fcc89bdda4ad61910346de928c43bb1",
+    "canonicalPayload": "{\"conclusionId\":\"LEDGER-1788716082201-0\",\"confidence\":99.4,\"contradictingEvidence\":[\"[OBSERVED] Host CPU utilization is 62%, disproving compute burnout and isolating lock/socket contention\"],\"correlatedChanges\":[{\"author\":\"deploy-pipeline@bank.corp\",\"minutesAgo\":14,\"type\":\"DEPLOYMENT\",\"version\":\"v2.4.1\"}],\"index\":0,\"modelVersion\":\"v2.0-BETA-CANONICAL\",\"previousHash\":\"0000000000000000000000000000000000000000000000000000000000000000\",\"primaryHypothesis\":\"DB2 Contention & Performance Thrombosis\",\"provenance\":\"INFERRED\",\"sourceTelemetrySummary\":\"{\\\"clientIp\\\":\\\"192.168.1.105\\\",\\\"db2LockPid\\\":99142,\\\"dnsLatency\\\":undefined,\\\"f5Vip\\\":\\\"10.240.10.50:443\\\",\\\"finalStatus\\\":504,\\\"ihsPlugin\\\":\\\"mod_was_ap22.c\\\",\\\"mqQueue\\\":\\\"DEV.CHECKOUT.IN\\\",\\\"wasThread\\\":\\\"WebContainer : 142\\\"}\",\"supportingEvidence\":[\"[OBSERVED] DB2 duration (3982ms) is 221x higher than Golden Baseline\",\"[CORRELATED] Temporal alignment with DEPLOYMENT v2.4.1 (14m ago)\",\"[CORRELATED] Upstream dependencies stalled awaiting DB2 response\"],\"timestamp\":\"2026-09-06T17:34:42.201Z\",\"traceId\":\"TX-847392-ENTERPRISE-PROD\"}"
   },
   "ledgerIntegrity": {
     "isValid": true,
     "blockCount": 1,
-    "latestHash": "1c8983b5905e69ab27b5b6e60c56985465bb48aa6d27ba5cd8c70598d40ce352"
+    "latestHash": "ea226a3aa4790bfebc667eecfec1fb013fcc89bdda4ad61910346de928c43bb1"
   }
 }

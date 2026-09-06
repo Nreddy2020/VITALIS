@@ -2,10 +2,10 @@
   "traceId": "TX-847392-BETA-2-2",
   "envelopes": [
     {
-      "evidenceId": "ev-1788715947557-a7ce71aa",
+      "evidenceId": "ev-1788716084346-0b10ddce",
       "traceId": "TX-847392-BETA-2-2",
       "requestId": "req-TX-847392-BETA-2-2",
-      "spanId": "span-ev-1788715947557-a7ce71aa",
+      "spanId": "span-ev-1788716084346-0b10ddce",
       "parentSpanId": null,
       "component": {
         "type": "F5",
@@ -17,7 +17,7 @@
       "event": {
         "type": "WAF_ROUTING",
         "phase": "FORWARD",
-        "timestamp": "2026-09-06T17:32:27.558Z",
+        "timestamp": "2026-09-06T17:34:44.346Z",
         "durationMs": 18,
         "status": "SUCCESS"
       },
@@ -45,7 +45,7 @@
         "collectionMethod": "OUT_OF_BAND",
         "observed": true,
         "confidence": 1,
-        "collectionTimestamp": "2026-09-06T17:32:27.559Z"
+        "collectionTimestamp": "2026-09-06T17:34:44.347Z"
       },
       "epistemic": {
         "classification": "OBSERVED",
@@ -60,10 +60,10 @@
       }
     },
     {
-      "evidenceId": "ev-1788715947559-e9bb607c",
+      "evidenceId": "ev-1788716084347-200e89b6",
       "traceId": "TX-847392-BETA-2-2",
       "requestId": "req-TX-847392-BETA-2-2",
-      "spanId": "span-ev-1788715947559-e9bb607c",
+      "spanId": "span-ev-1788716084347-200e89b6",
       "parentSpanId": null,
       "component": {
         "type": "IHS",
@@ -75,7 +75,7 @@
       "event": {
         "type": "PLUGIN_FORWARD",
         "phase": "FORWARD",
-        "timestamp": "2026-09-06T17:32:27.559Z",
+        "timestamp": "2026-09-06T17:34:44.347Z",
         "durationMs": 21,
         "status": "SUCCESS"
       },
@@ -103,7 +103,7 @@
         "collectionMethod": "OUT_OF_BAND",
         "observed": true,
         "confidence": 1,
-        "collectionTimestamp": "2026-09-06T17:32:27.559Z"
+        "collectionTimestamp": "2026-09-06T17:34:44.347Z"
       },
       "epistemic": {
         "classification": "OBSERVED",
@@ -118,10 +118,10 @@
       }
     },
     {
-      "evidenceId": "ev-1788715947559-1a4bf3cd",
+      "evidenceId": "ev-1788716084347-26cff22b",
       "traceId": "TX-847392-BETA-2-2",
       "requestId": "req-TX-847392-BETA-2-2",
-      "spanId": "span-ev-1788715947559-1a4bf3cd",
+      "spanId": "span-ev-1788716084347-26cff22b",
       "parentSpanId": null,
       "component": {
         "type": "WEBSPHERE",
@@ -133,7 +133,7 @@
       "event": {
         "type": "SERVLET_EXECUTION",
         "phase": "FORWARD",
-        "timestamp": "2026-09-06T17:32:27.559Z",
+        "timestamp": "2026-09-06T17:34:44.347Z",
         "durationMs": 51,
         "status": "DEGRADED"
       },
@@ -161,7 +161,7 @@
         "collectionMethod": "OUT_OF_BAND",
         "observed": true,
         "confidence": 1,
-        "collectionTimestamp": "2026-09-06T17:32:27.559Z"
+        "collectionTimestamp": "2026-09-06T17:34:44.347Z"
       },
       "epistemic": {
         "classification": "OBSERVED",
@@ -176,10 +176,10 @@
       }
     },
     {
-      "evidenceId": "ev-1788715947559-1a5e84f4",
+      "evidenceId": "ev-1788716084347-363bde4a",
       "traceId": "TX-847392-BETA-2-2",
       "requestId": "req-TX-847392-BETA-2-2",
-      "spanId": "span-ev-1788715947559-1a5e84f4",
+      "spanId": "span-ev-1788716084347-363bde4a",
       "parentSpanId": null,
       "component": {
         "type": "DB2",
@@ -191,7 +191,7 @@
       "event": {
         "type": "SQL_EXECUTION",
         "phase": "FORWARD",
-        "timestamp": "2026-09-06T17:32:27.559Z",
+        "timestamp": "2026-09-06T17:34:44.347Z",
         "durationMs": 3982,
         "status": "FAILED"
       },
@@ -219,7 +219,7 @@
         "collectionMethod": "OUT_OF_BAND",
         "observed": true,
         "confidence": 1,
-        "collectionTimestamp": "2026-09-06T17:32:27.559Z"
+        "collectionTimestamp": "2026-09-06T17:34:44.347Z"
       },
       "epistemic": {
         "classification": "OBSERVED",
@@ -243,18 +243,18 @@
     "durationMs": 3960
   },
   "causalClaim": {
-    "claimId": "claim-1788715947560-54acff",
+    "claimId": "claim-1788716084348-66c425",
     "traceId": "TX-847392-BETA-2-2",
-    "timestamp": "2026-09-06T17:32:27.560Z",
+    "timestamp": "2026-09-06T17:34:44.348Z",
     "type": "ROOT_CAUSE_CANDIDATE",
     "statement": "IBM-DB2-CLUSTER-PRIMARY lock contention & connection pool saturation caused the request failure cascade",
     "classification": "INFERRED",
     "confidence": 0.824,
     "supportingEvidence": [
-      "ev-1788715947557-a7ce71aa",
-      "ev-1788715947559-e9bb607c",
-      "ev-1788715947559-1a4bf3cd",
-      "ev-1788715947559-1a5e84f4"
+      "ev-1788716084346-0b10ddce",
+      "ev-1788716084347-200e89b6",
+      "ev-1788716084347-26cff22b",
+      "ev-1788716084347-363bde4a"
     ],
     "contradictingEvidence": [],
     "falsifiability": [
@@ -280,9 +280,9 @@
     ]
   },
   "unknownClaim": {
-    "claimId": "claim-1788715947560-e1385e",
+    "claimId": "claim-1788716084348-2bdd72",
     "traceId": "TX-INCOMPLETE-TEST",
-    "timestamp": "2026-09-06T17:32:27.560Z",
+    "timestamp": "2026-09-06T17:34:44.348Z",
     "type": "ROOT_CAUSE_CANDIDATE",
     "statement": "Unable to determine root cause: 0 evidence envelopes received",
     "classification": "UNKNOWN",
@@ -297,7 +297,7 @@
   },
   "impact": {
     "traceId": "TX-847392-BETA-2-2",
-    "timestamp": "2026-09-06T17:32:27.560Z",
+    "timestamp": "2026-09-06T17:34:44.348Z",
     "businessOperation": "CHECKOUT_PAYMENT_CART",
     "technicalStatus": "UNHEALTHY",
     "businessOutcome": "FAILED",

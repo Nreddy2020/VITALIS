@@ -12,7 +12,10 @@
     "test:beta21": "node tests/beta_2_1_enterprise_validation.js",
     "test:enterprise": "node tests/test_full_enterprise_pipeline.js",
     "test:beta22": "node tests/beta_2_2_evidence_truth_test.js",
-    "test:beta23": "node tests/beta_2_3_correlation_truth_test.js"
+    "test:beta23": "node tests/beta_2_3_correlation_truth_test.js",
+    "test:beta25": "node tests/beta_2_5_replay_recovery_test.js",
+    "test:orchestrator": "node tests/test_truth_orchestrator.js",
+    "test:all": "node tests/verify_alpha_gates.js; node tests/test_full_enterprise_pipeline.js; node tests/beta_2_2_evidence_truth_test.js; node tests/beta_2_3_correlation_truth_test.js; node tests/beta_2_5_replay_recovery_test.js; node tests/test_truth_orchestrator.js"
   },
   "keywords": [
     "observability",

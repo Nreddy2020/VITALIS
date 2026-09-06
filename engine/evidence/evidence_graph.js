@@ -88,6 +88,13 @@ class EvidenceGraph {
     }
     return { found: false };
   }
+
+  toJSON() {
+    return {
+      nodes: Array.from(this.nodes.values()),
+      edges: [...this.edges]
+    };
+  }
 }
 
 module.exports = { EvidenceGraph };
