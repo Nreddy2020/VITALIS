@@ -5,80 +5,80 @@
     {
       "fromState": "DETECTED",
       "toState": "DETECTED",
-      "timestamp": "2026-09-06T17:23:00.497Z",
+      "timestamp": "2026-09-06T17:30:52.448Z",
       "reason": "Incident detected by RIE baseline monitor",
       "metadata": {},
-      "signature": "sig-uadyv8ys"
+      "signature": "sig-s6i7seie"
     },
     {
       "fromState": "DETECTED",
       "toState": "DIAGNOSED",
-      "timestamp": "2026-09-06T17:23:00.497Z",
+      "timestamp": "2026-09-06T17:30:52.448Z",
       "reason": "Root cause inferred: DB2 Contention & Performance Thrombosis",
       "metadata": {},
-      "signature": "sig-0q49keoh"
+      "signature": "sig-gdwgr27d"
     },
     {
       "fromState": "DIAGNOSED",
       "toState": "RECOMMENDED",
-      "timestamp": "2026-09-06T17:23:00.497Z",
+      "timestamp": "2026-09-06T17:30:52.449Z",
       "reason": "Action recommended: Terminate lock PID #99142 and scale read replica pool",
       "metadata": {},
-      "signature": "sig-yfn1uih0"
+      "signature": "sig-wmwvo519"
     },
     {
       "fromState": "RECOMMENDED",
       "toState": "RISK_ASSESSED",
-      "timestamp": "2026-09-06T17:23:00.497Z",
+      "timestamp": "2026-09-06T17:30:52.449Z",
       "reason": "Risk evaluated as LOW",
       "metadata": {
         "riskLevel": "LOW",
         "blastRadius": "Checkout API (Isolated)"
       },
-      "signature": "sig-r4b852xm"
+      "signature": "sig-p4lqpyxz"
     },
     {
       "fromState": "RISK_ASSESSED",
       "toState": "AWAITING_APPROVAL",
-      "timestamp": "2026-09-06T17:23:00.497Z",
+      "timestamp": "2026-09-06T17:30:52.449Z",
       "reason": "Awaiting cryptographic human approval from on-call engineer",
       "metadata": {},
-      "signature": "sig-vlw7241i"
+      "signature": "sig-mrgzfwav"
     },
     {
       "fromState": "AWAITING_APPROVAL",
       "toState": "APPROVED",
-      "timestamp": "2026-09-06T17:23:00.497Z",
+      "timestamp": "2026-09-06T17:30:52.449Z",
       "reason": "Approved by sre-lead@bank.corp for ticket INC-847392",
       "metadata": {
         "operatorId": "sre-lead@bank.corp",
         "ticketId": "INC-847392"
       },
-      "signature": "sig-seh8khiz"
+      "signature": "sig-4s7153af"
     },
     {
       "fromState": "APPROVED",
       "toState": "EXECUTING",
-      "timestamp": "2026-09-06T17:23:00.497Z",
+      "timestamp": "2026-09-06T17:30:52.449Z",
       "reason": "Dispatching remediation command to cluster API",
       "metadata": {},
-      "signature": "sig-y3qje1dy"
+      "signature": "sig-27tcs066"
     },
     {
       "fromState": "EXECUTING",
       "toState": "VERIFYING",
-      "timestamp": "2026-09-06T17:23:00.497Z",
+      "timestamp": "2026-09-06T17:30:52.449Z",
       "reason": "Verifying post-remediation telemetry against Golden Baseline",
       "metadata": {},
-      "signature": "sig-vapzc9n0"
+      "signature": "sig-petkjg8i"
     },
     {
       "fromState": "VERIFYING",
       "toState": "COMPLETED",
-      "timestamp": "2026-09-06T17:23:00.497Z",
+      "timestamp": "2026-09-06T17:30:52.449Z",
       "reason": "Telemetry confirmed healthy; transaction latency returned to baseline",
       "metadata": {},
-      "signature": "sig-a5eezstx"
+      "signature": "sig-w48frwaz"
     }
   ]
 }

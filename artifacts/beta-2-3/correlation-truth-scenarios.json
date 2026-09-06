@@ -1,0 +1,43 @@
+[
+  {
+    "scenario": "A_NOMINAL",
+    "status": "VERIFIED",
+    "pass": true
+  },
+  {
+    "scenario": "B_OUT_OF_ORDER",
+    "pass": true
+  },
+  {
+    "scenario": "C_ASYNC_MQ",
+    "pass": true
+  },
+  {
+    "scenario": "D_MISSING_TRACE_ID",
+    "pass": true
+  },
+  {
+    "scenario": "E_IP_COLLISION",
+    "pass": true
+  },
+  {
+    "scenario": "F_DUPLICATE_DETECTION",
+    "pass": true
+  },
+  {
+    "scenario": "G_CONFLICT_DETECTION",
+    "pass": true
+  },
+  {
+    "scenario": "H_CLOCK_SKEW",
+    "pass": true
+  },
+  {
+    "scenario": "I_EXTERNAL_TIMEOUT",
+    "pass": true
+  },
+  {
+    "scenario": "J_PARTIAL_REQUEST",
+    "pass": true
+  }
+]

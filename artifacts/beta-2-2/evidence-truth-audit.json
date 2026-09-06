@@ -2,10 +2,10 @@
   "traceId": "TX-847392-BETA-2-2",
   "envelopes": [
     {
-      "evidenceId": "ev-1788715769897-5214eac1",
+      "evidenceId": "ev-1788715947557-a7ce71aa",
       "traceId": "TX-847392-BETA-2-2",
       "requestId": "req-TX-847392-BETA-2-2",
-      "spanId": "span-ev-1788715769897-5214eac1",
+      "spanId": "span-ev-1788715947557-a7ce71aa",
       "parentSpanId": null,
       "component": {
         "type": "F5",
@@ -17,7 +17,7 @@
       "event": {
         "type": "WAF_ROUTING",
         "phase": "FORWARD",
-        "timestamp": "2026-09-06T17:29:29.897Z",
+        "timestamp": "2026-09-06T17:32:27.558Z",
         "durationMs": 18,
         "status": "SUCCESS"
       },
@@ -45,7 +45,7 @@
         "collectionMethod": "OUT_OF_BAND",
         "observed": true,
         "confidence": 1,
-        "collectionTimestamp": "2026-09-06T17:29:29.898Z"
+        "collectionTimestamp": "2026-09-06T17:32:27.559Z"
       },
       "epistemic": {
         "classification": "OBSERVED",
@@ -60,10 +60,10 @@
       }
     },
     {
-      "evidenceId": "ev-1788715769898-2129a63a",
+      "evidenceId": "ev-1788715947559-e9bb607c",
       "traceId": "TX-847392-BETA-2-2",
       "requestId": "req-TX-847392-BETA-2-2",
-      "spanId": "span-ev-1788715769898-2129a63a",
+      "spanId": "span-ev-1788715947559-e9bb607c",
       "parentSpanId": null,
       "component": {
         "type": "IHS",
@@ -75,7 +75,7 @@
       "event": {
         "type": "PLUGIN_FORWARD",
         "phase": "FORWARD",
-        "timestamp": "2026-09-06T17:29:29.898Z",
+        "timestamp": "2026-09-06T17:32:27.559Z",
         "durationMs": 21,
         "status": "SUCCESS"
       },
@@ -103,7 +103,7 @@
         "collectionMethod": "OUT_OF_BAND",
         "observed": true,
         "confidence": 1,
-        "collectionTimestamp": "2026-09-06T17:29:29.898Z"
+        "collectionTimestamp": "2026-09-06T17:32:27.559Z"
       },
       "epistemic": {
         "classification": "OBSERVED",
@@ -118,10 +118,10 @@
       }
     },
     {
-      "evidenceId": "ev-1788715769898-0d78ed0d",
+      "evidenceId": "ev-1788715947559-1a4bf3cd",
       "traceId": "TX-847392-BETA-2-2",
       "requestId": "req-TX-847392-BETA-2-2",
-      "spanId": "span-ev-1788715769898-0d78ed0d",
+      "spanId": "span-ev-1788715947559-1a4bf3cd",
       "parentSpanId": null,
       "component": {
         "type": "WEBSPHERE",
@@ -133,7 +133,7 @@
       "event": {
         "type": "SERVLET_EXECUTION",
         "phase": "FORWARD",
-        "timestamp": "2026-09-06T17:29:29.898Z",
+        "timestamp": "2026-09-06T17:32:27.559Z",
         "durationMs": 51,
         "status": "DEGRADED"
       },
@@ -161,7 +161,7 @@
         "collectionMethod": "OUT_OF_BAND",
         "observed": true,
         "confidence": 1,
-        "collectionTimestamp": "2026-09-06T17:29:29.898Z"
+        "collectionTimestamp": "2026-09-06T17:32:27.559Z"
       },
       "epistemic": {
         "classification": "OBSERVED",
@@ -176,10 +176,10 @@
       }
     },
     {
-      "evidenceId": "ev-1788715769898-a23c7a8a",
+      "evidenceId": "ev-1788715947559-1a5e84f4",
       "traceId": "TX-847392-BETA-2-2",
       "requestId": "req-TX-847392-BETA-2-2",
-      "spanId": "span-ev-1788715769898-a23c7a8a",
+      "spanId": "span-ev-1788715947559-1a5e84f4",
       "parentSpanId": null,
       "component": {
         "type": "DB2",
@@ -191,7 +191,7 @@
       "event": {
         "type": "SQL_EXECUTION",
         "phase": "FORWARD",
-        "timestamp": "2026-09-06T17:29:29.898Z",
+        "timestamp": "2026-09-06T17:32:27.559Z",
         "durationMs": 3982,
         "status": "FAILED"
       },
@@ -219,7 +219,7 @@
         "collectionMethod": "OUT_OF_BAND",
         "observed": true,
         "confidence": 1,
-        "collectionTimestamp": "2026-09-06T17:29:29.898Z"
+        "collectionTimestamp": "2026-09-06T17:32:27.559Z"
       },
       "epistemic": {
         "classification": "OBSERVED",
@@ -243,18 +243,18 @@
     "durationMs": 3960
   },
   "causalClaim": {
-    "claimId": "claim-1788715769899-70087d",
+    "claimId": "claim-1788715947560-54acff",
     "traceId": "TX-847392-BETA-2-2",
-    "timestamp": "2026-09-06T17:29:29.899Z",
+    "timestamp": "2026-09-06T17:32:27.560Z",
     "type": "ROOT_CAUSE_CANDIDATE",
     "statement": "IBM-DB2-CLUSTER-PRIMARY lock contention & connection pool saturation caused the request failure cascade",
     "classification": "INFERRED",
     "confidence": 0.824,
     "supportingEvidence": [
-      "ev-1788715769897-5214eac1",
-      "ev-1788715769898-2129a63a",
-      "ev-1788715769898-0d78ed0d",
-      "ev-1788715769898-a23c7a8a"
+      "ev-1788715947557-a7ce71aa",
+      "ev-1788715947559-e9bb607c",
+      "ev-1788715947559-1a4bf3cd",
+      "ev-1788715947559-1a5e84f4"
     ],
     "contradictingEvidence": [],
     "falsifiability": [
@@ -263,12 +263,26 @@
       "Confirm external payment gateway timeout rate returns to 0.0%",
       "Re-run identical transaction payload and confirm nominal completion within 180ms"
     ],
-    "status": "OPEN"
+    "status": "OPEN",
+    "whyNotEliminations": [
+      {
+        "component": "F5-BIG-IP-EDGE",
+        "eliminationReason": "Latency (18ms) remained within nominal baseline budget; WAF decision was PASS; no pool member health check failure."
+      },
+      {
+        "component": "IBM-HTTP-SERVER-01",
+        "eliminationReason": "Worker wait latency (21ms) normal; plugin routing (mod_was_ap22) succeeded without error."
+      },
+      {
+        "component": "WAS-CORE-APP-04",
+        "eliminationReason": "Thread pool saturation (98%) began temporally after downstream DB2 lock delay; no independent JVM crash or OutOfMemory exception."
+      }
+    ]
   },
   "unknownClaim": {
-    "claimId": "claim-1788715769899-9230ad",
+    "claimId": "claim-1788715947560-e1385e",
     "traceId": "TX-INCOMPLETE-TEST",
-    "timestamp": "2026-09-06T17:29:29.899Z",
+    "timestamp": "2026-09-06T17:32:27.560Z",
     "type": "ROOT_CAUSE_CANDIDATE",
     "statement": "Unable to determine root cause: 0 evidence envelopes received",
     "classification": "UNKNOWN",
@@ -283,7 +297,7 @@
   },
   "impact": {
     "traceId": "TX-847392-BETA-2-2",
-    "timestamp": "2026-09-06T17:29:29.900Z",
+    "timestamp": "2026-09-06T17:32:27.560Z",
     "businessOperation": "CHECKOUT_PAYMENT_CART",
     "technicalStatus": "UNHEALTHY",
     "businessOutcome": "FAILED",
