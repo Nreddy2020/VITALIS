@@ -1,0 +1,32 @@
+[
+  {
+    "id": "pymongo-4.11-server-minimum",
+    "fromPackage": "pip:pymongo",
+    "fromVersion": [{ "op": "minorMatch", "value": "4.11" }],
+    "toPackage": "server:mongodb",
+    "constraint": { "op": "gte", "value": "4.0" },
+    "claim": "PyMongo 4.11 removed MongoDB 3.6 support; server minimum is 4.0. Passing checks only this minimum.",
+    "source": {
+      "url": "https://www.mongodb.com/docs/languages/python/pymongo-driver/current/reference/upgrade/",
+      "section": "Version 4.11 Breaking Changes",
+      "recordedAt": "2026-09-10",
+      "reviewBy": "2026-12-10"
+    }
+  },
+  {
+    "id": "pgjdbc-direct-tls-server-minimum",
+    "fromPackage": "maven:org.postgresql:postgresql",
+    "fromVersion": [{ "op": "exact", "value": "42.7.7" }],
+    "when": { "vitalis.connection.sslNegotiation": "direct" },
+    "toPackage": "server:postgresql",
+    "constraint": { "op": "gte", "value": "17" },
+    "claim": "pgJDBC direct SSL negotiation requires PostgreSQL 17 or higher. Passing checks only this feature prerequisite.",
+    "source": {
+      "url": "https://jdbc.postgresql.org/documentation/use/",
+      "versionEvidenceUrl": "https://raw.githubusercontent.com/pgjdbc/pgjdbc/REL42.7.7/pgjdbc/src/main/java/org/postgresql/PGProperty.java",
+      "section": "Connection Parameters / sslNegotiation",
+      "recordedAt": "2026-09-10",
+      "reviewBy": "2026-12-10"
+    }
+  }
+]

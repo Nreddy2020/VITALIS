@@ -1,0 +1,16 @@
+{
+  "recordedAt": "2026-09-10T11:15:20Z",
+  "provenance": "OBSERVED runtime metadata; not artifact attestation",
+  "backendSourceMainSha256": "78a08a1f53ef38fb2c1246df8cb803ae77661f9727f5706bc625fbb804f177fc",
+  "packages": {
+    "fastapi": "0.104.1",
+    "pymongo": "4.6.1",
+    "motor": "3.3.2",
+    "opentelemetry-sdk": "1.44.0"
+  },
+  "databaseServer": {
+    "version": "7.0.28",
+    "gitVersion": "cfc346c59d2cc3dbc903507fc642e22e3097f362",
+    "provenance": "OBSERVED server buildInfo response on local endpoint; not request-linked server span"
+  }
+}

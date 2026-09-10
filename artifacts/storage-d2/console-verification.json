@@ -1,0 +1,10 @@
+{
+  "status": "PASS",
+  "runAt": "2026-09-10T14:20:07.642Z",
+  "checks": [
+    "Corruption shown when no trace can be loaded",
+    "Recovery preserves sources and blocks mutations",
+    "Actual quota rejection and retention hold visible",
+    "No purge button or browser errors"
+  ]
+}

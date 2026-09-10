@@ -1,0 +1,231 @@
+{
+  "suite": "stage14-learned-baseline",
+  "startedAt": "2026-09-10T17:46:06.625Z",
+  "gates": {
+    "B1_noBaselineIsUnknown": "PASS",
+    "B2_healthyTrafficReadsHealthy": "PASS",
+    "B3_latencyOutlierIsDeviation": "PASS",
+    "B4_missingHopIsDeviation": "PASS",
+    "B5_unhealthyTrafficNotLearned": "PASS",
+    "B6_identityStableUnderSlowness": "PASS",
+    "B7_baselinesAreNotShared": "PASS",
+    "B8_baselinesSurviveRestart": "PASS",
+    "B9_multiRootTraceIsNotOneRequest": "PASS"
+  },
+  "evidence": {
+    "B1": {
+      "first": {
+        "verdict": "UNKNOWN",
+        "key": "orders-api::GET /orders/{id}",
+        "baselineSource": "NONE",
+        "observations": 0,
+        "minObservations": 5,
+        "deviations": [],
+        "reason": "no baseline yet for this request — 0 of 5 healthy observations needed. A request with no baseline is not healthy and not deviating; it is unmeasured."
+      },
+      "second": {
+        "verdict": "UNKNOWN",
+        "key": "orders-api::GET /orders/{id}",
+        "baselineSource": "NONE",
+        "observations": 1,
+        "minObservations": 5,
+        "deviations": [],
+        "reason": "no baseline yet for this request — 1 of 5 healthy observations needed. A request with no baseline is not healthy and not deviating; it is unmeasured."
+      }
+    },
+    "B2": {
+      "verdict": "HEALTHY",
+      "key": "orders-api::GET /orders/{id}",
+      "baselineSource": "LEARNED",
+      "observations": 6,
+      "observedTotalMs": 91,
+      "deviations": [],
+      "baseline": {
+        "key": "orders-api::GET /orders/{id}",
+        "observations": 6,
+        "p50": 90,
+        "p95": 93,
+        "minMs": 88,
+        "maxMs": 93,
+        "structure": [
+          "orders-api::GET /orders/{id}",
+          "orders-api::verify-token",
+          "postgres::SELECT orders"
+        ],
+        "structureAgreement": 1,
+        "hops": {
+          "orders-api::GET /orders/{id}": {
+            "observations": 6,
+            "p50": 60,
+            "p95": 60
+          },
+          "orders-api::verify-token": {
+            "observations": 6,
+            "p50": 10,
+            "p95": 10
+          },
+          "postgres::SELECT orders": {
+            "observations": 6,
+            "p50": 20,
+            "p95": 23
+          }
+        }
+      }
+    },
+    "B3": {
+      "verdict": "DEVIATION",
+      "key": "orders-api::GET /orders/{id}",
+      "baselineSource": "LEARNED",
+      "observations": 8,
+      "observedTotalMs": 2870,
+      "deviations": [
+        {
+          "type": "LATENCY",
+          "detail": "total 2870ms exceeds the deviation threshold of 140ms",
+          "evidence": "p50 90ms, p95 90ms over 8 healthy observations; threshold = max(p95 x 1.5, p95 + 50ms)"
+        }
+      ],
+      "baseline": {
+        "key": "orders-api::GET /orders/{id}",
+        "observations": 8,
+        "p50": 90,
+        "p95": 90,
+        "minMs": 90,
+        "maxMs": 90,
+        "structure": [
+          "orders-api::GET /orders/{id}",
+          "orders-api::verify-token",
+          "postgres::SELECT orders"
+        ],
+        "structureAgreement": 1,
+        "hops": {
+          "orders-api::GET /orders/{id}": {
+            "observations": 8,
+            "p50": 60,
+            "p95": 60
+          },
+          "orders-api::verify-token": {
+            "observations": 8,
+            "p50": 10,
+            "p95": 10
+          },
+          "postgres::SELECT orders": {
+            "observations": 8,
+            "p50": 20,
+            "p95": 20
+          }
+        }
+      }
+    },
+    "B4": {
+      "verdict": "DEVIATION",
+      "key": "orders-api::GET /orders/{id}",
+      "baselineSource": "LEARNED",
+      "observations": 8,
+      "observedTotalMs": 70,
+      "deviations": [
+        {
+          "type": "STRUCTURE_MISSING",
+          "detail": "hop normally present is absent: postgres::SELECT orders",
+          "evidence": "seen in 100% of 8 healthy observations"
+        }
+      ],
+      "baseline": {
+        "key": "orders-api::GET /orders/{id}",
+        "observations": 8,
+        "p50": 90,
+        "p95": 90,
+        "minMs": 90,
+        "maxMs": 90,
+        "structure": [
+          "orders-api::GET /orders/{id}",
+          "orders-api::verify-token",
+          "postgres::SELECT orders"
+        ],
+        "structureAgreement": 1,
+        "hops": {
+          "orders-api::GET /orders/{id}": {
+            "observations": 8,
+            "p50": 60,
+            "p95": 60
+          },
+          "orders-api::verify-token": {
+            "observations": 8,
+            "p50": 10,
+            "p95": 10
+          },
+          "postgres::SELECT orders": {
+            "observations": 8,
+            "p50": 20,
+            "p95": 20
+          }
+        }
+      }
+    },
+    "B5": {
+      "healthyP95": 90,
+      "after": {
+        "key": "orders-api::GET /orders/{id}",
+        "observations": 8,
+        "p50": 90,
+        "p95": 90,
+        "minMs": 90,
+        "maxMs": 90,
+        "structure": [
+          "orders-api::GET /orders/{id}",
+          "orders-api::verify-token",
+          "postgres::SELECT orders"
+        ],
+        "structureAgreement": 1,
+        "hops": {
+          "orders-api::GET /orders/{id}": {
+            "observations": 8,
+            "p50": 60,
+            "p95": 60
+          },
+          "orders-api::verify-token": {
+            "observations": 8,
+            "p50": 10,
+            "p95": 10
+          },
+          "postgres::SELECT orders": {
+            "observations": 8,
+            "p50": 20,
+            "p95": 20
+          }
+        }
+      },
+      "stillCaught": "DEVIATION"
+    },
+    "B6": {
+      "normal": "orders-api::GET /orders/{id}",
+      "slow": "orders-api::GET /orders/{id}"
+    },
+    "B7": {
+      "verdict": "UNKNOWN",
+      "key": "billing-api::POST /invoices",
+      "baselineSource": "NONE",
+      "observations": 0,
+      "minObservations": 5,
+      "deviations": [],
+      "reason": "no baseline yet for this request — 0 of 5 healthy observations needed. A request with no baseline is not healthy and not deviating; it is unmeasured."
+    },
+    "B8": {
+      "stats": {
+        "tracesConsidered": 7,
+        "learned": 7,
+        "keys": 1
+      },
+      "verdict": "DEVIATION"
+    },
+    "B9": {
+      "shape": {
+        "spanCount": 36,
+        "rootCount": 18
+      },
+      "learned": null,
+      "reason": "this trace id carries 18 independent request roots across 36 spans — it is a batch, not a request, so no request-level verdict is possible. Every root shares the parent span NEVER_INGESTED, which was never ingested: something in the sender holds an OpenTelemetry context open, so each request is adopted as its child. Fix it at the sender; VITALIS will not guess where one request ends and the next begins."
+    }
+  },
+  "finishedAt": "2026-09-10T17:46:06.633Z"
+}

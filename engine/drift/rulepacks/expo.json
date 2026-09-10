@@ -1,0 +1,416 @@
+{
+  "id": "expo",
+  "displayName": "Expo / React Native",
+  "ecosystem": "npm",
+  "_readme": "Compatibility knowledge as DATA. Adding a framework needs a file like this, not a code change. Every rule must carry a source; the loader refuses unsourced rules.",
+  "sources": {
+    "expoVersionTable": {
+      "url": "https://docs.expo.dev/versions/latest/",
+      "title": "Expo SDK reference — SDK / React Native / React / Node version table",
+      "recordedAt": "2026-09-09"
+    },
+    "expoSdk53Changelog": {
+      "url": "https://expo.dev/changelog/sdk-53",
+      "title": "Expo SDK 53 changelog",
+      "recordedAt": "2026-09-09"
+    },
+    "expoNewArchitecture": {
+      "url": "https://docs.expo.dev/guides/new-architecture/",
+      "title": "Expo — React Native New Architecture",
+      "recordedAt": "2026-09-09"
+    },
+    "npmExpoRandom": {
+      "url": "https://registry.npmjs.org/expo-random",
+      "title": "npm registry metadata for expo-random (deprecated field)",
+      "recordedAt": "2026-09-09"
+    }
+  },
+  "facts": [
+    {
+      "name": "expo.newArchEnabled",
+      "file": "app.json",
+      "path": [
+        "expo",
+        "newArchEnabled"
+      ]
+    }
+  ],
+  "rules": [
+    {
+      "id": "expo-sdk-57-react-native",
+      "description": "Expo SDK 57 targets react-native 0.86",
+      "when": {
+        "package": "expo",
+        "constraint": {
+          "op": "majorEquals",
+          "value": 57
+        }
+      },
+      "require": {
+        "package": "react-native",
+        "constraint": {
+          "op": "minorMatch",
+          "value": "0.86"
+        }
+      },
+      "severity": "HIGH",
+      "source": "expoVersionTable"
+    },
+    {
+      "id": "expo-sdk-57-react",
+      "description": "Expo SDK 57 targets react 19.2.3",
+      "when": {
+        "package": "expo",
+        "constraint": {
+          "op": "majorEquals",
+          "value": 57
+        }
+      },
+      "require": {
+        "package": "react",
+        "constraint": {
+          "op": "exact",
+          "value": "19.2.3"
+        }
+      },
+      "severity": "HIGH",
+      "source": "expoVersionTable"
+    },
+    {
+      "id": "expo-sdk-57-react-native-web",
+      "description": "Expo SDK 57 targets react-native-web 0.21.0",
+      "when": {
+        "package": "expo",
+        "constraint": {
+          "op": "majorEquals",
+          "value": 57
+        }
+      },
+      "require": {
+        "package": "react-native-web",
+        "constraint": {
+          "op": "minorMatch",
+          "value": "0.21.0"
+        }
+      },
+      "severity": "LOW",
+      "source": "expoVersionTable"
+    },
+    {
+      "id": "expo-sdk-57-node",
+      "description": "Expo SDK 57 requires Node >= 22.13.0",
+      "when": {
+        "package": "expo",
+        "constraint": {
+          "op": "majorEquals",
+          "value": 57
+        }
+      },
+      "require": {
+        "fact": "runtime.node",
+        "constraint": {
+          "op": "gte",
+          "value": "22.13.0"
+        }
+      },
+      "severity": "MEDIUM",
+      "source": "expoVersionTable"
+    },
+    {
+      "id": "expo-sdk-56-react-native",
+      "description": "Expo SDK 56 targets react-native 0.85",
+      "when": {
+        "package": "expo",
+        "constraint": {
+          "op": "majorEquals",
+          "value": 56
+        }
+      },
+      "require": {
+        "package": "react-native",
+        "constraint": {
+          "op": "minorMatch",
+          "value": "0.85"
+        }
+      },
+      "severity": "HIGH",
+      "source": "expoVersionTable"
+    },
+    {
+      "id": "expo-sdk-56-react",
+      "description": "Expo SDK 56 targets react 19.2.3",
+      "when": {
+        "package": "expo",
+        "constraint": {
+          "op": "majorEquals",
+          "value": 56
+        }
+      },
+      "require": {
+        "package": "react",
+        "constraint": {
+          "op": "exact",
+          "value": "19.2.3"
+        }
+      },
+      "severity": "HIGH",
+      "source": "expoVersionTable"
+    },
+    {
+      "id": "expo-sdk-56-react-native-web",
+      "description": "Expo SDK 56 targets react-native-web 0.21.0",
+      "when": {
+        "package": "expo",
+        "constraint": {
+          "op": "majorEquals",
+          "value": 56
+        }
+      },
+      "require": {
+        "package": "react-native-web",
+        "constraint": {
+          "op": "minorMatch",
+          "value": "0.21.0"
+        }
+      },
+      "severity": "LOW",
+      "source": "expoVersionTable"
+    },
+    {
+      "id": "expo-sdk-56-node",
+      "description": "Expo SDK 56 requires Node >= 20.19.0",
+      "when": {
+        "package": "expo",
+        "constraint": {
+          "op": "majorEquals",
+          "value": 56
+        }
+      },
+      "require": {
+        "fact": "runtime.node",
+        "constraint": {
+          "op": "gte",
+          "value": "20.19.0"
+        }
+      },
+      "severity": "MEDIUM",
+      "source": "expoVersionTable"
+    },
+    {
+      "id": "expo-sdk-55-react-native",
+      "description": "Expo SDK 55 targets react-native 0.83",
+      "when": {
+        "package": "expo",
+        "constraint": {
+          "op": "majorEquals",
+          "value": 55
+        }
+      },
+      "require": {
+        "package": "react-native",
+        "constraint": {
+          "op": "minorMatch",
+          "value": "0.83"
+        }
+      },
+      "severity": "HIGH",
+      "source": "expoVersionTable"
+    },
+    {
+      "id": "expo-sdk-55-react",
+      "description": "Expo SDK 55 targets react 19.2.0",
+      "when": {
+        "package": "expo",
+        "constraint": {
+          "op": "majorEquals",
+          "value": 55
+        }
+      },
+      "require": {
+        "package": "react",
+        "constraint": {
+          "op": "exact",
+          "value": "19.2.0"
+        }
+      },
+      "severity": "HIGH",
+      "source": "expoVersionTable"
+    },
+    {
+      "id": "expo-sdk-55-react-native-web",
+      "description": "Expo SDK 55 targets react-native-web 0.21.0",
+      "when": {
+        "package": "expo",
+        "constraint": {
+          "op": "majorEquals",
+          "value": 55
+        }
+      },
+      "require": {
+        "package": "react-native-web",
+        "constraint": {
+          "op": "minorMatch",
+          "value": "0.21.0"
+        }
+      },
+      "severity": "LOW",
+      "source": "expoVersionTable"
+    },
+    {
+      "id": "expo-sdk-55-node",
+      "description": "Expo SDK 55 requires Node >= 20.19.0",
+      "when": {
+        "package": "expo",
+        "constraint": {
+          "op": "majorEquals",
+          "value": 55
+        }
+      },
+      "require": {
+        "fact": "runtime.node",
+        "constraint": {
+          "op": "gte",
+          "value": "20.19.0"
+        }
+      },
+      "severity": "MEDIUM",
+      "source": "expoVersionTable"
+    },
+    {
+      "id": "expo-sdk-54-react-native",
+      "description": "Expo SDK 54 targets react-native 0.81",
+      "when": {
+        "package": "expo",
+        "constraint": {
+          "op": "majorEquals",
+          "value": 54
+        }
+      },
+      "require": {
+        "package": "react-native",
+        "constraint": {
+          "op": "minorMatch",
+          "value": "0.81"
+        }
+      },
+      "severity": "HIGH",
+      "source": "expoVersionTable"
+    },
+    {
+      "id": "expo-sdk-54-react",
+      "description": "Expo SDK 54 targets react 19.1.0",
+      "when": {
+        "package": "expo",
+        "constraint": {
+          "op": "majorEquals",
+          "value": 54
+        }
+      },
+      "require": {
+        "package": "react",
+        "constraint": {
+          "op": "exact",
+          "value": "19.1.0"
+        }
+      },
+      "severity": "HIGH",
+      "source": "expoVersionTable"
+    },
+    {
+      "id": "expo-sdk-54-react-native-web",
+      "description": "Expo SDK 54 targets react-native-web 0.21.0",
+      "when": {
+        "package": "expo",
+        "constraint": {
+          "op": "majorEquals",
+          "value": 54
+        }
+      },
+      "require": {
+        "package": "react-native-web",
+        "constraint": {
+          "op": "minorMatch",
+          "value": "0.21.0"
+        }
+      },
+      "severity": "LOW",
+      "source": "expoVersionTable"
+    },
+    {
+      "id": "expo-sdk-54-node",
+      "description": "Expo SDK 54 requires Node >= 20.19.0",
+      "when": {
+        "package": "expo",
+        "constraint": {
+          "op": "majorEquals",
+          "value": 54
+        }
+      },
+      "require": {
+        "fact": "runtime.node",
+        "constraint": {
+          "op": "gte",
+          "value": "20.19.0"
+        }
+      },
+      "severity": "MEDIUM",
+      "source": "expoVersionTable"
+    },
+    {
+      "id": "expo-sdk-53-react-native",
+      "description": "Expo SDK 53 targets react-native 0.79",
+      "when": {
+        "package": "expo",
+        "constraint": {
+          "op": "majorEquals",
+          "value": 53
+        }
+      },
+      "require": {
+        "package": "react-native",
+        "constraint": {
+          "op": "minorMatch",
+          "value": "0.79"
+        }
+      },
+      "severity": "HIGH",
+      "source": "expoSdk53Changelog"
+    },
+    {
+      "id": "expo-sdk-55-plus-new-architecture-mandatory",
+      "description": "From Expo SDK 55 the New Architecture cannot be disabled; the legacy architecture is supported only in SDK 54 and earlier",
+      "when": {
+        "package": "expo",
+        "constraint": {
+          "op": "gte",
+          "value": "55.0.0"
+        }
+      },
+      "require": {
+        "fact": "expo.newArchEnabled",
+        "constraint": {
+          "op": "boolEquals",
+          "value": true
+        }
+      },
+      "severity": "HIGH",
+      "source": "expoNewArchitecture"
+    },
+    {
+      "id": "deprecated-expo-random",
+      "description": "expo-random is deprecated by its publisher in favour of expo-crypto, which provides the same functionality",
+      "when": {
+        "package": "expo-random",
+        "constraint": {
+          "op": "gte",
+          "value": "0.0.0"
+        }
+      },
+      "require": {
+        "absent": "expo-random"
+      },
+      "severity": "MEDIUM",
+      "source": "npmExpoRandom"
+    }
+  ]
+}

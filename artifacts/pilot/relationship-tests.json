@@ -1,0 +1,614 @@
+{
+  "suite": "relationship-pilot",
+  "runAt": "2026-09-10T17:46:06.782Z",
+  "gates": [
+    {
+      "name": "Python / MongoDB source-backed incompatibility, no causal claim",
+      "status": "PASS"
+    },
+    {
+      "name": "Java / PostgreSQL feature prerequisite without engine changes",
+      "status": "PASS"
+    },
+    {
+      "name": "Satisfied minimum is not whole-request compatibility",
+      "status": "PASS"
+    },
+    {
+      "name": "missing artifact identity despite version equality",
+      "status": "PASS"
+    },
+    {
+      "name": "wrong deployed artifact",
+      "status": "PASS"
+    },
+    {
+      "name": "source versus deployment mismatch",
+      "status": "PASS"
+    },
+    {
+      "name": "missing resolved package version",
+      "status": "PASS"
+    },
+    {
+      "name": "range is not resolved evidence",
+      "status": "PASS"
+    },
+    {
+      "name": "prerelease fails closed",
+      "status": "PASS"
+    },
+    {
+      "name": "ambiguous build inventory",
+      "status": "PASS"
+    },
+    {
+      "name": "unattributed inventory",
+      "status": "PASS"
+    },
+    {
+      "name": "duplicate package evidence",
+      "status": "PASS"
+    },
+    {
+      "name": "missing peer inventory",
+      "status": "PASS"
+    },
+    {
+      "name": "missing source inventory",
+      "status": "PASS"
+    },
+    {
+      "name": "Unrelated off-path incompatibilities do not contaminate verdict",
+      "status": "PASS"
+    },
+    {
+      "name": "Co-presence and internal parentage do not infer network edges",
+      "status": "PASS"
+    },
+    {
+      "name": "missing parent cannot establish request truth",
+      "status": "PASS"
+    },
+    {
+      "name": "multiple roots cannot establish request truth",
+      "status": "PASS"
+    },
+    {
+      "name": "duplicate span cannot establish request truth",
+      "status": "PASS"
+    },
+    {
+      "name": "cycle cannot establish request truth",
+      "status": "PASS"
+    },
+    {
+      "name": "Invalid timestamps cannot establish request truth",
+      "status": "PASS"
+    },
+    {
+      "name": "Invalid trace ID cannot establish request truth",
+      "status": "PASS"
+    },
+    {
+      "name": "Unobserved peer is unchecked",
+      "status": "PASS"
+    },
+    {
+      "name": "Empty or absent trace is unknown",
+      "status": "PASS"
+    },
+    {
+      "name": "Missing connection setting cannot assert feature incompatibility",
+      "status": "PASS"
+    },
+    {
+      "name": "Installed driver is not proof it made this call",
+      "status": "PASS"
+    },
+    {
+      "name": "Different connection setting is outside rule scope",
+      "status": "PASS"
+    },
+    {
+      "name": "Future and stale rules cannot pass or violate",
+      "status": "PASS"
+    },
+    {
+      "name": "Uncovered source versions do not inherit rules",
+      "status": "PASS"
+    },
+    {
+      "name": "Unsourced or unsupported rules rejected",
+      "status": "PASS"
+    },
+    {
+      "name": "Expected but unobserved boundary is explicit UNKNOWN, never creates edge",
+      "status": "PASS"
+    },
+    {
+      "name": "Reproducible hashes and findings",
+      "status": "PASS"
+    },
+    {
+      "name": "Live HTTP OTLP ingestion retains kinds/digests and API boundary evidence",
+      "status": "PASS"
+    },
+    {
+      "name": "Malformed inventory fails closed in API",
+      "status": "PASS"
+    }
+  ],
+  "python": {
+    "schemaVersion": 1,
+    "traceId": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+    "evaluatedAt": "2026-09-10T12:00:00.000Z",
+    "inputHash": "f73d7066b622ee145264847c03f7ae86dcdf83442443acd413825ea71c02c97e",
+    "ruleSetHash": "3ef4642420c0415449adb9f111580cd7c1d6574e1a7a6add614beb67a00d2eba",
+    "fixture": true,
+    "traceShape": {
+      "state": "OBSERVED_TREE",
+      "reasons": [],
+      "roots": [
+        "1111111111111111"
+      ]
+    },
+    "deployments": [
+      {
+        "spanId": "1111111111111111",
+        "kind": 2,
+        "service": "python-api",
+        "deployed": {
+          "version": "1.0.0",
+          "artifactDigest": "sha256:aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "provenance": "OBSERVED",
+          "basis": "Sender-reported resource attributes; not independently attested"
+        },
+        "declared": {
+          "version": "1.0.0",
+          "declaredBy": "pilot fixture generator",
+          "evidence": "tests/fixtures/relationship_pilot.js"
+        },
+        "resolved": [
+          {
+            "name": "pip:pymongo",
+            "declared": "4.11.0",
+            "resolved": "4.11.0"
+          }
+        ],
+        "inventoryHash": "7271328457c0e80478b808d8881d9b1579007575a8835b78f691de11c1d811fd",
+        "state": "CORRELATED",
+        "reason": "Exact digest joined to attributed inventory; collector and inventory are trusted inputs, not cryptographic attestation"
+      },
+      {
+        "spanId": "2222222222222222",
+        "parentSpanId": "1111111111111111",
+        "kind": 3,
+        "service": "python-api",
+        "deployed": {
+          "version": "1.0.0",
+          "artifactDigest": "sha256:aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "provenance": "OBSERVED",
+          "basis": "Sender-reported resource attributes; not independently attested"
+        },
+        "declared": {
+          "version": "1.0.0",
+          "declaredBy": "pilot fixture generator",
+          "evidence": "tests/fixtures/relationship_pilot.js"
+        },
+        "resolved": [
+          {
+            "name": "pip:pymongo",
+            "declared": "4.11.0",
+            "resolved": "4.11.0"
+          }
+        ],
+        "inventoryHash": "7271328457c0e80478b808d8881d9b1579007575a8835b78f691de11c1d811fd",
+        "state": "CORRELATED",
+        "reason": "Exact digest joined to attributed inventory; collector and inventory are trusted inputs, not cryptographic attestation"
+      },
+      {
+        "spanId": "3333333333333333",
+        "parentSpanId": "2222222222222222",
+        "kind": 2,
+        "service": "mongo-db",
+        "deployed": {
+          "version": "1.0.0",
+          "artifactDigest": "sha256:bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+          "provenance": "OBSERVED",
+          "basis": "Sender-reported resource attributes; not independently attested"
+        },
+        "declared": {
+          "version": "1.0.0",
+          "declaredBy": "pilot fixture generator",
+          "evidence": "tests/fixtures/relationship_pilot.js"
+        },
+        "resolved": [
+          {
+            "name": "server:mongodb",
+            "declared": "3.6.23",
+            "resolved": "3.6.23"
+          }
+        ],
+        "inventoryHash": "3338944030ebeb629b4e8b0afd1232e35a6ed329c72ea51b7d234a14eb4d83a3",
+        "state": "CORRELATED",
+        "reason": "Exact digest joined to attributed inventory; collector and inventory are trusted inputs, not cryptographic attestation"
+      }
+    ],
+    "relationships": [
+      {
+        "from": "python-api",
+        "to": "mongo-db",
+        "clientSpanId": "2222222222222222",
+        "serverSpanId": "3333333333333333",
+        "observed": "SERVER parentSpanId equals CLIENT spanId, across distinct services",
+        "provenance": "OBSERVED",
+        "status": "VIOLATED",
+        "findings": [
+          {
+            "ruleId": "pymongo-4.11-server-minimum",
+            "claim": "PyMongo 4.11 removed MongoDB 3.6 support; server minimum is 4.0. Passing checks only this minimum.",
+            "source": {
+              "url": "https://www.mongodb.com/docs/languages/python/pymongo-driver/current/reference/upgrade/",
+              "section": "Version 4.11 Breaking Changes",
+              "recordedAt": "2026-09-10",
+              "reviewBy": "2026-12-10"
+            },
+            "status": "VIOLATED",
+            "provenance": "INFERRED",
+            "reason": "3.6.23 is not gte 4.0",
+            "versions": {
+              "from": [
+                {
+                  "name": "pip:pymongo",
+                  "declared": "4.11.0",
+                  "resolved": "4.11.0"
+                }
+              ],
+              "to": [
+                {
+                  "name": "server:mongodb",
+                  "declared": "3.6.23",
+                  "resolved": "3.6.23"
+                }
+              ]
+            },
+            "conditions": {},
+            "wouldChangeVerdict": [
+              "A corrected deployment inventory, interaction observation, or revised vendor prerequisite would trigger re-evaluation"
+            ]
+          }
+        ],
+        "causalClaim": "NONE: a prerequisite violation is not proof of the cause of this request outcome"
+      }
+    ],
+    "unchecked": [],
+    "expectedCoverage": [],
+    "status": "VIOLATED",
+    "coverage": {
+      "observedBoundaries": 1,
+      "checkedBoundaries": 1,
+      "unknownBoundaries": 0,
+      "uncheckedInteractions": 0
+    },
+    "limitation": "Only observed CLIENT -> SERVER boundaries and listed prerequisites are evaluated. Missing spans, async links, uninstrumented peers, unlisted rules and runtime behavior remain UNKNOWN. No whole-request compatibility or causal assurance."
+  },
+  "java": {
+    "schemaVersion": 1,
+    "traceId": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+    "evaluatedAt": "2026-09-10T12:00:00.000Z",
+    "inputHash": "f1b56771baef4ee1d8bf4c163806bb88519f72a9e25a8aa8f77dbb4bfe8c4227",
+    "ruleSetHash": "3ef4642420c0415449adb9f111580cd7c1d6574e1a7a6add614beb67a00d2eba",
+    "fixture": true,
+    "traceShape": {
+      "state": "OBSERVED_TREE",
+      "reasons": [],
+      "roots": [
+        "1111111111111111"
+      ]
+    },
+    "deployments": [
+      {
+        "spanId": "1111111111111111",
+        "kind": 2,
+        "service": "java-api",
+        "deployed": {
+          "version": "1.0.0",
+          "artifactDigest": "sha256:aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "provenance": "OBSERVED",
+          "basis": "Sender-reported resource attributes; not independently attested"
+        },
+        "declared": {
+          "version": "1.0.0",
+          "declaredBy": "pilot fixture generator",
+          "evidence": "tests/fixtures/relationship_pilot.js"
+        },
+        "resolved": [
+          {
+            "name": "maven:org.postgresql:postgresql",
+            "declared": "42.7.7",
+            "resolved": "42.7.7"
+          }
+        ],
+        "inventoryHash": "ed9261642da49483616a2c983b8075a7426c08dc6e6ad23ba30a1f645638ac49",
+        "state": "CORRELATED",
+        "reason": "Exact digest joined to attributed inventory; collector and inventory are trusted inputs, not cryptographic attestation"
+      },
+      {
+        "spanId": "2222222222222222",
+        "parentSpanId": "1111111111111111",
+        "kind": 3,
+        "service": "java-api",
+        "deployed": {
+          "version": "1.0.0",
+          "artifactDigest": "sha256:aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "provenance": "OBSERVED",
+          "basis": "Sender-reported resource attributes; not independently attested"
+        },
+        "declared": {
+          "version": "1.0.0",
+          "declaredBy": "pilot fixture generator",
+          "evidence": "tests/fixtures/relationship_pilot.js"
+        },
+        "resolved": [
+          {
+            "name": "maven:org.postgresql:postgresql",
+            "declared": "42.7.7",
+            "resolved": "42.7.7"
+          }
+        ],
+        "inventoryHash": "ed9261642da49483616a2c983b8075a7426c08dc6e6ad23ba30a1f645638ac49",
+        "state": "CORRELATED",
+        "reason": "Exact digest joined to attributed inventory; collector and inventory are trusted inputs, not cryptographic attestation"
+      },
+      {
+        "spanId": "3333333333333333",
+        "parentSpanId": "2222222222222222",
+        "kind": 2,
+        "service": "postgres-db",
+        "deployed": {
+          "version": "1.0.0",
+          "artifactDigest": "sha256:bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+          "provenance": "OBSERVED",
+          "basis": "Sender-reported resource attributes; not independently attested"
+        },
+        "declared": {
+          "version": "1.0.0",
+          "declaredBy": "pilot fixture generator",
+          "evidence": "tests/fixtures/relationship_pilot.js"
+        },
+        "resolved": [
+          {
+            "name": "server:postgresql",
+            "declared": "16.4",
+            "resolved": "16.4"
+          }
+        ],
+        "inventoryHash": "8d377db305222f3252eebd21abf774adb7ac30b6c203724ae24a59c488f1bcce",
+        "state": "CORRELATED",
+        "reason": "Exact digest joined to attributed inventory; collector and inventory are trusted inputs, not cryptographic attestation"
+      }
+    ],
+    "relationships": [
+      {
+        "from": "java-api",
+        "to": "postgres-db",
+        "clientSpanId": "2222222222222222",
+        "serverSpanId": "3333333333333333",
+        "observed": "SERVER parentSpanId equals CLIENT spanId, across distinct services",
+        "provenance": "OBSERVED",
+        "status": "VIOLATED",
+        "findings": [
+          {
+            "ruleId": "pgjdbc-direct-tls-server-minimum",
+            "claim": "pgJDBC direct SSL negotiation requires PostgreSQL 17 or higher. Passing checks only this feature prerequisite.",
+            "source": {
+              "url": "https://jdbc.postgresql.org/documentation/use/",
+              "versionEvidenceUrl": "https://raw.githubusercontent.com/pgjdbc/pgjdbc/REL42.7.7/pgjdbc/src/main/java/org/postgresql/PGProperty.java",
+              "section": "Connection Parameters / sslNegotiation",
+              "recordedAt": "2026-09-10",
+              "reviewBy": "2026-12-10"
+            },
+            "status": "VIOLATED",
+            "provenance": "INFERRED",
+            "reason": "16.4 is not gte 17",
+            "versions": {
+              "from": [
+                {
+                  "name": "maven:org.postgresql:postgresql",
+                  "declared": "42.7.7",
+                  "resolved": "42.7.7"
+                }
+              ],
+              "to": [
+                {
+                  "name": "server:postgresql",
+                  "declared": "16.4",
+                  "resolved": "16.4"
+                }
+              ]
+            },
+            "conditions": {
+              "vitalis.connection.sslNegotiation": "direct"
+            },
+            "wouldChangeVerdict": [
+              "A corrected deployment inventory, interaction observation, or revised vendor prerequisite would trigger re-evaluation"
+            ]
+          }
+        ],
+        "causalClaim": "NONE: a prerequisite violation is not proof of the cause of this request outcome"
+      }
+    ],
+    "unchecked": [],
+    "expectedCoverage": [],
+    "status": "VIOLATED",
+    "coverage": {
+      "observedBoundaries": 1,
+      "checkedBoundaries": 1,
+      "unknownBoundaries": 0,
+      "uncheckedInteractions": 0
+    },
+    "limitation": "Only observed CLIENT -> SERVER boundaries and listed prerequisites are evaluated. Missing spans, async links, uninstrumented peers, unlisted rules and runtime behavior remain UNKNOWN. No whole-request compatibility or causal assurance."
+  },
+  "http": {
+    "schemaVersion": 1,
+    "traceId": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+    "evaluatedAt": "2026-09-10T17:46:06.869Z",
+    "inputHash": "2dd7a241a4f5bf07899b79dc42b664be88d342d43f9361eae191a35fa9c8cb86",
+    "ruleSetHash": "3ef4642420c0415449adb9f111580cd7c1d6574e1a7a6add614beb67a00d2eba",
+    "fixture": true,
+    "traceShape": {
+      "state": "OBSERVED_TREE",
+      "reasons": [],
+      "roots": [
+        "1111111111111111"
+      ]
+    },
+    "deployments": [
+      {
+        "spanId": "1111111111111111",
+        "kind": 2,
+        "operation": "CONTROLLED FIXTURE",
+        "observedAt": 1789000000000,
+        "service": "python-api",
+        "deployed": {
+          "version": "1.0.0",
+          "artifactDigest": "sha256:aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "provenance": "OBSERVED",
+          "basis": "Sender-reported resource attributes; not independently attested"
+        },
+        "declared": {
+          "version": "1.0.0",
+          "declaredBy": "pilot fixture generator",
+          "evidence": "tests/fixtures/relationship_pilot.js"
+        },
+        "resolved": [
+          {
+            "name": "pip:pymongo",
+            "declared": "4.11.0",
+            "resolved": "4.11.0"
+          }
+        ],
+        "inventoryHash": "7271328457c0e80478b808d8881d9b1579007575a8835b78f691de11c1d811fd",
+        "state": "CORRELATED",
+        "reason": "Exact digest joined to attributed inventory; collector and inventory are trusted inputs, not cryptographic attestation"
+      },
+      {
+        "spanId": "2222222222222222",
+        "parentSpanId": "1111111111111111",
+        "kind": 3,
+        "operation": "CONTROLLED FIXTURE",
+        "observedAt": 1789000000000,
+        "service": "python-api",
+        "deployed": {
+          "version": "1.0.0",
+          "artifactDigest": "sha256:aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "provenance": "OBSERVED",
+          "basis": "Sender-reported resource attributes; not independently attested"
+        },
+        "declared": {
+          "version": "1.0.0",
+          "declaredBy": "pilot fixture generator",
+          "evidence": "tests/fixtures/relationship_pilot.js"
+        },
+        "resolved": [
+          {
+            "name": "pip:pymongo",
+            "declared": "4.11.0",
+            "resolved": "4.11.0"
+          }
+        ],
+        "inventoryHash": "7271328457c0e80478b808d8881d9b1579007575a8835b78f691de11c1d811fd",
+        "state": "CORRELATED",
+        "reason": "Exact digest joined to attributed inventory; collector and inventory are trusted inputs, not cryptographic attestation"
+      },
+      {
+        "spanId": "3333333333333333",
+        "parentSpanId": "2222222222222222",
+        "kind": 2,
+        "operation": "CONTROLLED FIXTURE",
+        "observedAt": 1789000000000,
+        "service": "mongo-db",
+        "deployed": {
+          "version": "1.0.0",
+          "artifactDigest": "sha256:bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+          "provenance": "OBSERVED",
+          "basis": "Sender-reported resource attributes; not independently attested"
+        },
+        "declared": {
+          "version": "1.0.0",
+          "declaredBy": "pilot fixture generator",
+          "evidence": "tests/fixtures/relationship_pilot.js"
+        },
+        "resolved": [
+          {
+            "name": "server:mongodb",
+            "declared": "3.6.23",
+            "resolved": "3.6.23"
+          }
+        ],
+        "inventoryHash": "3338944030ebeb629b4e8b0afd1232e35a6ed329c72ea51b7d234a14eb4d83a3",
+        "state": "CORRELATED",
+        "reason": "Exact digest joined to attributed inventory; collector and inventory are trusted inputs, not cryptographic attestation"
+      }
+    ],
+    "relationships": [
+      {
+        "from": "python-api",
+        "to": "mongo-db",
+        "clientSpanId": "2222222222222222",
+        "serverSpanId": "3333333333333333",
+        "observed": "SERVER parentSpanId equals CLIENT spanId, across distinct services",
+        "provenance": "OBSERVED",
+        "status": "VIOLATED",
+        "findings": [
+          {
+            "ruleId": "pymongo-4.11-server-minimum",
+            "claim": "PyMongo 4.11 removed MongoDB 3.6 support; server minimum is 4.0. Passing checks only this minimum.",
+            "source": {
+              "url": "https://www.mongodb.com/docs/languages/python/pymongo-driver/current/reference/upgrade/",
+              "section": "Version 4.11 Breaking Changes",
+              "recordedAt": "2026-09-10",
+              "reviewBy": "2026-12-10"
+            },
+            "status": "VIOLATED",
+            "provenance": "INFERRED",
+            "reason": "3.6.23 is not gte 4.0",
+            "versions": {
+              "from": [
+                {
+                  "name": "pip:pymongo",
+                  "declared": "4.11.0",
+                  "resolved": "4.11.0"
+                }
+              ],
+              "to": [
+                {
+                  "name": "server:mongodb",
+                  "declared": "3.6.23",
+                  "resolved": "3.6.23"
+                }
+              ]
+            },
+            "conditions": {},
+            "wouldChangeVerdict": [
+              "A corrected deployment inventory, interaction observation, or revised vendor prerequisite would trigger re-evaluation"
+            ]
+          }
+        ],
+        "causalClaim": "NONE: a prerequisite violation is not proof of the cause of this request outcome"
+      }
+    ],
+    "unchecked": [],
+    "expectedCoverage": [],
+    "status": "VIOLATED",
+    "coverage": {
+      "observedBoundaries": 1,
+      "checkedBoundaries": 1,
+      "unknownBoundaries": 0,
+      "uncheckedInteractions": 0
+    },
+    "limitation": "Only observed CLIENT -> SERVER boundaries and listed prerequisites are evaluated. Missing spans, async links, uninstrumented peers, unlisted rules and runtime behavior remain UNKNOWN. No whole-request compatibility or causal assurance.",
+    "evidenceContext": "Telemetry origin is not independently verified by this report"
+  }
+}

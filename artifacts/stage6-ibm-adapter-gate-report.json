@@ -1,0 +1,26 @@
+{
+  "version": "1.0",
+  "testRun": "VITALIS-STAGE6-1789062365679",
+  "timestamp": "2026-09-10T17:46:05.679Z",
+  "scope": {
+    "proven": [
+      "de-fabrication of normalizers",
+      "raw->OTel transformation",
+      "RCA reads DB2 spans end-to-end"
+    ],
+    "notProven": [
+      "live DB2 connection (ibm_db)",
+      "live MQ runmqsc execution"
+    ]
+  },
+  "gates": {
+    "db2NormalizerDoesNotFabricate": "PASS",
+    "mqNormalizerDoesNotFabricate": "PASS",
+    "db2RowMapping": "PASS",
+    "db2Arithmetic": "PASS",
+    "db2SpanEndToEnd": "PASS",
+    "mqscParsing": "PASS",
+    "mqNoConsumerDetection": "PASS",
+    "mqSpanShape": "PASS"
+  }
+}

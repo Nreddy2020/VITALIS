@@ -1,0 +1,314 @@
+{
+  "status": "PASS",
+  "runAt": "2026-09-10T14:17:48.171Z",
+  "checks": [
+    "Root timing excludes nested and parallel overlap",
+    "Missing and unsafe timing cannot use the legacy 10ms default",
+    "Submillisecond timing remains precise",
+    "Missing roots, cycles, malformed IDs and conflicting IDs refuse request outcome",
+    "Exact retries collapse; arrival order does not change the revision",
+    "Child error is observable without inventing root business failure",
+    "Conflicting status aliases and explicit errors are disclosed",
+    "No invented permissions, business result, recovery state or executable recommendations",
+    "Oversized traces return an explicit analysis limit",
+    "New APIs reject unauthenticated calls, bad pagination and absent traces",
+    "Real Node HTTP 500 and 200 requests become distinct evidenced investigations",
+    "Recorded FIN mobile traces use the same investigation path and original timing"
+  ],
+  "liveNodeReports": [
+    {
+      "schemaVersion": 1,
+      "engineVersion": "1.1.0",
+      "traceId": "41f87f9b55a529f6c6a309a6398a120f",
+      "revision": "542738dc0fec93d6dfabde94262250a6a8b48750bd8c8e1abc55529f224cf023",
+      "evidenceContext": "Telemetry origin is not independently verified by this report",
+      "shape": {
+        "state": "OBSERVED_TREE",
+        "reasons": [],
+        "duplicatesCollapsed": 0,
+        "conflicts": []
+      },
+      "outcome": {
+        "state": "HTTP_SERVER_ERROR",
+        "provenance": "OBSERVED",
+        "spanId": "2152da34f91ebfee",
+        "httpStatusCode": 500,
+        "otelStatusCode": 2,
+        "businessResult": "UNKNOWN",
+        "conflict": false
+      },
+      "timing": {
+        "valueMs": 16,
+        "provenance": "OBSERVED",
+        "spanId": "2152da34f91ebfee",
+        "basis": "Root span end minus start; not summed span time, critical path or proof of complete capture."
+      },
+      "signals": [
+        {
+          "code": "SPAN_ERROR_REPORTED",
+          "provenance": "OBSERVED",
+          "spanId": "2152da34f91ebfee",
+          "service": "node-investigation-client",
+          "operation": "GET /check",
+          "httpStatusCode": 500,
+          "causalClaim": "NONE"
+        },
+        {
+          "code": "SPAN_ERROR_REPORTED",
+          "provenance": "OBSERVED",
+          "spanId": "36c19a117ee0d3d7",
+          "service": "node-investigation-api",
+          "operation": "GET /check",
+          "httpStatusCode": 500,
+          "causalClaim": "NONE"
+        }
+      ],
+      "gaps": [
+        {
+          "id": "EXPECTATIONS",
+          "kind": "DATA",
+          "reason": "No attributed expected-interaction inventory is available; completeness cannot be measured.",
+          "spanIds": [],
+          "referenceCount": 0
+        },
+        {
+          "id": "DEPLOYMENT",
+          "kind": "DATA",
+          "reason": "Running artifact/package identity is not consistently bound to inventory.",
+          "spanIds": [],
+          "referenceCount": 0
+        },
+        {
+          "id": "COMPATIBILITY",
+          "kind": "DATA",
+          "reason": "Compatibility is not established for this request; inspect boundary-specific rules and evidence.",
+          "spanIds": [],
+          "referenceCount": 0
+        },
+        {
+          "id": "BUSINESS",
+          "kind": "CAPABILITY",
+          "reason": "No journey-specific functional acceptance contract is evaluated by this version.",
+          "spanIds": [],
+          "referenceCount": 0
+        }
+      ],
+      "nextSteps": [
+        {
+          "order": 1,
+          "id": "SIGNAL",
+          "provenance": "RECOMMENDED",
+          "mode": "READ_ONLY",
+          "title": "Inspect the observed error",
+          "instruction": "Follow the referenced error span in the request tree and inspect its sanitized diagnostics.",
+          "validation": "Supporting and contradicting evidence recorded; the error location is not assumed to be the cause.",
+          "gapIds": [],
+          "spanIds": [
+            "2152da34f91ebfee",
+            "36c19a117ee0d3d7"
+          ]
+        },
+        {
+          "order": 2,
+          "id": "EXPECTATIONS",
+          "provenance": "RECOMMENDED",
+          "mode": "READ_ONLY",
+          "title": "Describe the expected journey",
+          "instruction": "Register attributed expected interactions for this journey and its environment.",
+          "validation": "Expected boundaries can be compared with observations without creating synthetic edges.",
+          "gapIds": [
+            "EXPECTATIONS"
+          ],
+          "spanIds": []
+        },
+        {
+          "order": 3,
+          "id": "DEPLOYMENT",
+          "provenance": "RECOMMENDED",
+          "mode": "READ_ONLY",
+          "title": "Identify the running deployment",
+          "instruction": "Obtain the running artifact digest and attributed exact package inventory from the deployment system.",
+          "validation": "Consistent digest-bound inventory; a version label alone does not establish identity.",
+          "gapIds": [
+            "DEPLOYMENT"
+          ],
+          "spanIds": []
+        },
+        {
+          "order": 4,
+          "id": "COMPATIBILITY",
+          "provenance": "RECOMMENDED",
+          "mode": "READ_ONLY",
+          "title": "Review compatibility coverage",
+          "instruction": "Inspect available reviewed rules and their exact package scope; obtain missing source evidence.",
+          "validation": "A sourced rule and applicable identity evidence, or an explicit uncovered boundary.",
+          "gapIds": [
+            "COMPATIBILITY"
+          ],
+          "spanIds": []
+        },
+        {
+          "order": 5,
+          "id": "BUSINESS",
+          "provenance": "RECOMMENDED",
+          "mode": "READ_ONLY",
+          "title": "Verify the functional result",
+          "instruction": "Define and observe the business acceptance condition without capturing sensitive response payloads.",
+          "validation": "A journey-specific functional assertion; HTTP success alone is insufficient.",
+          "gapIds": [
+            "BUSINESS"
+          ],
+          "spanIds": []
+        }
+      ],
+      "triage": "ERROR_OBSERVED",
+      "operation": {
+        "service": "node-investigation-client",
+        "name": "GET /check",
+        "spanId": "2152da34f91ebfee"
+      },
+      "coverage": {
+        "observationsReceived": 2,
+        "uniqueSpans": 2,
+        "completeCapture": "UNKNOWN",
+        "productionImpact": "UNKNOWN"
+      },
+      "execution": {
+        "enabled": false,
+        "state": "NOT_REQUESTED"
+      },
+      "limitation": "Observed retained evidence only. No verified business outcome, population impact, causal diagnosis or repair execution."
+    },
+    {
+      "schemaVersion": 1,
+      "engineVersion": "1.1.0",
+      "traceId": "427a985221c55eb2df88b9ac5f3c5914",
+      "revision": "ec0fc1d595b07fcc99b1e18db90b0eff695230e2f067e0917d0ed597dda9d53f",
+      "evidenceContext": "Telemetry origin is not independently verified by this report",
+      "shape": {
+        "state": "OBSERVED_TREE",
+        "reasons": [],
+        "duplicatesCollapsed": 0,
+        "conflicts": []
+      },
+      "outcome": {
+        "state": "HTTP_RESPONSE_OBSERVED",
+        "provenance": "OBSERVED",
+        "spanId": "4cdfcf680006af2e",
+        "httpStatusCode": 200,
+        "otelStatusCode": 1,
+        "businessResult": "UNKNOWN",
+        "conflict": false
+      },
+      "timing": {
+        "valueMs": 58,
+        "provenance": "OBSERVED",
+        "spanId": "4cdfcf680006af2e",
+        "basis": "Root span end minus start; not summed span time, critical path or proof of complete capture."
+      },
+      "signals": [],
+      "gaps": [
+        {
+          "id": "EXPECTATIONS",
+          "kind": "DATA",
+          "reason": "No attributed expected-interaction inventory is available; completeness cannot be measured.",
+          "spanIds": [],
+          "referenceCount": 0
+        },
+        {
+          "id": "DEPLOYMENT",
+          "kind": "DATA",
+          "reason": "Running artifact/package identity is not consistently bound to inventory.",
+          "spanIds": [],
+          "referenceCount": 0
+        },
+        {
+          "id": "COMPATIBILITY",
+          "kind": "DATA",
+          "reason": "Compatibility is not established for this request; inspect boundary-specific rules and evidence.",
+          "spanIds": [],
+          "referenceCount": 0
+        },
+        {
+          "id": "BUSINESS",
+          "kind": "CAPABILITY",
+          "reason": "No journey-specific functional acceptance contract is evaluated by this version.",
+          "spanIds": [],
+          "referenceCount": 0
+        }
+      ],
+      "nextSteps": [
+        {
+          "order": 1,
+          "id": "EXPECTATIONS",
+          "provenance": "RECOMMENDED",
+          "mode": "READ_ONLY",
+          "title": "Describe the expected journey",
+          "instruction": "Register attributed expected interactions for this journey and its environment.",
+          "validation": "Expected boundaries can be compared with observations without creating synthetic edges.",
+          "gapIds": [
+            "EXPECTATIONS"
+          ],
+          "spanIds": []
+        },
+        {
+          "order": 2,
+          "id": "DEPLOYMENT",
+          "provenance": "RECOMMENDED",
+          "mode": "READ_ONLY",
+          "title": "Identify the running deployment",
+          "instruction": "Obtain the running artifact digest and attributed exact package inventory from the deployment system.",
+          "validation": "Consistent digest-bound inventory; a version label alone does not establish identity.",
+          "gapIds": [
+            "DEPLOYMENT"
+          ],
+          "spanIds": []
+        },
+        {
+          "order": 3,
+          "id": "COMPATIBILITY",
+          "provenance": "RECOMMENDED",
+          "mode": "READ_ONLY",
+          "title": "Review compatibility coverage",
+          "instruction": "Inspect available reviewed rules and their exact package scope; obtain missing source evidence.",
+          "validation": "A sourced rule and applicable identity evidence, or an explicit uncovered boundary.",
+          "gapIds": [
+            "COMPATIBILITY"
+          ],
+          "spanIds": []
+        },
+        {
+          "order": 4,
+          "id": "BUSINESS",
+          "provenance": "RECOMMENDED",
+          "mode": "READ_ONLY",
+          "title": "Verify the functional result",
+          "instruction": "Define and observe the business acceptance condition without capturing sensitive response payloads.",
+          "validation": "A journey-specific functional assertion; HTTP success alone is insufficient.",
+          "gapIds": [
+            "BUSINESS"
+          ],
+          "spanIds": []
+        }
+      ],
+      "triage": "EVIDENCE_NEEDED",
+      "operation": {
+        "service": "node-investigation-client",
+        "name": "GET /check",
+        "spanId": "4cdfcf680006af2e"
+      },
+      "coverage": {
+        "observationsReceived": 2,
+        "uniqueSpans": 2,
+        "completeCapture": "UNKNOWN",
+        "productionImpact": "UNKNOWN"
+      },
+      "execution": {
+        "enabled": false,
+        "state": "NOT_REQUESTED"
+      },
+      "limitation": "Observed retained evidence only. No verified business outcome, population impact, causal diagnosis or repair execution."
+    }
+  ],
+  "scope": "Local test application with deliberate HTTP failure plus original FIN recording replay; not a production incident or repair."
+}

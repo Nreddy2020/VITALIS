@@ -1,0 +1,210 @@
+{
+  "id": "pip-core",
+  "displayName": "Python core libraries (FastAPI / MongoDB stack)",
+  "ecosystem": "pip",
+  "_readme": "Derived from PyPI requires_dist metadata — the packages own machine-readable declaration of what it needs. A bounded range is expressed as two rules because the constraint vocabulary is deliberately closed (see version_ops.js).",
+  "sources": {
+    "src1": {
+      "url": "https://pypi.org/pypi/motor/3.3.2/json",
+      "title": "PyPI metadata for motor 3.3.2 (requires_dist)",
+      "recordedAt": "2026-09-09"
+    },
+    "src2": {
+      "url": "https://pypi.org/pypi/fastapi/0.104.1/json",
+      "title": "PyPI metadata for fastapi 0.104.1 (requires_dist)",
+      "recordedAt": "2026-09-09"
+    },
+    "src3": {
+      "url": "https://pypi.org/pypi/pymongo/4.6.1/json",
+      "title": "PyPI metadata for pymongo 4.6.1 (requires_dist)",
+      "recordedAt": "2026-09-09"
+    },
+    "src4": {
+      "url": "https://pypi.org/pypi/pydantic/2.5.0/json",
+      "title": "PyPI metadata for pydantic 2.5.0 (requires_dist)",
+      "recordedAt": "2026-09-09"
+    }
+  },
+  "rules": [
+    {
+      "id": "motor-3.3-pymongo-min",
+      "description": "motor 3.3.x requires pymongo >= 4.5.0",
+      "when": {
+        "package": "motor",
+        "constraint": {
+          "op": "minorMatch",
+          "value": "3.3"
+        }
+      },
+      "require": {
+        "package": "pymongo",
+        "constraint": {
+          "op": "gte",
+          "value": "4.5.0"
+        }
+      },
+      "severity": "HIGH",
+      "source": "src1"
+    },
+    {
+      "id": "motor-3.3-pymongo-max",
+      "description": "motor 3.3.x requires pymongo < 5.0.0",
+      "when": {
+        "package": "motor",
+        "constraint": {
+          "op": "minorMatch",
+          "value": "3.3"
+        }
+      },
+      "require": {
+        "package": "pymongo",
+        "constraint": {
+          "op": "lt",
+          "value": "5.0.0"
+        }
+      },
+      "severity": "HIGH",
+      "source": "src1"
+    },
+    {
+      "id": "fastapi-0.104-starlette-min",
+      "description": "fastapi 0.104.x requires starlette >= 0.27.0",
+      "when": {
+        "package": "fastapi",
+        "constraint": {
+          "op": "minorMatch",
+          "value": "0.104"
+        }
+      },
+      "require": {
+        "package": "starlette",
+        "constraint": {
+          "op": "gte",
+          "value": "0.27.0"
+        }
+      },
+      "severity": "HIGH",
+      "source": "src2"
+    },
+    {
+      "id": "fastapi-0.104-starlette-max",
+      "description": "fastapi 0.104.x requires starlette < 0.28.0",
+      "when": {
+        "package": "fastapi",
+        "constraint": {
+          "op": "minorMatch",
+          "value": "0.104"
+        }
+      },
+      "require": {
+        "package": "starlette",
+        "constraint": {
+          "op": "lt",
+          "value": "0.28.0"
+        }
+      },
+      "severity": "HIGH",
+      "source": "src2"
+    },
+    {
+      "id": "fastapi-0.104-pydantic-min",
+      "description": "fastapi 0.104.x requires pydantic >= 1.7.4",
+      "when": {
+        "package": "fastapi",
+        "constraint": {
+          "op": "minorMatch",
+          "value": "0.104"
+        }
+      },
+      "require": {
+        "package": "pydantic",
+        "constraint": {
+          "op": "gte",
+          "value": "1.7.4"
+        }
+      },
+      "severity": "HIGH",
+      "source": "src2"
+    },
+    {
+      "id": "fastapi-0.104-pydantic-max",
+      "description": "fastapi 0.104.x requires pydantic < 3.0.0",
+      "when": {
+        "package": "fastapi",
+        "constraint": {
+          "op": "minorMatch",
+          "value": "0.104"
+        }
+      },
+      "require": {
+        "package": "pydantic",
+        "constraint": {
+          "op": "lt",
+          "value": "3.0.0"
+        }
+      },
+      "severity": "HIGH",
+      "source": "src2"
+    },
+    {
+      "id": "pymongo-4.6-dnspython-min",
+      "description": "pymongo 4.6.x requires dnspython >= 1.16.0",
+      "when": {
+        "package": "pymongo",
+        "constraint": {
+          "op": "minorMatch",
+          "value": "4.6"
+        }
+      },
+      "require": {
+        "package": "dnspython",
+        "constraint": {
+          "op": "gte",
+          "value": "1.16.0"
+        }
+      },
+      "severity": "MEDIUM",
+      "source": "src3"
+    },
+    {
+      "id": "pymongo-4.6-dnspython-max",
+      "description": "pymongo 4.6.x requires dnspython < 3.0.0",
+      "when": {
+        "package": "pymongo",
+        "constraint": {
+          "op": "minorMatch",
+          "value": "4.6"
+        }
+      },
+      "require": {
+        "package": "dnspython",
+        "constraint": {
+          "op": "lt",
+          "value": "3.0.0"
+        }
+      },
+      "severity": "MEDIUM",
+      "source": "src3"
+    },
+    {
+      "id": "pydantic-2.5-pydantic-core",
+      "description": "pydantic 2.5.x pins pydantic-core to exactly 2.14.1",
+      "when": {
+        "package": "pydantic",
+        "constraint": {
+          "op": "minorMatch",
+          "value": "2.5"
+        }
+      },
+      "require": {
+        "package": "pydantic-core",
+        "constraint": {
+          "op": "exact",
+          "value": "2.14.1"
+        }
+      },
+      "severity": "HIGH",
+      "source": "src4"
+    }
+  ]
+}

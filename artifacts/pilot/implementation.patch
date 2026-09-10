@@ -1,0 +1,1257 @@
+--- a/server.js
++++ b/server.js
+@@ -29,6 +29,7 @@
+ const { VulnerabilityCorrelator } = require('./engine/vulnerability_correlator');
+ const { decodeExportTraceServiceRequest, isProtobufContentType } = require('./engine/ingestion/otlp_protobuf');
+ const { BaselineLearner } = require('./engine/baseline_learner');
++const { configuredReport } = require('./engine/drift/relationships');
+ 
+ // ---------------------------------------------------------------------------
+ // 0. STAGE 0 SECURITY CONFIGURATION
+@@ -614,6 +615,9 @@
+             // structurally. Without it, "root" fell back to the longest span,
+             // which meant a request's identity changed whenever it got slow.
+             parentSpanId: span.parentSpanId || undefined,
++            kind: span.kind,
++            timingValid: /^\d+$/.test(String(span.startTimeUnixNano || '')) && /^\d+$/.test(String(span.endTimeUnixNano || '')) &&
++              BigInt(span.startTimeUnixNano) > 0n && BigInt(span.endTimeUnixNano) >= BigInt(span.startTimeUnixNano),
+             service: serviceName,
+             name: PrivacySanitizer.sanitizeText(span.name || ''),
+             durationMs,
+@@ -625,6 +629,11 @@
+           // stays absent rather than becoming null/'unknown', so downstream code
+           // cannot mistake a default for an observation.
+           if (serviceVersion !== undefined) spanData.serviceVersion = serviceVersion;
++          const digestValues = (res.resource?.attributes || []).filter(a => a.key === 'vitalis.artifact.digest');
++          const identityUnambiguous = ['service.name', 'service.version'].every(key => (res.resource?.attributes || []).filter(a => a.key === key).length === 1);
++          if (identityUnambiguous && digestValues.length === 1 && /^sha256:[a-f0-9]{64}$/.test(digestValues[0].value?.stringValue || '')) {
++            spanData.artifactDigest = digestValues[0].value.stringValue;
++          }
+           if (deploymentEnvironment !== undefined) spanData.deploymentEnvironment = deploymentEnvironment;
+ 
+           this.traces.get(traceId).push(spanData);
+@@ -896,23 +905,31 @@
+     const chunks = [];
+     let bodyBytes = 0;
+     let tooLarge = false;
++    let oversizedDeadline;
++    const rejectOversized = () => {
++      if (res.writableEnded) return;
++      res.writeHead(413, { 'Content-Type': 'application/json', 'Connection': 'close' });
++      res.end(JSON.stringify({ status: 'PAYLOAD_TOO_LARGE', error: `Body exceeds ${MAX_BODY_BYTES} bytes` }));
++    };
++    req.on('close', () => clearTimeout(oversizedDeadline));
+     req.on('data', chunk => {
+       if (tooLarge) return;
+       chunks.push(chunk);
+       bodyBytes += chunk.length;
+       if (bodyBytes > MAX_BODY_BYTES) {
+         tooLarge = true;
+-        // Tell any keep-alive client agent not to reuse this socket — we're
+-        // about to destroy the underlying request stream, and a client that
+-        // tries to pipeline another request onto a "kept alive" but destroyed
+-        // socket will see a raw ECONNRESET instead of a clean response.
+-        res.writeHead(413, { 'Content-Type': 'application/json', 'Connection': 'close' });
+-        res.end(JSON.stringify({ status: 'PAYLOAD_TOO_LARGE', error: `Body exceeds ${MAX_BODY_BYTES} bytes` }));
+-        req.destroy();
++        // Discard retained bytes and drain before closing. Closing with unread
++        // upload bytes can reset the socket before Windows receives the 413.
++        // Bound draining to five seconds; retain no further body data.
++        chunks.length = 0;
++        oversizedDeadline = setTimeout(() => { rejectOversized(); req.destroy(); }, 5000);
++        oversizedDeadline.unref();
++        req.resume();
+       }
+     });
+     req.on('end', () => {
+-      if (tooLarge) return;
++      clearTimeout(oversizedDeadline);
++      if (tooLarge) { rejectOversized(); return; }
+       const raw = Buffer.concat(chunks);
+       const contentType = req.headers['content-type'];
+       const isProto = isProtobufContentType(contentType);
+@@ -1124,6 +1141,7 @@
+   if (method === 'GET' && pathname.startsWith('/api/traces/')) {
+     const traceId = pathname.replace('/api/traces/', '');
+     const result = engine.evaluateTrace(traceId);
++    result.compatibility = configuredReport({ traceId, hops: engine.traces.get(traceId) || [] });
+     res.writeHead(200, { 'Content-Type': 'application/json' });
+     res.end(JSON.stringify(result));
+     return;
+@@ -1222,9 +1240,9 @@
+   res.end(JSON.stringify({ error: 'Endpoint Not Found' }));
+ });
+ 
+-function startServer(port = PORT) {
++function startServer(port = PORT, host) {
+   return new Promise((resolve) => {
+-    server.listen(port, () => {
++    server.listen(port, host, () => {
+       resolve(server);
+     });
+   });
+--- a/index.html
++++ b/index.html
+@@ -312,6 +312,11 @@
+       </div>
+ 
+       <section id="tab-journey">
++        <div class="panel" id="compatibilityPanel">
++          <h3>Request boundary compatibility</h3>
++          <style>#compatibilityEvidence .warn { color: var(--warn); } #compatibilityEvidence .bad { color: var(--bad); } #compatibilityEvidence details { overflow-wrap: anywhere; }</style>
++          <div id="compatibilityEvidence"></div>
++        </div>
+         <div class="panel">
+           <h3>Hop-by-hop timeline</h3>
+           <p class="sub">Every hop VITALIS actually observed for this request, in ingest order. Bars are scaled to the slowest hop.</p>
+@@ -590,9 +595,52 @@
+   }).join('');
+ }
+ 
++function renderCompatibility(r) {
++  const el = $('#compatibilityEvidence');
++  if (!r || r.error) {
++    el.innerHTML = '<p class="warn">UNKNOWN — ' + esc(r && r.error || 'No compatibility report available') + '</p>';
++    return;
++  }
++  const c = r.coverage;
++  function sourceLink(s) {
++    return /^https:\/\//.test(s.url) ? '<a target="_blank" rel="noopener noreferrer" href="' + esc(s.url) + '">' + esc(s.section) + '</a>' : esc(s.url);
++  }
++  el.innerHTML = '<p class="' + (r.status === 'VIOLATED' ? 'bad' : 'warn') + '"><b>' + esc(r.status) + '</b>' +
++    (r.fixture ? ' · CONTROLLED FIXTURE — not a production incident' : '') + '</p>' +
++    '<p class="sub">Evidence context (operator declared): ' + esc(r.evidenceContext || 'UNKNOWN') + '</p>' +
++    '<p class="sub">' + esc(r.limitation) + '</p>' +
++    '<p>Observed boundaries: ' + c.observedBoundaries + ' · checked: ' + c.checkedBoundaries +
++    ' · UNKNOWN: ' + c.unknownBoundaries + ' · unchecked interactions: ' + c.uncheckedInteractions + '</p>' +
++    '<p class="warn">Trace shape: ' + esc(r.traceShape.state) + ' ' + esc(r.traceShape.reasons.join('; ')) +
++    '. A valid observed tree does not prove complete capture.</p>' +
++    r.relationships.map(function (e) {
++      return '<div class="cand"><h4>' + esc(e.from) + ' → ' + esc(e.to) + ' · ' + esc(e.status) + '</h4>' +
++        '<p><span class="tag OBSERVED">OBSERVED</span> ' + esc(e.observed) + '</p>' +
++        '<p class="sub">Client span ' + esc(e.clientSpanId) + ' → server span ' + esc(e.serverSpanId) + '</p>' +
++        (e.reason ? '<p class="warn">' + esc(e.reason) + '</p>' : '') +
++        e.findings.map(function (f) {
++          return '<p><b>' + esc(f.status) + '</b> · <span class="tag ' + esc(f.provenance) + '">' + esc(f.provenance) + '</span> ' + esc(f.claim) + '</p>' +
++            '<p>' + esc(f.reason) + '</p><p>Source: ' + sourceLink(f.source) + ' · recorded ' + esc(f.source.recordedAt) + ' · review by ' + esc(f.source.reviewBy) + '</p>' +
++            '<p>What would change this verdict: ' + esc(f.wouldChangeVerdict.join('; ')) + '</p>';
++        }).join('') + '<p class="sub">' + esc(e.causalClaim) + '</p></div>';
++    }).join('') +
++    (r.unchecked.length ? '<h4>Unchecked observations</h4>' + r.unchecked.map(function (u) { return '<p class="warn">' + esc(u.spanId) + ': ' + esc(u.reason) + '</p>'; }).join('') : '') +
++    '<h4>Expected interaction coverage (operator declared)</h4>' +
++    (r.expectedCoverage.length ? r.expectedCoverage.map(function (e) { return '<p class="warn">' + esc(e.from) + ' → ' + esc(e.to) + ': ' + esc(e.state) + ' · ' + esc(e.reason) + '</p>'; }).join('') : '<p class="warn">UNKNOWN — no expected-hop inventory supplied; capture completeness cannot be measured.</p>') +
++    '<h4>Deployment evidence by span</h4>' + r.deployments.map(function (d) {
++      return '<details class="cand"><summary>' + esc(d.service) + ' · ' + esc(d.operation || 'operation UNKNOWN') + ' · ' + esc(d.spanId) + ' · ' + esc(d.state) + '</summary>' +
++        '<p>Observed parent: ' + esc(d.parentSpanId || 'root') + ' · kind: ' + esc(d.kind == null ? 'UNKNOWN' : d.kind) + '</p>' +
++        '<p>' + esc(d.reason) + '</p><p>DEPLOYED (sender reported): ' + esc(d.deployed.version || 'UNKNOWN') + ' · ' + esc(d.deployed.artifactDigest || 'digest UNKNOWN') + '</p>' +
++        '<p>DECLARED: ' + esc(d.declared ? JSON.stringify(d.declared) : 'UNKNOWN') + '</p>' +
++        '<p>RESOLVED (inventory): ' + esc(JSON.stringify(d.resolved)) + '</p></details>';
++    }).join('') +
++    '<details><summary>Reproducible evidence report · ' + esc(r.evaluatedAt) + '</summary><pre style="white-space:pre-wrap;overflow-wrap:anywhere">' + esc(JSON.stringify(r, null, 2)) + '</pre></details>';
++}
++
+ function renderDetail() {
+   const d = state.detail;
+   if (!d) return;
++  renderCompatibility(d.compatibility);
+   const hops = d.hops || [];
+   const total = hops.reduce(function (s, h) { return s + (h.durationMs || 0); }, 0);
+   const max = Math.max.apply(null, [1].concat(hops.map(function (h) { return h.durationMs || 0; })));
+--- a/package.json
++++ b/package.json
+@@ -25,7 +25,13 @@
+     "test:stage12": "node tests/verify_stage12_otlp_encoding_gates.js",
+     "test:stage13": "node tests/verify_stage13_rulepack_coverage_gates.js",
+     "test:stage14": "node tests/verify_stage14_learned_baseline_gates.js",
+-    "test:stage16": "node tests/verify_stage16_no_fabricated_facts_gates.js"
++    "test:stage16": "node tests/verify_stage16_no_fabricated_facts_gates.js",
++    "test:pilot": "node tests/verify_relationship_pilot.js",
++    "test:pilot-console": "node tests/verify_relationship_console.js",
++    "test:pilot-fin": "node tests/verify_fin_capture.js",
++    "pilot": "node tests/serve_relationship_pilot.js",
++    "test:pilot-node": "node tests/verify_node_live_capture.js",
++    "test:pilot-regressions": "node tests/run_pilot_regressions.js"
+   },
+   "keywords": [
+     "observability",
+--- a/README.md
++++ b/README.md
+@@ -1,4 +1,11 @@
+ # 🩸 VITALIS — The Request Truth Engine
++
++Current local pilot: [implementation, validation and runbook](docs/28_Request_Compatibility_Pilot.md).
++Run `npm run pilot` for labeled controlled fixtures in the operator console on
++http://127.0.0.1:4358 (local demo key: `local-pilot-test`). `npm run test:pilot`
++checks observed boundaries, deployed identity evidence, sourced rules and unknowns.
++Actual FIN health capture and a separate live Node HTTP stack are documented;
++whole-application compatibility and competitive superiority are not established.
+ ## The IT Circulatory Intelligence Platform
+ 
+ > **"Every request has a story. VITALIS makes that story visible, understandable, and actionable."**  
+--- a/engine/drift/request_drift.js
++++ b/engine/drift/request_drift.js
+@@ -1,5 +1,11 @@
+ /**
+  * VITALIS: request-scoped compatibility drift
++ *
++ * PILOT CORRECTION: the historical framing below overstates this module.
++ * Component findings are SOURCE-MANIFEST checks, not deployed-boundary proof.
++ * relationshipReport now evaluates observed boundaries separately, using the
++ * optional fourth argument's digest-bound inventories. Missing evidence stays
++ * UNKNOWN. Market exclusivity and version-equality identity claims are unproven.
+  *
+  * This is the join that makes drift a VITALIS capability rather than a good
+  * standalone linter.
+@@ -28,6 +34,7 @@
+  */
+ 
+ const { bindingFor } = require('./component_bindings');
++const { analyseRelationships } = require('./relationships');
+ 
+ /** Collapse hops to distinct components, keeping the evidence from each sighting. */
+ function componentsOf(hops) {
+@@ -61,7 +68,7 @@
+  * @param analyse   (manifestPath) => { reading, result } — injected so this
+  *                  module stays pure and testable without a filesystem
+  */
+-function analyseRequest(trace, bindings, analyse) {
++function analyseRequest(trace, bindings, analyse, relationshipEvidence = {}) {
+   const traceId = trace && trace.traceId;
+   const components = componentsOf(trace && trace.hops);
+   const cache = new Map();
+@@ -116,7 +123,7 @@
+         detail: `component reported ${c.deployedVersion}; the bound manifest declares no version to compare against`
+       };
+     } else if (declared.value === c.deployedVersion) {
+-      versionAgreement = { state: 'AGREES', detail: `deployed ${c.deployedVersion} matches the bound manifest` };
++      versionAgreement = { state: 'AGREES', detail: `reported version ${c.deployedVersion} matches the manifest; version equality does not prove deployed artifact identity` };
+     } else {
+       versionAgreement = {
+         state: 'DISAGREES',
+@@ -146,6 +153,9 @@
+ 
+   return {
+     traceId,
++    scope: 'Component findings describe source manifests; boundary assurance is evaluated separately',
++    relationshipReport: analyseRelationships(trace, relationshipEvidence.inventories || [], relationshipEvidence.rules,
++      relationshipEvidence.now, relationshipEvidence.expectedInteractions || []),
+     components: analysed,
+     summary: {
+       componentsOnPath: analysed.length,
+@@ -173,7 +183,7 @@
+     `${s.bound} bound to a version source, ${s.unbound} UNKNOWN.`
+   );
+   if (s.violationsOnPath > 0) {
+-    parts.push(`${s.violationsOnPath} compatibility violation(s) affect ${s.componentsWithViolations} component(s) on this path.`);
++    parts.push(`${s.violationsOnPath} source-manifest compatibility violation(s) found for ${s.componentsWithViolations} component(s) on this path; deployed applicability is not established by version equality.`);
+   } else {
+     parts.push('No violation was found among the components that could be checked.');
+   }
+--- /dev/null
++++ b/engine/drift/relationships.js
+@@ -0,0 +1,146 @@
++'use strict';
++// Read-only, bounded client -> server evaluation. No edge from co-presence.
++const crypto = require('crypto');
++const fs = require('fs');
++const { evaluate, parseVersion, OPERATORS } = require('./version_ops');
++const defaultRules = require('./relationship_rules.json');
++const hash = value => crypto.createHash('sha256').update(JSON.stringify(value)).digest('hex');
++const digest = value => typeof value === 'string' && /^sha256:[a-f0-9]{64}$/.test(value);
++const exact = value => typeof value === 'string' && /^\d+(\.\d+)*$/.test(value) && parseVersion(value)?.segments.every(Number.isSafeInteger);
++const client = h => h.kind === 3 || h.kind === 'SPAN_KIND_CLIENT';
++const server = h => h.kind === 2 || h.kind === 'SPAN_KIND_SERVER';
++const attr = (h, key) => {
++  const a = (h.attributes || []).filter(a => a.key === key);
++  return a.length === 1 ? a[0].value?.stringValue : undefined;
++};
++function validateRules(rules) {
++  if (!Array.isArray(rules)) throw Error('Relationship rules must be an array');
++  const ids = new Set();
++  for (const r of rules) {
++    if (!r.id || ids.has(r.id) || !r.fromPackage || !r.toPackage || !r.claim ||
++        !Array.isArray(r.fromVersion) || !r.fromVersion.length ||
++        ![...r.fromVersion, r.constraint].every(c => c && OPERATORS.includes(c.op) && c.value !== undefined) ||
++        !/^https:\/\//.test(r.source?.url || '') || !r.source?.section ||
++        !Number.isFinite(Date.parse(r.source?.recordedAt)) || !Number.isFinite(Date.parse(r.source?.reviewBy)) ||
++        Date.parse(r.source.reviewBy) < Date.parse(r.source.recordedAt)) throw Error('Invalid or unsourced relationship rule');
++    new URL(r.source.url);
++    ids.add(r.id);
++  }
++  return rules;
++}
++function shape(hops) {
++  const reasons = [];
++  const ids = new Map();
++  for (const h of hops) {
++    if (!/^[a-f0-9]{16}$/.test(h.spanId || '') || /^0+$/.test(h.spanId || '') || ids.has(h.spanId)) reasons.push('Invalid, missing or duplicate span ID');
++    if (h.timingValid !== true) reasons.push('Missing or invalid span start/end timestamps');
++    ids.set(h.spanId, h);
++  }
++  const roots = hops.filter(h => !h.parentSpanId);
++  if (roots.length !== 1) reasons.push(`Expected one root; observed ${roots.length}`);
++  for (const h of hops) {
++    if (h.parentSpanId && !ids.has(h.parentSpanId)) reasons.push(`Missing parent ${h.parentSpanId}`);
++    const seen = new Set();
++    let current = h;
++    while (current) {
++      if (seen.has(current.spanId)) { reasons.push('Cycle in parent links'); break; }
++      seen.add(current.spanId);
++      current = ids.get(current.parentSpanId);
++    }
++  }
++  return { state: reasons.length ? 'UNKNOWN' : 'OBSERVED_TREE', reasons: [...new Set(reasons)], roots: roots.map(h => h.spanId) };
++}
++function deployment(h, inventories) {
++  const matches = inventories.filter(i => i.service === h.service && i.artifactDigest === h.artifactDigest);
++  let reason;
++  const i = matches[0];
++  if (!digest(h.artifactDigest)) reason = 'Missing or invalid deployed SHA-256 artifact digest';
++  else if (matches.length !== 1) reason = 'No unique inventory for this service and deployed digest';
++  else if (!i.declaredBy || !i.evidence || !Array.isArray(i.packages)) reason = 'Inventory lacks attribution, evidence reference, or packages';
++  else if (!h.serviceVersion || !i.declaredVersion) reason = 'Missing reported or declared service version';
++  else if (h.serviceVersion !== i.declaredVersion) reason = 'Reported service version disagrees with digest-bound inventory';
++  return {
++    spanId: h.spanId, parentSpanId: h.parentSpanId, kind: h.kind, operation: h.name, observedAt: h.observedAt, service: h.service,
++    deployed: { version: h.serviceVersion, artifactDigest: h.artifactDigest, provenance: 'OBSERVED', basis: 'Sender-reported resource attributes; not independently attested' },
++    declared: i ? { version: i.declaredVersion, declaredBy: i.declaredBy, evidence: i.evidence } : null,
++    resolved: i?.packages || [],
++    inventoryHash: i ? hash(i) : null,
++    state: reason ? 'UNKNOWN' : 'CORRELATED',
++    reason: reason || 'Exact digest joined to attributed inventory; collector and inventory are trusted inputs, not cryptographic attestation'
++  };
++}
++function analyseRelationships(trace, inventories = [], rules = defaultRules, now = new Date(), expectedInteractions = []) {
++  validateRules(rules);
++  if (!Array.isArray(inventories)) throw Error('Inventories must be an array');
++  const hops = Array.isArray(trace?.hops) ? trace.hops : [];
++  const traceShape = shape(hops);
++  if (!/^[a-f0-9]{32}$/.test(trace?.traceId || '') || /^0+$/.test(trace?.traceId || '')) {
++    traceShape.state = 'UNKNOWN'; traceShape.reasons.push('Invalid or absent trace ID');
++  }
++  const deployments = hops.map(h => deployment(h, inventories));
++  const byId = new Map(hops.map((h, i) => [h.spanId, { h, d: deployments[i] }]));
++  const relationships = [];
++  const unchecked = [];
++  for (const h of hops) {
++    const parent = byId.get(h.parentSpanId);
++    if (parent && parent.h.service !== h.service && !(client(parent.h) && server(h))) {
++      unchecked.push({ spanId: h.spanId, reason: 'Cross-service parent link lacks CLIENT -> SERVER kinds; interaction not evaluated' });
++    }
++    if (!client(h)) continue;
++    const targets = hops.filter(t => t.parentSpanId === h.spanId && server(t) && t.service !== h.service);
++    if (targets.length !== 1) {
++      unchecked.push({ spanId: h.spanId, reason: 'Client span has no unique remote SERVER child; peer identity and compatibility UNKNOWN' });
++      continue;
++    }
++    const t = targets[0];
++    const from = byId.get(h.spanId).d, to = byId.get(t.spanId).d;
++    const edge = { from: h.service, to: t.service, clientSpanId: h.spanId, serverSpanId: t.spanId,
++      observed: 'SERVER parentSpanId equals CLIENT spanId, across distinct services', provenance: 'OBSERVED',
++      status: 'UNKNOWN', findings: [], causalClaim: 'NONE: a prerequisite violation is not proof of the cause of this request outcome' };
++    const candidates = rules.filter(r => from.resolved.some(p => p.name === r.fromPackage) && to.resolved.some(p => p.name === r.toPackage));
++    for (const r of candidates) {
++      const a = from.resolved.filter(p => p.name === r.fromPackage);
++      const b = to.resolved.filter(p => p.name === r.toPackage);
++      const missing = [];
++      if (attr(h, 'vitalis.client.package') !== r.fromPackage) missing.push('Observe which client package made this call; installed inventory alone does not prove use');
++      if (traceShape.state !== 'OBSERVED_TREE') missing.push('Repair missing, duplicate, cyclic or multiple-root trace evidence');
++      if (from.state !== 'CORRELATED' || to.state !== 'CORRELATED') missing.push('Supply consistent digest-bound deployment inventories on both endpoints');
++      if (a.length !== 1 || b.length !== 1 || !exact(a[0]?.resolved) || !exact(b[0]?.resolved)) missing.push('Supply unique exact resolved package versions; declarations are not installed evidence');
++      const scope = a.length === 1 && exact(a[0]?.resolved) ? r.fromVersion.map(c => evaluate(c, a[0].resolved).result) : ['UNKNOWN'];
++      if (scope.includes('VIOLATED')) continue;
++      if (scope.includes('UNKNOWN')) missing.push('Source version rule applicability is unknown');
++      if (!Number.isFinite(+now) || +now < Date.parse(r.source.recordedAt) || +now > Date.parse(r.source.reviewBy) + 86400000 - 1) missing.push('Review stale or future-dated rule against its vendor source');
++      const conditions = Object.entries(r.when || {});
++      if (conditions.some(([k, v]) => attr(h, k) !== undefined && attr(h, k) !== v)) continue;
++      if (conditions.some(([k]) => attr(h, k) === undefined)) missing.push('Observe the connection setting used by this client span');
++      const result = missing.length ? { result: 'UNKNOWN', reason: missing.join('; ') } : evaluate(r.constraint, b[0].resolved);
++      edge.findings.push({ ruleId: r.id, claim: r.claim, source: r.source, status: result.result,
++        provenance: result.result === 'UNKNOWN' ? 'UNKNOWN' : 'INFERRED', reason: result.reason,
++        versions: { from: a, to: b }, conditions: Object.fromEntries(conditions.map(([k]) => [k, attr(h, k) ?? null])),
++        wouldChangeVerdict: missing.length ? missing : ['A corrected deployment inventory, interaction observation, or revised vendor prerequisite would trigger re-evaluation'] });
++    }
++    edge.status = edge.findings.some(f => f.status === 'VIOLATED') ? 'VIOLATED'
++      : edge.findings.length && edge.findings.every(f => f.status === 'SATISFIED') ? 'CHECKED_PREREQUISITES' : 'UNKNOWN';
++    if (!edge.findings.length) edge.reason = 'No applicable sourced rule for this observed boundary; add a reviewed rule and exact inventory evidence';
++    relationships.push(edge);
++  }
++  if (!Array.isArray(expectedInteractions)) throw Error('Expected interactions must be an array');
++  const expectedCoverage = expectedInteractions.map(e => ({ ...e, provenance: 'DECLARED',
++    state: e.declaredBy && e.evidence && relationships.some(r => r.from === e.from && r.to === e.to) ? 'OBSERVED_BOUNDARY' : 'UNKNOWN',
++    reason: !e.declaredBy || !e.evidence ? 'Expected interaction lacks attribution or evidence reference' : 'Expectation does not create an edge or establish compatibility' }));
++  return { schemaVersion: 1, traceId: trace?.traceId, evaluatedAt: now.toISOString(), inputHash: hash({ trace, inventories, rules, expectedInteractions }),
++    ruleSetHash: hash(rules), fixture: trace?.fixture === true || inventories.some(i => i.fixture === true), traceShape, deployments, relationships, unchecked, expectedCoverage,
++    status: traceShape.state !== 'OBSERVED_TREE' ? 'UNKNOWN' : relationships.some(r => r.status === 'VIOLATED') ? 'VIOLATED' : 'UNKNOWN',
++    coverage: { observedBoundaries: relationships.length, checkedBoundaries: relationships.filter(r => r.status !== 'UNKNOWN').length,
++      unknownBoundaries: relationships.filter(r => r.status === 'UNKNOWN').length, uncheckedInteractions: unchecked.length },
++    limitation: 'Only observed CLIENT -> SERVER boundaries and listed prerequisites are evaluated. Missing spans, async links, uninstrumented peers, unlisted rules and runtime behavior remain UNKNOWN. No whole-request compatibility or causal assurance.' };
++}
++function configuredReport(trace) {
++  try {
++    const config = process.env.VITALIS_BUILD_INVENTORY ? JSON.parse(fs.readFileSync(process.env.VITALIS_BUILD_INVENTORY, 'utf8')) : [];
++    const report = analyseRelationships(trace, Array.isArray(config) ? config : config.builds, defaultRules, new Date(), config.expectedInteractions || []);
++    report.evidenceContext = config.evidenceContext || 'Telemetry origin is not independently verified by this report';
++    return report;
++  } catch (e) { return { status: 'UNKNOWN', error: `Compatibility evidence unavailable: ${e.message}` }; }
++}
++module.exports = { analyseRelationships, configuredReport, validateRules, shape };
+--- /dev/null
++++ b/engine/drift/relationship_rules.json
+@@ -0,0 +1,32 @@
++[
++  {
++    "id": "pymongo-4.11-server-minimum",
++    "fromPackage": "pip:pymongo",
++    "fromVersion": [{ "op": "minorMatch", "value": "4.11" }],
++    "toPackage": "server:mongodb",
++    "constraint": { "op": "gte", "value": "4.0" },
++    "claim": "PyMongo 4.11 removed MongoDB 3.6 support; server minimum is 4.0. Passing checks only this minimum.",
++    "source": {
++      "url": "https://www.mongodb.com/docs/languages/python/pymongo-driver/current/reference/upgrade/",
++      "section": "Version 4.11 Breaking Changes",
++      "recordedAt": "2026-09-10",
++      "reviewBy": "2026-12-10"
++    }
++  },
++  {
++    "id": "pgjdbc-direct-tls-server-minimum",
++    "fromPackage": "maven:org.postgresql:postgresql",
++    "fromVersion": [{ "op": "exact", "value": "42.7.7" }],
++    "when": { "vitalis.connection.sslNegotiation": "direct" },
++    "toPackage": "server:postgresql",
++    "constraint": { "op": "gte", "value": "17" },
++    "claim": "pgJDBC direct SSL negotiation requires PostgreSQL 17 or higher. Passing checks only this feature prerequisite.",
++    "source": {
++      "url": "https://jdbc.postgresql.org/documentation/use/",
++      "versionEvidenceUrl": "https://raw.githubusercontent.com/pgjdbc/pgjdbc/REL42.7.7/pgjdbc/src/main/java/org/postgresql/PGProperty.java",
++      "section": "Connection Parameters / sslNegotiation",
++      "recordedAt": "2026-09-10",
++      "reviewBy": "2026-12-10"
++    }
++  }
++]
+--- a/docs/00_START_HERE.md
++++ b/docs/00_START_HERE.md
+@@ -1,4 +1,6 @@
+ # 00 — START HERE
++
++> **Current pilot correction (2026-09-10): historical exclusivity claims in 00/01/03/17/18 are not established facts. A bounded boundary evaluator and console view now exist. AppDynamics is the primary organizational tool. Fresh FIN backend health capture and a second live Node HTTP stack were exercised; full mobile visibility, deployment attestation, live incompatible database incidents and comparative operator value remain unproven.** See [28](28_Request_Compatibility_Pilot.md) for step-by-step implementation, actual validation, limits and the comparison procedure.
+ 
+ **If you are a person or an agent picking up VITALIS, this is the entry point. Read this file
+ completely before opening anything else, running anything, or writing a line of code.**
+--- a/docs/01_CHARTER_read_this_first.md
++++ b/docs/01_CHARTER_read_this_first.md
+@@ -1,4 +1,6 @@
+ # VITALIS CHARTER — The Real Intention
++
++> **2026-09-10 correction: the request-scoped, technology-independent intention and five non-negotiables remain. Claims below that evidence transparency or compatibility is unserved, uncopiable or unanswerable by incumbents are hypotheses, not facts. The approved pilot tests incremental value alongside AppDynamics.** See [28](28_Request_Compatibility_Pilot.md) for step-by-step implementation, actual validation, limits and the comparison procedure.
+ 
+ > **Read this before any code, any deck, any architecture decision, any demo.**
+ > Everything else in this project is downstream of this document. If another doc, a slide, or a
+--- a/docs/03_Competitive_Reality.md
++++ b/docs/03_Competitive_Reality.md
+@@ -1,4 +1,6 @@
+ # VITALIS — Competitive Reality Check
++
++> **Superseding correction, 2026-09-10: categorical claims below that nobody shows reasoning or serves compatibility are withdrawn as established conclusions. The subsequent review identified overlapping vendor capabilities: hypothesis/evidence investigation, root-cause evidence, replay/dependency testing and version/configuration drift. Uniqueness has not been proven. No competitor-access experiment or comparative result exists yet.** See [28](28_Request_Compatibility_Pilot.md) for step-by-step implementation, actual validation, limits and the comparison procedure.
+ 
+ **Date:** 2026-09-09
+ **Question:** Do tools like this exist? Are they actually doing it? What can VITALIS do that they can't?
+--- a/docs/09_Internal_Adoption_Proposal.md
++++ b/docs/09_Internal_Adoption_Proposal.md
+@@ -1,4 +1,6 @@
+ # 09 — Internal Adoption Proposal
++
++> **Organizational correction, 2026-09-10: AppDynamics is the primary monitoring product, with limited other request-flow tooling. The BMC/Prometheus/Splunk/GCL estate assumed below is not confirmed and must not drive design or a proposal. Actual incident access and AppDynamics coverage remain unknown. Only local pilot work is authorized.** See [28](28_Request_Compatibility_Pilot.md) for step-by-step implementation, actual validation, limits and the comparison procedure.
+ 
+ **Date:** 2026-09-09
+ **Question:** Should VITALIS be proposed as an internal implementation in an organisation that
+--- a/docs/17_Stage9_Compatibility_Drift.md
++++ b/docs/17_Stage9_Compatibility_Drift.md
+@@ -1,4 +1,6 @@
+ # 17 — Stage 9 Completion Log: Compatibility Drift
++
++> **Scope correction, 2026-09-10: this stage checks repository dependencies; it does not establish compatibility between interacting deployed components. Market exclusivity assertions below are unproven.** See [28](28_Request_Compatibility_Pilot.md) for step-by-step implementation, actual validation, limits and the comparison procedure.
+ 
+ **Date:** 2026-09-09
+ **Status:** Built, and verified by execution. 9/9 gates pass.
+--- a/docs/18_Stage10_Request_Path_Drift.md
++++ b/docs/18_Stage10_Request_Path_Drift.md
+@@ -1,4 +1,6 @@
+ # 18 — Stage 10 Completion Log: Drift on the Request Path
++
++> **Scope correction, 2026-09-10: attaching per-manifest checks to traced services does not prove compatibility across their boundaries. service.version is a sender claim; equality with source is not artifact identity. Market exclusivity assertions below are unproven. The new boundary report is separate from the legacy source-manifest findings.** See [28](28_Request_Compatibility_Pilot.md) for step-by-step implementation, actual validation, limits and the comparison procedure.
+ 
+ **Date:** 2026-09-09
+ **Status:** Built and verified by execution. 7/7 gates pass, including a live end-to-end.
+--- /dev/null
++++ b/docs/28_Request_Compatibility_Pilot.md
+@@ -0,0 +1,260 @@
++# Request compatibility pilot — implementation and evidence log
++
++This is local, observe-only work. The authoritative baseline was E:\VITALIS at
++faea430 **plus its uncommitted files**, imported into the isolated Codex worktree.
++E:\VITALIS was not changed. `artifacts/pilot/imported-baseline.json` records file
++hashes before pilot edits. Existing local work is part of the baseline, not claimed
++as this pilot's implementation. No push or production deployment is authorized.
++
++## Step 1 — establish baseline and read contracts
++
++Compared both checkouts, inspected git status, and read 00 completely, then 01,
++17–19, 21, 23–27, 05 and 12. The worktree lacked the newer engine and console.
++Copied the authoritative working files before implementation. Independently ran
++stage9 (9 gates) and stage11 (7 gates): passed. Prior documentation's test numbers
++are historical claims, not validation of this pilot.
++
++## Step 2 — relationship contract and sourced rules
++
++Added `engine/drift/relationships.js` and `relationship_rules.json`. An edge requires
++one CLIENT span with one remote SERVER child whose parentSpanId matches it. Merely
++sharing a trace, service list, or ingest order creates no edge. Internal spans and
++async links do not imply a supported boundary. Client spans without a unique server
++observation are counted as unchecked. Missing parents, duplicate IDs, cycles and
++multiple roots block relationship verdicts. A valid observed tree is not proof of
++complete capture.
++
++Rules are data, with attributed vendor URLs, sections, recorded dates and review
++deadlines. Stale/future rules and unsupported versions remain UNKNOWN. Runtime
++analysis is offline. The review deadline is a pilot policy (90 days here), not a
++vendor guarantee. Reviewed 2026-09-10:
++
++- [MongoDB upgrade guide](https://www.mongodb.com/docs/languages/python/pymongo-driver/current/reference/upgrade/),
++  Version 4.11 Breaking Changes: PyMongo 4.11 requires MongoDB >=4.0. Scoped to
++  4.11.x only; this does not assert all newer drivers have the same minimum.
++- [pgJDBC connection parameters](https://jdbc.postgresql.org/documentation/use/),
++  sslNegotiation: direct TLS requires PostgreSQL >=17. Pilot client scope is
++  42.7.7 only, and the connection setting must be observed on the client span.
++
++These are prerequisite checks. A violation is not a causal diagnosis; satisfying
++one is not a whole-boundary or whole-request compatibility assertion.
++
++## Step 3 — deployment evidence
++
++The ingest path now retains OTLP span kind and a custom resource attribute,
++`vitalis.artifact.digest`, only if it is a SHA-256 digest. Set
++`VITALIS_BUILD_INVENTORY` to a JSON array of build records. Each record has service,
++artifactDigest, declaredVersion, declaredBy, evidence (a build/SBOM reference), and
++packages [{name, declared, resolved}]. Package names are ecosystem-qualified.
++
++DEPLOYED resource version/digest, DECLARED source version, and RESOLVED build
++inventory packages stay separate. Exact digest matching is CORRELATED evidence,
++**not cryptographic attestation**: this pilot trusts the authenticated collector
++and operator-provided inventory. The ingestion API key does not authenticate each
++workload's claims. No signature or image/SBOM generation pipeline is implemented.
++Absent digests, ambiguous inventory, version mismatch or unresolvable package
++versions block evaluation. Reusing a version string does not prove artifact identity.
++
++## Step 4 — operator view
++
++Reused the existing Request Journey console, adding boundary coverage, actual span
++links, per-rule verdicts and vendor sources, unchecked observations, per-span build
++evidence and an expandable JSON report. Unknowns are amber, never green. The report
++contains evaluation time and hashes of inputs/rules for reproducibility; source
++documents are linked, not archived snapshots. No remediation call is added.
++
++## Step 5 — counterexample tests and refinements
++
++Added 34 gates in `tests/verify_relationship_pilot.js`, recording full outputs in
++`artifacts/pilot/relationship-tests.json`. Tested real sourced incompatible version
++pairings as **controlled fixtures**, missing/wrong digests despite equal version
++strings, declared/deployed mismatch, missing/ranged/prerelease resolved versions,
++duplicate inventories/packages, unowned evidence, off-path exclusion, co-presence,
++absent peers, malformed/cyclic/multiple-root traces, invalid timestamps/IDs,
++stale/future/unsourced rules, connection settings, expected-hop gaps, deterministic
++hashes and live OTLP HTTP/API behavior.
++
++Testing/review tightened the contract: a client span must report
++`vitalis.client.package` matching the qualified rule package. A package being
++installed is not proof it made the call. Java's direct TLS setting is the custom
++span attribute `vitalis.connection.sslNegotiation`; absent stays UNKNOWN. These
++custom attributes need trustworthy instrumentation; ordinary OTLP does not provide
++them automatically. The generic core contains no FIN paths or service names.
++
++An expected-hop inventory is optional configuration, never an edge generator:
++use `{builds: [...], expectedInteractions: [{from, to, declaredBy, evidence}]}`.
++Absent expectations mean capture completeness is unknown. Missing expected
++boundaries remain UNKNOWN even when some prerequisite checks succeed.
++
++The legacy `analyseRequest()` library accepts optional fourth-argument
++`{inventories, rules, now, expectedInteractions}` and returns `relationshipReport`
++separately from source-manifest component findings. Its old CLI JSON includes that
++report, with UNKNOWN identity by default. It does not automatically turn source
++manifests into trustworthy build inventories. The console uses the new report.
++
++## Step 6 — fresh real FIN capture
++
++Coordinated with the active Life Events task, which requested no Metro/emulator
++restarts. Read FIN backend configuration and health route. WSL read access initially
++failed under the sandbox; an approved escalation provided read-only runtime access.
++No backend listener was running there; MongoDB was listening locally.
++
++`tests/capture_fin_health.py` imported the actual FIN backend through its existing
++Python venv, with bytecode writing disabled, on isolated loopback port 8361. Explicit
++FastAPI/PyMongo instrumentation lived only in the harness. It loaded existing local
++configuration without printing secrets, refused a non-local database, called only
++`/health` (MongoDB ping), captured genuine OTLP protobuf, and stopped its own runtime.
++FIN source, Metro and the emulator were not changed. This does **not** reproduce or
++settle the previous all-instrumentation sender defect from 27.
++
++Actual results: **2 HTTP 200 responses, 2 independent four-span health traces**, each
++with a MongoDB CLIENT span. `tests/verify_fin_capture.js` replayed hash-checked bytes
++through the real VITALIS HTTP/protobuf ingest and API. Both have valid observed trees,
++zero evaluable server boundaries, one unchecked client interaction, UNKNOWN expected
++mobile/database boundaries and zero causal candidates. This is not full FIN capture.
++
++Evidence: `fin-capture-metadata.json` (time, source hash, runtime package versions,
++requests and raw-byte hashes), `fin-health-otlp-*.bin`, `fin-capture-tests.json`, all
++under `artifacts/pilot`. Raw capture is local pilot evidence; review/redact before
++sharing it externally. No production telemetry or credentials were requested.
++
++## Step 7 — materially different live runtime and browser verification
++
++`tests/verify_node_live_capture.js` used the installed, locked Node OTel SDK to
++instrument two actual loopback HTTP services in one process. A real request crossed
++them using W3C trace context: 3 spans, one observed CLIENT -> SERVER boundary. Missing
++build identity and rules correctly yielded UNKNOWN. This is a live test application,
++not an incident, multi-host deployment or automatic Node instrumentation proof.
++`node-live-capture-tests.json` records the result. Java/pgJDBC compatibility is tested
++as rule fixtures only; no Java database incident was executed. Version-scoped pgJDBC
++feature availability was also checked in the vendor's REL42.7.7 PGProperty source,
++linked from the rule.
++
++`tests/verify_relationship_console.js` drove real Chrome against the live local
++server: 4 checks passed for path/verdict/provenance/source/next evidence rendering,
++UNKNOWN without green elements, escaped hostile sender HTML and no JavaScript
++errors. Inspected `console-violation.png` and `console-unknown.png` visually. The
++timeline remains ingest-order display; the new boundary panel uses actual parent
++links. Demo listener is restricted to loopback. Browser dependency is external to
++production: install Playwright or use the bundled runtime via NODE_PATH.
++
++## Step 8 — regressions, a discovered defect, and recordkeeping
++
++Installed existing lockfile dependencies (`npm ci --ignore-scripts --no-audit
++--no-fund`); first sandboxed attempt failed to write npm's user cache, then the
++approved retry with a temporary cache succeeded. No dependency versions changed.
++
++The first 17-suite regression run found a security-suite failure: a 3MB upload
++sometimes received ECONNRESET instead of 413. It reproduced with the original
++E:\VITALIS server as well (that suite's attempt to save an original-checkout artifact
++was denied; no original source changed). Preserved the failing report and log as
++`regressions-before-security-fix.json` and `security-before-fix.txt`.
++
++Removing immediate request destruction passed once but still failed in the full
++runner. The final fix discards retained body bytes at the limit, drains without
++buffering until upload ends, then sends 413. A five-second deadline bounds draining
++for a sender that does not finish; that timeout may still close the connection without
++a clean response. No oversized body is parsed/ingested. Three successive security
++suite runs and the subsequent full regression runner passed.
++
++`tests/run_pilot_regressions.js` executes each suite independently and checks exit
++codes; this avoids the original shell-dependent semicolon `test:all` chain hiding
++earlier failures. Final recorded result: **17/17 suites PASS**, plus **4 browser
++checks PASS**. `regressions.json` names every executed suite and its log. These do not
++include the legacy live Postgres, GUI/Postgres, change/audit-network, or propagation
++suites; DB2/MQ transformations are tested, live connections remain unverified.
++
++Corrections in 00/01/03/09/17/18 supersede market and organizational overclaims;
++README points here. No push, merge or change to the authoritative E: checkout.
++
++## Run and inspect the local pilot
++
++From this worktree:
++
++```text
++npm run test:pilot
++npm run test:pilot-fin
++npm run test:pilot-node
++npm run test:pilot-regressions
++npm run pilot
++```
++
++Open `http://127.0.0.1:4358`, enter `local-pilot-test`, select a request and read
++Request Journey -> Request boundary compatibility. Fixtures are explicitly labeled.
++Stop that server before running the recorded real FIN mode:
++
++```text
++npm run pilot -- --fin
++```
++
++This mode replays recorded real health telemetry, **not a live FIN session**. To
++recapture, coordinate with the active FIN task and run `capture_fin_health.py` with
++FIN's existing venv and backend/artifact directory arguments, then `test:pilot-fin`.
++Do not use the old onboarding script blindly: it restarts runtime processes.
++
++For real deployment evidence, populate a reviewed inventory and pass its path in
++`VITALIS_BUILD_INVENTORY` to the normal server. Rules must be reviewed by their
++deadline; a later run correctly changes stale results to UNKNOWN. No build identity
++or rule should be invented merely to make this demo green.
++
++## Step 9 — reviewable delivery and real-capture console
++
++Added a separate `--fin` console mode that replays the captured bytes, labels the
++capture date and limited scope, and presents operation names and parent IDs with
++deployment evidence. Real Chrome verification added 3 checks for this mode; all
++passed and `console-fin-capture.png` was visually inspected. Total browser checks:
++**7 passed (4 fixture + 3 recorded FIN)**. A test selector initially matched both
++the visible provenance label and its expanded JSON representation; it was narrowed
++to the visible paragraph, then both suites passed. No product defect was hidden.
++
++`tests/build_pilot_review.py E:\VITALIS` produces `artifacts/pilot/implementation.patch`
++and `implementation-files.json` against the actual imported working baseline. It
++verifies recorded import hashes before generating the diff. This separates the pilot
++from all pre-existing uncommitted project work that the worktree had to import.
++Generated captures, test reports and screenshots are separate evidence artifacts;
++they are not represented as newly implemented source in that patch. Nothing is
++applied back to E: or pushed automatically.
++The resulting patch passed `git apply --check` against the authoritative E: working
++checkout. This is a read-only applicability check, not an application of the patch.
++
++## Remaining evidence needed
++
++- No mobile-origin FIN transaction, gateway, third-party boundary or actual incident captured.
++- No DB SERVER telemetry, signed build/SBOM attestation, or verified deployed inventory for FIN.
++- PyMongo 4.6.1 observed in FIN is outside the new 4.11 rule scope; no inferred applicability.
++- Only synchronous CLIENT -> SERVER links supported; async/opaque boundaries need adapters.
++- Inventory generation, workload authentication and rule maintenance remain manual pilot work.
++- AppDynamics access, operator timing measurements and comparative benefit remain unmeasured.
++
++## Pilot application and organizational context
++
++FIN at E:\fintech-mobile is a proving application. Its active Life Events task was
++contacted before runtime work. Do not restart it or modify overlapping files without
++coordination. All application-specific inventory and capture setup belongs in pilot
++files, never engine service-name, framework, path or topology assumptions.
++
++AppDynamics is the organization's primary monitoring product, with limited other
++request-flow tools. The intended value is complementary compatibility evidence.
++Actual AppDynamics coverage, incident data and organizational access are not yet
++verified. No worldwide-first, complete visibility, zero downtime or immediate RCA
++claim follows from this implementation.
++
++## Repeatable comparison procedure — results not yet measured
++
++Use the same consented incident or controlled request, initial evidence, expected-hop
++inventory, operator experience and time limit for AppDynamics alone and AppDynamics
++plus this pilot. Randomize order across operators to reduce learning effects. Record:
++
++1. Setup minutes: export configuration, service/build binding and expected-hop inventory.
++2. Time from opening evidence to a **verified explanation** linked to observations and
++   vendor constraints. Record unresolved cases as censored, not successful explanations.
++3. False conclusions: unsupported causal claims, wrong deployed-build attribution,
++   off-path contamination and unknown evidence reported as healthy.
++4. Useful unknowns: missing observations identified, whether collecting them changed
++   the conclusion, and time required to obtain them.
++5. Maintenance minutes per rule: source review, scope updates, fixture/regression work;
++   count stale rules and inventory refresh failures.
++
++Preserve operator notes, request IDs, immutable build references, rule versions and
++screen captures. A reviewer with ground truth adjudicates explanations. Do not
++fabricate competitor measurements or treat fixture pass rates as customer value.
+--- /dev/null
++++ b/tests/fixtures/relationship_pilot.js
+@@ -0,0 +1,32 @@
++'use strict';
++// Controlled evidence, not an actual deployed database or incident.
++function fixture(stack = 'python') {
++  const java = stack === 'java';
++  const artifact = n => 'sha256:' + n.repeat(64);
++  const from = java ? 'java-api' : 'python-api', to = java ? 'postgres-db' : 'mongo-db';
++  const source = java ? 'maven:org.postgresql:postgresql' : 'pip:pymongo';
++  const target = java ? 'server:postgresql' : 'server:mongodb';
++  const hops = [
++    { spanId: '1111111111111111', service: from, kind: 2, serviceVersion: '1.0.0', artifactDigest: artifact('a'), attributes: [] },
++    { spanId: '2222222222222222', parentSpanId: '1111111111111111', service: from, kind: 3, serviceVersion: '1.0.0', artifactDigest: artifact('a'), attributes: java ? [{ key: 'vitalis.connection.sslNegotiation', value: { stringValue: 'direct' } }] : [] },
++    { spanId: '3333333333333333', parentSpanId: '2222222222222222', service: to, kind: 2, serviceVersion: '1.0.0', artifactDigest: artifact('b'), attributes: [] }
++  ];
++  const inventories = [
++    { service: from, artifactDigest: artifact('a'), declaredVersion: '1.0.0', declaredBy: 'pilot fixture generator', evidence: 'tests/fixtures/relationship_pilot.js', fixture: true,
++      packages: [{ name: source, declared: java ? '42.7.7' : '4.11.0', resolved: java ? '42.7.7' : '4.11.0' }] },
++    { service: to, artifactDigest: artifact('b'), declaredVersion: '1.0.0', declaredBy: 'pilot fixture generator', evidence: 'tests/fixtures/relationship_pilot.js', fixture: true,
++      packages: [{ name: target, declared: java ? '16.4' : '3.6.23', resolved: java ? '16.4' : '3.6.23' }] }
++  ];
++  hops[1].attributes.push({ key: 'vitalis.client.package', value: { stringValue: source } });
++  hops.forEach(h => { h.timingValid = true; });
++  return { trace: { traceId: java ? 'bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb' : 'aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa', fixture: true, hops }, inventories };
++}
++function otlp(f) {
++  return { resourceSpans: f.trace.hops.map(h => ({ resource: { attributes: [
++    { key: 'service.name', value: { stringValue: h.service } },
++    { key: 'service.version', value: { stringValue: h.serviceVersion } },
++    ...(h.artifactDigest ? [{ key: 'vitalis.artifact.digest', value: { stringValue: h.artifactDigest } }] : [])
++  ] }, scopeSpans: [{ spans: [{ traceId: f.trace.traceId, spanId: h.spanId, parentSpanId: h.parentSpanId, kind: h.kind,
++    name: 'CONTROLLED FIXTURE', startTimeUnixNano: '1789000000000000000', endTimeUnixNano: '1789000000010000000', attributes: h.attributes }] }] })) };
++}
++module.exports = { fixture, otlp };
+--- /dev/null
++++ b/tests/verify_relationship_pilot.js
+@@ -0,0 +1,92 @@
++'use strict';
++const assert = require('node:assert/strict');
++const fs = require('fs');
++const os = require('os');
++const path = require('path');
++const { analyseRelationships, validateRules } = require('../engine/drift/relationships');
++const rules = require('../engine/drift/relationship_rules.json');
++const { fixture, otlp } = require('./fixtures/relationship_pilot');
++const now = new Date('2026-09-10T12:00:00Z');
++const report = { suite: 'relationship-pilot', runAt: new Date().toISOString(), gates: [] };
++function run(name, fn) { fn(); report.gates.push({ name, status: 'PASS' }); console.log('PASS', name); }
++const check = (f, r = rules, date = now, expected = []) => analyseRelationships(f.trace, f.inventories, r, date, expected);
++const finding = r => r.relationships[0].findings[0];
++async function main() {
++  run('Python / MongoDB source-backed incompatibility, no causal claim', () => {
++    const r = check(fixture()); assert.equal(r.status, 'VIOLATED'); assert.equal(finding(r).provenance, 'INFERRED');
++    assert.match(r.relationships[0].causalClaim, /^NONE/); assert.equal(r.coverage.observedBoundaries, 1);
++    report.python = r;
++  });
++  run('Java / PostgreSQL feature prerequisite without engine changes', () => {
++    const r = check(fixture('java')); assert.equal(r.status, 'VIOLATED'); assert.match(finding(r).source.url, /postgresql/); report.java = r;
++  });
++  run('Satisfied minimum is not whole-request compatibility', () => {
++    const f = fixture(); f.inventories[1].packages[0].resolved = '4.0.28';
++    const r = check(f); assert.equal(finding(r).status, 'SATISFIED'); assert.equal(r.status, 'UNKNOWN');
++  });
++  for (const [name, mutate] of [
++    ['missing artifact identity despite version equality', f => delete f.trace.hops[1].artifactDigest],
++    ['wrong deployed artifact', f => f.trace.hops[1].artifactDigest = 'sha256:' + 'c'.repeat(64)],
++    ['source versus deployment mismatch', f => f.inventories[0].declaredVersion = '2.0.0'],
++    ['missing resolved package version', f => delete f.inventories[0].packages[0].resolved],
++    ['range is not resolved evidence', f => f.inventories[0].packages[0].resolved = '^4.11.0'],
++    ['prerelease fails closed', f => f.inventories[0].packages[0].resolved = '4.11.0-rc1'],
++    ['ambiguous build inventory', f => f.inventories.push(structuredClone(f.inventories[0]))],
++    ['unattributed inventory', f => delete f.inventories[0].declaredBy],
++    ['duplicate package evidence', f => f.inventories[0].packages.push(structuredClone(f.inventories[0].packages[0]))],
++    ['missing peer inventory', f => f.inventories.pop()],
++    ['missing source inventory', f => f.inventories.shift()]
++  ]) run(name, () => { const f = fixture(); mutate(f); assert.equal(check(f).relationships[0].status, 'UNKNOWN'); });
++  run('Unrelated off-path incompatibilities do not contaminate verdict', () => {
++    const f = fixture(); f.inventories[1].packages[0].resolved = '4.0'; const before = check(f);
++    f.inventories.push(...fixture('java').inventories); assert.deepEqual(check(f).relationships, before.relationships);
++  });
++  run('Co-presence and internal parentage do not infer network edges', () => {
++    const f = fixture(); f.trace.hops[1].kind = 1; const r = check(f);
++    assert.equal(r.relationships.length, 0); assert.equal(r.unchecked.length, 1);
++  });
++  for (const [name, mutate] of [
++    ['missing parent', f => f.trace.hops[0].parentSpanId = 'absent'],
++    ['multiple roots', f => f.trace.hops.push({spanId:'four',service:'other',kind:2})],
++    ['duplicate span', f => f.trace.hops.push(structuredClone(f.trace.hops[0]))],
++    ['cycle', f => f.trace.hops[0].parentSpanId = f.trace.hops[2].spanId]
++  ]) run(name + ' cannot establish request truth', () => { const f=fixture(); mutate(f); const r=check(f); assert.equal(r.status,'UNKNOWN'); assert.equal(r.traceShape.state,'UNKNOWN'); assert.ok(r.relationships.every(e=>e.status==='UNKNOWN')); });
++  run('Invalid timestamps cannot establish request truth', () => {const f=fixture();delete f.trace.hops[0].timingValid;assert.equal(check(f).status,'UNKNOWN');});
++  run('Invalid trace ID cannot establish request truth', () => {const f=fixture();f.trace.traceId='bad';assert.equal(check(f).status,'UNKNOWN');});
++  run('Unobserved peer is unchecked', () => {const f=fixture();f.trace.hops.pop();assert.equal(check(f).coverage.uncheckedInteractions,1);});
++  run('Empty or absent trace is unknown', () => {assert.equal(analyseRelationships(null).status,'UNKNOWN');assert.equal(analyseRelationships({hops:[]}).traceShape.state,'UNKNOWN');});
++  run('Missing connection setting cannot assert feature incompatibility', () => {const f=fixture('java');f.trace.hops[1].attributes=[];assert.equal(finding(check(f)).status,'UNKNOWN');});
++  run('Installed driver is not proof it made this call', () => { const f=fixture(); f.trace.hops[1].attributes=[]; assert.equal(finding(check(f)).status,'UNKNOWN'); });
++  run('Different connection setting is outside rule scope', () => {const f=fixture('java');f.trace.hops[1].attributes[0].value.stringValue='postgres';assert.equal(check(f).relationships[0].status,'UNKNOWN');});
++  run('Future and stale rules cannot pass or violate', () => {
++    assert.equal(finding(check(fixture(),rules,new Date('2027-01-01'))).status,'UNKNOWN');
++    assert.equal(finding(check(fixture(),rules,new Date('2026-01-01'))).status,'UNKNOWN');
++  });
++  run('Uncovered source versions do not inherit rules', () => {const f=fixture();f.inventories[0].packages[0].resolved='4.14';assert.equal(check(f).relationships[0].findings.length,0);});
++  run('Unsourced or unsupported rules rejected', () => {
++    const r=structuredClone(rules);delete r[0].source;assert.throws(()=>validateRules(r));
++    const s=structuredClone(rules);s[0].constraint.op='guess';assert.throws(()=>validateRules(s));
++  });
++  run('Expected but unobserved boundary is explicit UNKNOWN, never creates edge', () => {
++    const r=check(fixture(),rules,now,[{from:'mobile',to:'api',declaredBy:'tester',evidence:'expected path inventory'}]);
++    assert.equal(r.expectedCoverage[0].state,'UNKNOWN');assert.equal(r.relationships.length,1);
++  });
++  run('Reproducible hashes and findings',()=>{assert.deepEqual(check(fixture()),check(fixture()));});
++  const temp=fs.mkdtempSync(path.join(os.tmpdir(),'vitalis-relationships-'));
++  process.env.VITALIS_API_KEY='local-pilot-test'; process.env.VITALIS_DATA_DIR=temp;
++  const f=fixture(); const config=path.join(temp,'inventory.json'); fs.writeFileSync(config,JSON.stringify(f.inventories)); process.env.VITALIS_BUILD_INVENTORY=config;
++  const {startServer,stopServer}=require('../server'); await startServer(4358, '127.0.0.1');
++  try {
++    const headers={'x-vitalis-api-key':process.env.VITALIS_API_KEY,'content-type':'application/json'};
++    const sent=await fetch('http://127.0.0.1:4358/v1/traces',{method:'POST',headers,body:JSON.stringify(otlp(f))}); assert.equal(sent.status,200);
++    const got=await fetch('http://127.0.0.1:4358/api/traces/'+f.trace.traceId,{headers}); const d=await got.json();
++    run('Live HTTP OTLP ingestion retains kinds/digests and API boundary evidence',()=>{assert.equal(d.hops[1].kind,3);assert.equal(d.hops[1].artifactDigest,f.trace.hops[1].artifactDigest);assert.equal(d.compatibility.status,'VIOLATED');assert.equal(d.compatibility.fixture,true);});
++    report.http=d.compatibility;
++    fs.writeFileSync(config,'invalid json'); const bad=await (await fetch('http://127.0.0.1:4358/api/traces/'+f.trace.traceId,{headers})).json();
++    run('Malformed inventory fails closed in API',()=>assert.equal(bad.compatibility.status,'UNKNOWN'));
++  } finally { await stopServer(); }
++  fs.mkdirSync(path.join(__dirname,'../artifacts/pilot'),{recursive:true});
++  fs.writeFileSync(path.join(__dirname,'../artifacts/pilot/relationship-tests.json'),JSON.stringify(report,null,2));
++  console.log(report.gates.length+' gates passed');
++}
++main().catch(e=>{console.error(e);process.exitCode=1;});
+--- /dev/null
++++ b/tests/verify_relationship_console.js
+@@ -0,0 +1,61 @@
++'use strict';
++const assert = require('node:assert/strict');
++const fs = require('fs');
++const path = require('path');
++const { chromium } = require('playwright');
++const { startPilot } = require('./serve_relationship_pilot');
++async function main() {
++  const finMode = process.argv.includes('--fin');
++  const pilot = await startPilot(4358, finMode ? 'fin' : 'fixtures');
++  let browser;
++  try {
++    browser = await chromium.launch({ headless: true, executablePath: process.env.PILOT_BROWSER || (process.platform === 'win32' ? 'C:\\Program Files\\Google\\Chrome\\Application\\chrome.exe' : undefined) });
++    const page = await browser.newPage({ viewport: { width: 1440, height: 1000 } });
++    const errors = []; page.on('pageerror', e => errors.push(e.message));
++    await page.goto(pilot.base);
++    await page.locator('#apiKey').fill('local-pilot-test'); await page.locator('#connectBtn').click();
++    if (finMode) {
++      const traces = await (await fetch(pilot.base + '/api/traces', { headers: pilot.headers })).json();
++      let healthId;
++      for (const t of traces.traces) {
++        const d = await (await fetch(pilot.base + '/api/traces/' + t.traceId, { headers: pilot.headers })).json();
++        if (d.hops.some(h => h.name === 'GET /health' && h.kind === 2)) { healthId = t.traceId; break; }
++      }
++      assert.ok(healthId);
++      await page.locator('[data-id="' + healthId + '"]').first().click();
++      await page.locator('#compatibilityEvidence p.sub').filter({ hasText: 'REPLAY OF REAL FIN HEALTH CAPTURE' }).waitFor();
++      const content = await page.locator('#compatibilityEvidence').innerText();
++      assert.match(content, /unchecked interactions: 1/); assert.match(content, /fin-health-pilot/);
++      assert.equal(await page.locator('#compatibilityEvidence .ok').count(), 0);
++      assert.deepEqual(errors, []);
++      await page.screenshot({ path: path.resolve('artifacts/pilot/console-fin-capture.png'), fullPage: true });
++      fs.writeFileSync('artifacts/pilot/fin-console-tests.json', JSON.stringify({ runAt: new Date().toISOString(), status: 'PASS', checks: ['Recorded real FIN capture label is visible', 'One unobserved DB boundary and UNKNOWN are visible, no green evidence', 'No browser JavaScript errors'], traceId: healthId }, null, 2));
++      console.log('PASS: 3 real FIN replay browser checks');
++      return;
++    }
++    await page.locator('[data-id="aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"]').first().click();
++    await page.locator('#compatibilityEvidence p.bad').filter({ hasText: 'CONTROLLED FIXTURE' }).waitFor();
++    let content = await page.locator('#compatibilityEvidence').innerText();
++    assert.match(content, /python-api → mongo-db/); assert.match(content, /VIOLATED/); assert.match(content, /INFERRED/);
++    assert.match(content, /What would change/); assert.match(content, /UNKNOWN/);
++    assert.ok(await page.locator('#compatibilityEvidence a[href^="https://www.mongodb.com/"]').count());
++    await page.screenshot({ path: path.resolve('artifacts/pilot/console-violation.png'), fullPage: true });
++    await page.locator('[data-id="cccccccccccccccccccccccccccccccc"]').first().click();
++    await page.waitForFunction(() => document.querySelector('#detailTraceId').textContent === 'cccccccccccccccccccccccccccccccc');
++    content = await page.locator('#compatibilityEvidence').innerText();
++    assert.match(content, /UNKNOWN/); assert.match(content, /No applicable sourced rule/);
++    assert.equal(await page.locator('#compatibilityEvidence .ok').count(), 0);
++    await page.screenshot({ path: path.resolve('artifacts/pilot/console-unknown.png'), fullPage: true });
++    // Render hostile sender input through the real ingestion/API/UI path.
++    const { fixture, otlp } = require('./fixtures/relationship_pilot');
++    const f = fixture(); f.trace.traceId = 'dddddddddddddddddddddddddddddddd'; f.trace.hops[0].service = '<img src=x onerror="window.pilotXss=1">';
++    await fetch(pilot.base + '/v1/traces', { method: 'POST', headers: pilot.headers, body: JSON.stringify(otlp(f)) });
++    await page.locator('[data-id="dddddddddddddddddddddddddddddddd"]').first().click();
++    await page.waitForFunction(() => document.querySelector('#detailTraceId').textContent === 'dddddddddddddddddddddddddddddddd');
++    assert.equal(await page.evaluate(() => window.pilotXss), undefined); assert.equal(await page.locator('#compatibilityEvidence img').count(), 0);
++    assert.deepEqual(errors, []);
++    fs.writeFileSync('artifacts/pilot/console-tests.json', JSON.stringify({ runAt: new Date().toISOString(), status: 'PASS', checks: ['Live fixture path, verdict, provenance, sources and next evidence rendered', 'Missing identity remains UNKNOWN with zero green elements', 'Sender HTML is escaped', 'No browser JavaScript errors'], browser: await browser.version() }, null, 2));
++    console.log('PASS: 4 real browser checks');
++  } finally { if (browser) await browser.close(); await pilot.stopServer(); }
++}
++main().catch(e => { console.error(e); process.exitCode = 1; });
+--- /dev/null
++++ b/tests/serve_relationship_pilot.js
+@@ -0,0 +1,40 @@
++'use strict';
++const fs = require('fs');
++const path = require('path');
++const { fixture, otlp } = require('./fixtures/relationship_pilot');
++async function startPilot(port = 4358, mode = 'fixtures') {
++  const dir = path.resolve(__dirname, '../artifacts/pilot');
++  fs.mkdirSync(dir, { recursive: true });
++  const python = fixture(), java = fixture('java'), unknown = fixture();
++  unknown.trace.traceId = 'cccccccccccccccccccccccccccccccc';
++  unknown.trace.hops.forEach(h => delete h.artifactDigest);
++  let config = { evidenceContext: 'CONTROLLED FIXTURES — no actual database incompatibility was executed', builds: [...python.inventories, ...java.inventories], expectedInteractions: [
++    { from: 'mobile-client', to: 'gateway', declaredBy: 'controlled pilot', evidence: 'Example expectation only; not observed in these fixtures' }
++  ] };
++  let metadata;
++  if (mode === 'fin') {
++    metadata = JSON.parse(fs.readFileSync(path.join(dir, 'fin-capture-metadata.json')));
++    config = JSON.parse(fs.readFileSync(path.join(dir, 'fin-expected-coverage.json')));
++    config.evidenceContext = 'REPLAY OF REAL FIN HEALTH CAPTURE from ' + metadata.capturedAt + ' — backend health only, not mobile end-to-end capture';
++  }
++  const configFile = path.join(dir, 'demo-inventory.json');
++  fs.writeFileSync(configFile, JSON.stringify(config, null, 2));
++  process.env.VITALIS_API_KEY = 'local-pilot-test';
++  process.env.VITALIS_BUILD_INVENTORY = configFile;
++  process.env.VITALIS_DATA_DIR = fs.mkdtempSync(path.join(require('os').tmpdir(), 'vitalis-demo-'));
++  const { startServer, stopServer } = require('../server');
++  await startServer(port, '127.0.0.1');
++  const base = `http://127.0.0.1:${port}`;
++  const headers = { 'x-vitalis-api-key': process.env.VITALIS_API_KEY, 'content-type': 'application/json' };
++  for (const f of mode === 'fin' ? [] : [python, java, unknown]) {
++    const response = await fetch(base + '/v1/traces', { method: 'POST', headers, body: JSON.stringify(otlp(f)) });
++    if (!response.ok) throw Error('Fixture ingest failed: ' + response.status);
++  }
++  for (const capture of metadata?.captures || []) {
++    const response = await fetch(base + '/v1/traces', { method: 'POST', headers: { ...headers, 'content-type': 'application/x-protobuf' }, body: fs.readFileSync(path.join(dir,capture.file)) });
++    if (!response.ok) throw Error('Recorded FIN ingest failed: ' + response.status);
++  }
++  return { base, headers, configFile, stopServer };
++}
++if (require.main === module) startPilot(4358, process.argv.includes('--fin') ? 'fin' : 'fixtures').then(({ base }) => console.log(`LOCAL PILOT (recorded FIN with --fin, otherwise controlled fixtures): ${base} — API key local-pilot-test. Ctrl+C to stop.`)).catch(e => { console.error(e); process.exitCode = 1; });
++module.exports = { startPilot };
+--- /dev/null
++++ b/tests/capture_fin_health.py
+@@ -0,0 +1,83 @@
++"""Local FIN proving harness. No application edits, no emulator access, health/ping only.
++Run with FIN's existing venv; arguments: backend directory, artifact directory.
++"""
++import sys
++sys.dont_write_bytecode = True
++import hashlib
++import importlib.metadata
++import json
++import os
++from pathlib import Path
++import threading
++import time
++from http.server import BaseHTTPRequestHandler, HTTPServer
++from urllib.parse import urlparse
++from urllib.request import urlopen
++
++backend, output = map(Path, sys.argv[1:3])
++output.mkdir(parents=True, exist_ok=True)
++from dotenv import load_dotenv
++raw = (backend / '.env').read_bytes()
++encoding = 'utf-16' if raw.startswith((b'\xff\xfe', b'\xfe\xff')) else 'utf-8-sig'
++load_dotenv(backend / '.env', encoding=encoding)
++if urlparse(os.environ.get('MONGO_URL', '')).hostname not in ('localhost', '127.0.0.1', '::1'):
++    raise SystemExit('Refusing non-local database for the local health pilot')
++
++captures = []
++class Receiver(BaseHTTPRequestHandler):
++    def log_message(self, *args): pass
++    def do_POST(self):
++        body = self.rfile.read(int(self.headers['content-length']))
++        filename = f'fin-health-otlp-{len(captures)}.bin'
++        (output / filename).write_bytes(body)
++        captures.append({'file': filename, 'sha256': hashlib.sha256(body).hexdigest(), 'bytes': len(body)})
++        self.send_response(200)
++        self.send_header('Content-Type', 'application/x-protobuf')
++        self.end_headers()
++
++collector = HTTPServer(('127.0.0.1', 0), Receiver)
++threading.Thread(target=collector.serve_forever, daemon=True).start()
++from opentelemetry import trace
++from opentelemetry.sdk.resources import Resource
++from opentelemetry.sdk.trace import TracerProvider
++from opentelemetry.sdk.trace.export import BatchSpanProcessor
++from opentelemetry.exporter.otlp.proto.http.trace_exporter import OTLPSpanExporter
++from opentelemetry.instrumentation.pymongo import PymongoInstrumentor
++from opentelemetry.instrumentation.fastapi import FastAPIInstrumentor
++
++provider = TracerProvider(resource=Resource.create({'service.name': 'fin-health-pilot', 'deployment.environment': 'local-pilot'}))
++provider.add_span_processor(BatchSpanProcessor(OTLPSpanExporter(endpoint=f'http://127.0.0.1:{collector.server_port}/v1/traces')))
++trace.set_tracer_provider(provider)
++PymongoInstrumentor().instrument()
++sys.path.insert(0, str(backend))
++from main import app
++FastAPIInstrumentor.instrument_app(app)
++import uvicorn
++server = uvicorn.Server(uvicorn.Config(app, host='127.0.0.1', port=8361, log_level='error', access_log=False))
++thread = threading.Thread(target=server.run, daemon=True)
++thread.start()
++results = []
++try:
++    for _ in range(100):
++        if server.started: break
++        if not thread.is_alive(): raise RuntimeError('FIN isolated backend exited before ready')
++        time.sleep(.1)
++    if not server.started: raise RuntimeError('FIN isolated backend did not become ready')
++    for _ in range(2):
++        with urlopen('http://127.0.0.1:8361/health', timeout=10) as response:
++            results.append({'httpStatus': response.status, 'body': json.loads(response.read())})
++    provider.force_flush()
++finally:
++    server.should_exit = True
++    thread.join(timeout=10)
++    provider.shutdown()
++    collector.shutdown()
++
++metadata = {'capturedAt': time.strftime('%Y-%m-%dT%H:%M:%SZ', time.gmtime()),
++    'application': str(backend), 'sourceMainSha256': hashlib.sha256((backend / 'main.py').read_bytes()).hexdigest(),
++    'kind': 'REAL_FIN_HEALTH_CAPTURE', 'requests': results, 'captures': captures,
++    'instrumentation': 'Explicit FastAPI and PyMongo instrumentation in isolated harness; no FIN source edits',
++    'versions': {p: importlib.metadata.version(p) for p in ['fastapi', 'pymongo', 'motor', 'opentelemetry-sdk', 'opentelemetry-instrumentation-fastapi', 'opentelemetry-instrumentation-pymongo']},
++    'unknowns': ['Mobile UI and network edge not captured', 'No deployed artifact digest or build attestation', 'No database SERVER span or immutable database build identity', 'Not a real incident or end-to-end mobile transaction']}
++(output / 'fin-capture-metadata.json').write_text(json.dumps(metadata, indent=2))
++print(json.dumps(metadata, indent=2))
+--- /dev/null
++++ b/tests/verify_fin_capture.js
+@@ -0,0 +1,49 @@
++'use strict';
++const assert = require('node:assert/strict');
++const fs = require('fs');
++const path = require('path');
++const crypto = require('crypto');
++const dir = path.resolve(__dirname, '../artifacts/pilot');
++async function main() {
++  const metadata = JSON.parse(fs.readFileSync(path.join(dir, 'fin-capture-metadata.json')));
++  process.env.VITALIS_API_KEY = 'local-fin-capture-test';
++  process.env.VITALIS_DATA_DIR = fs.mkdtempSync(path.join(require('os').tmpdir(), 'fin-capture-replay-'));
++  const expected = [
++    { from: 'mobile-client', to: 'fin-health-pilot', declaredBy: 'pilot operator', evidence: 'FIN app architecture; mobile path not exercised by this harness' },
++    { from: 'fin-health-pilot', to: 'mongodb', declaredBy: 'pilot operator', evidence: 'FIN backend/main.py health -> MongoDB.client.admin.command(ping)' }
++  ];
++  const configFile = path.join(dir,'fin-expected-coverage.json');
++  fs.writeFileSync(configFile, JSON.stringify({ builds: [], expectedInteractions: expected },null,2));
++  process.env.VITALIS_BUILD_INVENTORY = configFile;
++  const { startServer, stopServer } = require('../server');
++  await startServer(4359, '127.0.0.1');
++  const headers = { 'x-vitalis-api-key': process.env.VITALIS_API_KEY };
++  try {
++    for (const capture of metadata.captures) {
++      const bytes = fs.readFileSync(path.join(dir, capture.file));
++      assert.equal(crypto.createHash('sha256').update(bytes).digest('hex'), capture.sha256);
++      const r = await fetch('http://127.0.0.1:4359/v1/traces',{method:'POST',headers:{...headers,'content-type':'application/x-protobuf'},body:bytes});
++      assert.equal(r.status,200);
++    }
++    const list = await (await fetch('http://127.0.0.1:4359/api/traces',{headers})).json();
++    const details=[];
++    for (const t of list.traces) details.push(await (await fetch('http://127.0.0.1:4359/api/traces/'+t.traceId,{headers})).json());
++    const health=details.filter(d=>d.hops.some(h=>h.name==='GET /health' && h.kind===2));
++    assert.equal(health.length,2,'Two real health requests must have distinct trace IDs');
++    for(const d of health) {
++      assert.equal(d.compatibility.traceShape.state,'OBSERVED_TREE');
++      assert.ok(d.hops.some(h=>h.kind===3 && h.attributes.some(a=>a.key==='db.system' && a.value.stringValue==='mongodb')),'Expected a real Mongo client span');
++      assert.equal(d.compatibility.status,'UNKNOWN');
++      assert.equal(d.compatibility.relationships.length,0);
++      assert.ok(d.compatibility.coverage.uncheckedInteractions>0);
++      assert.ok(d.compatibility.expectedCoverage.every(e=>e.state==='UNKNOWN'));
++      assert.equal(d.candidates.length,0,'Missing compatibility evidence cannot create causal candidates');
++    }
++    const report={runAt:new Date().toISOString(),status:'PASS',metadata,healthRequests:health.length,
++      checks:['Two actual FIN health HTTP 200 responses','Two independent request traces with MongoDB client spans','No artifact identity or server spans means UNKNOWN','Expected mobile/database boundaries remain unchecked','No causal candidates from missing evidence'],
++      reports:health.map(d=>({traceId:d.traceId, observedHops:d.hops.map(h=>({spanId:h.spanId,parentSpanId:h.parentSpanId,name:h.name,kind:h.kind,service:h.service})),compatibility:d.compatibility}))};
++    fs.writeFileSync(path.join(dir,'fin-capture-tests.json'),JSON.stringify(report,null,2));
++    console.log(JSON.stringify({status:'PASS',healthRequests:health.length,hops:health.map(d=>d.hops.length),unchecked:health.map(d=>d.compatibility.coverage.uncheckedInteractions)},null,2));
++  } finally { await stopServer(); }
++}
++main().catch(e=>{console.error(e);process.exitCode=1;});
+--- /dev/null
++++ b/tests/verify_node_live_capture.js
+@@ -0,0 +1,55 @@
++'use strict';
++// A second live runtime: two actual Node HTTP services, explicit OTel SDK spans.
++// A test application, not a production incident or automatic-instrumentation claim.
++const assert = require('node:assert/strict');
++const http = require('http');
++const fs = require('fs');
++const path = require('path');
++const { NodeTracerProvider, SimpleSpanProcessor } = require('@opentelemetry/sdk-trace-node');
++const { OTLPTraceExporter } = require('@opentelemetry/exporter-trace-otlp-http');
++const { resourceFromAttributes } = require('@opentelemetry/resources');
++const { trace, ROOT_CONTEXT, SpanKind, defaultTextMapGetter, defaultTextMapSetter } = require('@opentelemetry/api');
++const { W3CTraceContextPropagator } = require('@opentelemetry/core');
++const listen = server => new Promise(resolve=>server.listen(0,'127.0.0.1',()=>resolve(server.address().port)));
++const close = server => new Promise(resolve=>server.close(resolve));
++async function main() {
++  process.env.VITALIS_API_KEY='local-node-pilot-test';
++  process.env.VITALIS_DATA_DIR=fs.mkdtempSync(path.join(require('os').tmpdir(),'node-pilot-'));
++  delete process.env.VITALIS_BUILD_INVENTORY;
++  const {startServer,stopServer}=require('../server');
++  await startServer(4356,'127.0.0.1');
++  const providers=['node-http-api','node-http-catalog'].map(service=>new NodeTracerProvider({resource:resourceFromAttributes({'service.name':service}),
++    spanProcessors:[new SimpleSpanProcessor(new OTLPTraceExporter({url:'http://127.0.0.1:4356/v1/traces',headers:{'x-vitalis-api-key':process.env.VITALIS_API_KEY}}))]}));
++  const [apiTracer,catalogTracer]=providers.map(p=>p.getTracer('vitalis-local-test'));
++  const propagator=new W3CTraceContextPropagator();
++  const catalog=http.createServer((req,res)=>{
++    const parent=propagator.extract(ROOT_CONTEXT,req.headers,defaultTextMapGetter);
++    const span=catalogTracer.startSpan('GET /catalog',{kind:SpanKind.SERVER},parent);
++    res.writeHead(200,{'content-type':'application/json'});res.end(JSON.stringify({items:[]}));span.end();
++  });
++  let api, traceId;
++  try {
++    const catalogPort=await listen(catalog);
++    api=http.createServer(async(req,res)=>{
++      const root=apiTracer.startSpan('GET /browse',{kind:SpanKind.SERVER},ROOT_CONTEXT);traceId=root.spanContext().traceId;
++      const call=apiTracer.startSpan('GET catalog',{kind:SpanKind.CLIENT},trace.setSpan(ROOT_CONTEXT,root));
++      try {
++        const headers={};propagator.inject(trace.setSpan(ROOT_CONTEXT,call),headers,defaultTextMapSetter);
++        const response=await fetch('http://127.0.0.1:'+catalogPort+'/catalog',{headers});
++        res.writeHead(response.status,{'content-type':'application/json'});res.end(await response.text());
++      } catch(e) {res.writeHead(500);res.end();} finally {call.end();root.end();}
++    });
++    const apiPort=await listen(api);
++    const response=await fetch('http://127.0.0.1:'+apiPort+'/browse');assert.equal(response.status,200);assert.deepEqual(await response.json(),{items:[]});
++    await Promise.all(providers.map(p=>p.forceFlush()));
++    const result=await (await fetch('http://127.0.0.1:4356/api/traces/'+traceId,{headers:{'x-vitalis-api-key':process.env.VITALIS_API_KEY}})).json();
++    assert.equal(result.hops.length,3);assert.equal(result.compatibility.traceShape.state,'OBSERVED_TREE');
++    assert.equal(result.compatibility.relationships.length,1);assert.equal(result.compatibility.status,'UNKNOWN');
++    assert.equal(result.compatibility.relationships[0].from,'node-http-api');assert.equal(result.compatibility.relationships[0].to,'node-http-catalog');
++    assert.ok(result.compatibility.deployments.every(d=>d.state==='UNKNOWN'));
++    fs.writeFileSync(path.resolve('artifacts/pilot/node-live-capture-tests.json'),JSON.stringify({runAt:new Date().toISOString(),status:'PASS',nodeVersion:process.version,
++      kind:'LIVE_TEST_APPLICATION',checks:['Real HTTP request crossed two Node HTTP services in one process','W3C parent context joined an actual CLIENT -> SERVER pair','Three actual SDK spans ingested','Missing inventory and rules remain UNKNOWN'],report:result.compatibility},null,2));
++    console.log('PASS: Node SDK live HTTP boundary captured; unsupported compatibility UNKNOWN');
++  } finally {if(api) await close(api);await close(catalog);await Promise.all(providers.map(p=>p.shutdown()));await stopServer();}
++}
++main().catch(e=>{console.error(e);process.exitCode=1;});
+--- /dev/null
++++ b/tests/run_pilot_regressions.js
+@@ -0,0 +1,26 @@
++'use strict';
++// Run independently and record exit status; npm's original semicolon chain is
++// shell-dependent and can hide earlier failures. Do not silently skip failures.
++const fs = require('fs');
++const path = require('path');
++const {spawnSync}=require('child_process');
++const files=[
++  'verify_alpha_gates.js','verify_security_gates.js','verify_stage1_evidence_gates.js',
++  'verify_stage1_otel_sdk_proof.js','verify_stage4_governance_gates.js',
++  'verify_stage5_durability_gates.js','verify_stage6_ibm_adapter_gates.js',
++  'verify_stage9_drift_gates.js','verify_stage10_request_drift_gates.js',
++  'verify_stage11_generality_gates.js','verify_stage12_otlp_encoding_gates.js',
++  'verify_stage13_rulepack_coverage_gates.js','verify_stage14_learned_baseline_gates.js',
++  'verify_stage16_no_fabricated_facts_gates.js','verify_relationship_pilot.js',
++  'verify_fin_capture.js','verify_node_live_capture.js'
++];
++const dir=path.resolve(__dirname,'../artifacts/pilot');fs.mkdirSync(dir,{recursive:true});
++const results=[];
++for(const file of files){
++  const r=spawnSync(process.execPath,[path.join(__dirname,file)],{encoding:'utf8',timeout:90000});
++  const output=(r.stdout||'')+(r.stderr||'');fs.writeFileSync(path.join(dir,file+'.log'),output);
++  const status=r.status===0&&!r.error?'PASS':'FAIL';
++  results.push({file,status,exitCode:r.status,error:r.error?.message,log:file+'.log'});console.log(status,file);
++}
++fs.writeFileSync(path.join(dir,'regressions.json'),JSON.stringify({runAt:new Date().toISOString(),results},null,2));
++process.exitCode=results.some(r=>r.status!=='PASS')?1:0;
+--- /dev/null
++++ b/tests/build_pilot_review.py
+@@ -0,0 +1,42 @@
++"""Produce a pilot-only diff against the imported E: working baseline, not old HEAD."""
++import difflib
++import hashlib
++import json
++from pathlib import Path
++import sys
++
++root = Path(__file__).resolve().parents[1]
++source = Path(sys.argv[1])
++files = [
++    'server.js', 'index.html', 'package.json', 'README.md',
++    'engine/drift/request_drift.js', 'engine/drift/relationships.js', 'engine/drift/relationship_rules.json',
++    'docs/00_START_HERE.md', 'docs/01_CHARTER_read_this_first.md', 'docs/03_Competitive_Reality.md',
++    'docs/09_Internal_Adoption_Proposal.md', 'docs/17_Stage9_Compatibility_Drift.md',
++    'docs/18_Stage10_Request_Path_Drift.md', 'docs/28_Request_Compatibility_Pilot.md',
++    'tests/fixtures/relationship_pilot.js', 'tests/verify_relationship_pilot.js',
++    'tests/verify_relationship_console.js', 'tests/serve_relationship_pilot.js',
++    'tests/capture_fin_health.py', 'tests/verify_fin_capture.js',
++    'tests/verify_node_live_capture.js', 'tests/run_pilot_regressions.js', 'tests/build_pilot_review.py'
++]
++out = root / 'artifacts/pilot'
++baseline = json.loads((out / 'imported-baseline.json').read_text(encoding='utf-8-sig'))
++hashes = {v['path'].replace('\\', '/'): v['sha256'].lower() for v in baseline}
++patch, records = [], []
++for name in files:
++    old = source / name
++    new = root / name
++    old_bytes = old.read_bytes() if old.exists() else b''
++    new_bytes = new.read_bytes()
++    old_hash = hashlib.sha256(old_bytes).hexdigest() if old.exists() else None
++    if name in hashes and old_hash != hashes[name]:
++        raise RuntimeError(f'Authoritative source changed since import: {name}; review before packaging')
++    if old_bytes == new_bytes:
++        continue
++    patch.extend(difflib.unified_diff(old_bytes.decode('utf-8-sig').splitlines(keepends=True),
++        new_bytes.decode('utf-8-sig').splitlines(keepends=True),
++        fromfile='a/' + name if old.exists() else '/dev/null', tofile='b/' + name))
++    records.append({'path': name, 'baselineSha256': old_hash, 'sha256': hashlib.sha256(new_bytes).hexdigest(),
++        'importHashVerified': name in hashes, 'newFile': not old.exists()})
++(out / 'implementation.patch').write_text(''.join(patch), encoding='utf-8', newline='')
++(out / 'implementation-files.json').write_text(json.dumps(records, indent=2), encoding='utf-8')
++print(f'Packaged {len(records)} pilot files; original checkout unchanged. Evidence artifacts remain alongside the patch.')

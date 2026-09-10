@@ -1,0 +1,25 @@
+{
+  "_readme": [
+    "Declares WHERE a service's versions can be read from. Copy to bindings.json and edit.",
+    "There is deliberately no inference here: a span says service.name='payments-api' and nothing",
+    "in that string identifies a repository. Guessing the mapping would attribute one component's",
+    "findings to another and present the result as evidence, so anything not declared below is",
+    "reported as UNKNOWN on every request that touches it.",
+    "'service' must match the OTel resource attribute service.name exactly.",
+    "'declaredBy' is required — an unattributable binding is refused at load."
+  ],
+  "bindings": [
+    {
+      "service": "example-mobile-app",
+      "manifestPath": "C:\\path\\to\\your\\app",
+      "declaredBy": "your-name",
+      "note": "Expo/React Native client — package.json + package-lock.json"
+    },
+    {
+      "service": "example-api",
+      "manifestPath": "C:\\path\\to\\your\\app\\backend",
+      "declaredBy": "your-name",
+      "note": "Python service — backend/requirements.txt is read when present"
+    }
+  ]
+}

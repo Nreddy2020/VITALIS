@@ -1,0 +1,10 @@
+{
+  "runAt": "2026-09-10T14:28:48.642Z",
+  "status": "PASS",
+  "checks": [
+    "Recorded real FIN capture label is visible",
+    "One unobserved DB boundary and UNKNOWN are visible, no green evidence",
+    "No browser JavaScript errors"
+  ],
+  "traceId": "b24964f07ad4fab58f6da5dd72db1020"
+}

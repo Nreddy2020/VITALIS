@@ -1,0 +1,20 @@
+{
+  "status": "PASS",
+  "runAt": "2026-09-10T14:21:51.507Z",
+  "checks": [
+    "Within-batch retries at quota add one observation; later retries preserve disk, age and revision",
+    "Canonical keys and unordered attributes dedup; ordered value arrays and retained fields conflict",
+    "Missing timestamps do not turn arrival time into identity; changed legacy duration remains a conflict",
+    "Concurrent HTTP retries have one durable winner; forced restart preserves both conflict variants",
+    "Mixed batch quota and malformed later row reject without partial publication",
+    "Recovery hold rejects even an exact retry and preserves damaged journal bytes",
+    "Historical duplicate snapshot rows are preserved without further retry growth",
+    "Original FIN capture in original encodings replays twice without added evidence or changed revisions",
+    "Retry emits no new-evidence subscription event or baseline observation"
+  ],
+  "limitations": [
+    "Identity covers retained sanitized fields only; not discarded OTLP fields or source attestation",
+    "Historical rows are preserved, not migrated or purged",
+    "Local process tests; production load and power loss untested"
+  ]
+}

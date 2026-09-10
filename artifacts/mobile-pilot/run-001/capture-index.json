@@ -1,0 +1,26 @@
+[
+  {
+    "file": "capture-000.bin",
+    "contentType": "application/x-protobuf",
+    "sha256": "9c73ad1be75dd6f9c964e576f26dbd9ba743bd5da3efc5742d63867919057bf1",
+    "receivedAt": 1789037931.422387
+  },
+  {
+    "file": "capture-001.bin",
+    "contentType": "application/x-protobuf",
+    "sha256": "9576b7fdcab3bc2173536e50268ac1007244eda8944978980cbf1ddf9b17b615",
+    "receivedAt": 1789037932.4434009
+  },
+  {
+    "file": "capture-002.bin",
+    "contentType": "application/x-protobuf",
+    "sha256": "5654b6c75357632cf956c19bc06aa34aec54949558926aed15ae7e1d319b758d",
+    "receivedAt": 1789037985.1011791
+  },
+  {
+    "file": "capture-003.bin",
+    "contentType": "application/x-protobuf",
+    "sha256": "5f4ee3b10084a7f102efdf9875a7e74da82fcf6a94bcad74c9cc776be2092492",
+    "receivedAt": 1789038831.9799697
+  }
+]

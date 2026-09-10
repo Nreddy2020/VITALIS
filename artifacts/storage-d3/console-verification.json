@@ -1,0 +1,10 @@
+{
+  "status": "PASS",
+  "runAt": "2026-09-10T14:21:59.852Z",
+  "checks": [
+    "Actual FIN replay retry preserves displayed observation count",
+    "Investigation facts remain identical after retry",
+    "Same-ID changed evidence displays UNKNOWN and conflict reason",
+    "No browser errors"
+  ]
+}

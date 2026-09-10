@@ -1,0 +1,23 @@
+{
+  "status": "PASS",
+  "runAt": "2026-09-10T14:19:15.592Z",
+  "checks": [
+    "Actual second writer is rejected; first remains usable; crash releases OS lock",
+    "Actual middle damage is visible, source bytes preserved and writes blocked",
+    "Actual tail damage is visible, source bytes preserved and writes blocked",
+    "Actual snapshot damage is visible, source bytes preserved and writes blocked",
+    "Actual oversized damage is visible, source bytes preserved and writes blocked",
+    "HTTP traces quota rejects a complete batch without partial publication",
+    "HTTP spans quota rejects a complete batch without partial publication",
+    "HTTP traceBytes quota rejects a complete batch without partial publication",
+    "HTTP journalBytes quota rejects a complete batch without partial publication",
+    "HTTP diskBytes quota rejects a complete batch without partial publication",
+    "Auxiliary resource record and byte caps apply before memory/correlation publication",
+    "Expired and unknown-age evidence remain held across restart; no purge action exists"
+  ],
+  "limits": [
+    "Local filesystem/process locking only",
+    "Retention holds data; automatic purge and case-aware deletion are not implemented",
+    "Metrics/logs bounded in memory and remain non-durable"
+  ]
+}

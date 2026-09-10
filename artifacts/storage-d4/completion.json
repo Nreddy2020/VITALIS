@@ -1,0 +1,25 @@
+{
+  "status": "MILESTONE_COMPLETE",
+  "completedStages": ["A", "B", "C", "D1", "D2", "D3", "D4"],
+  "fullPlanComplete": false,
+  "nextReady": "Case revision and case/evidence repository contract; persistent cases require atomic-write, recovery, quota and stale-update acceptance",
+  "validation": {
+    "pilotRegressionSuites": { "count": 17, "status": "PASS" },
+    "investigationChecks": { "count": 12, "status": "PASS" },
+    "journalChecks": { "count": 8, "status": "PASS" },
+    "storagePolicyChecks": { "count": 12, "status": "PASS" },
+    "idempotentIngestionChecks": { "count": 9, "status": "PASS" },
+    "browserChecks": { "investigation": 5, "mobileReplay": 4, "healthReplay": 3, "fixtures": 4, "storageRecovery": 4, "idempotency": 4, "status": "PASS" },
+    "capacityRun": { "status": "PASS", "acknowledgedSpans": 2000, "recoveredSpans": 2000, "evidenceAndRevisionsIdentical": true, "retriesAddedSpans": 0 }
+  },
+  "reviewPatch": "implementation.patch",
+  "reviewFiles": 52,
+  "patchSha256": "0b5bdcc33561e097c31748057d1abb3a74967d7a2097eb7d2edf23c09d9c9aca",
+  "originalApplyCheck": "PASS; patch not applied",
+  "originalVitalisChanged": false,
+  "originalFinChangedByThisBatch": false,
+  "productionChanges": false,
+  "backgroundImplementationRunning": false,
+  "replayServer": { "url": "http://127.0.0.1:4358/", "pid": 33104, "mode": "REPLAY_OF_REAL_ISOLATED_FIN_MOBILE_CAPTURE" },
+  "limitations": ["Full implementation plan remains open", "No automatic purge or case-aware deletion", "No persistent cases or comparable repair verification yet", "Local bounded workload, not production capacity or host power-loss certification", "No verified AppDynamics connector, deployment attestation or database SERVER capture"]
+}

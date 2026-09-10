@@ -1,0 +1,13 @@
+{
+  "version": "1.0",
+  "testRun": "VITALIS-STAGE5-1789062364049",
+  "timestamp": "2026-09-10T17:46:04.049Z",
+  "gates": {
+    "changeEventsSurviveCrash": "PASS",
+    "exposureStateSurvivesCrash": "PASS",
+    "enrolmentRoundTrip": "PASS",
+    "enrolmentRefusesUnsafeInput": "PASS",
+    "revocationEnforcedAndAudited": "PASS",
+    "pluggableVerifierUsed": "PASS"
+  }
+}

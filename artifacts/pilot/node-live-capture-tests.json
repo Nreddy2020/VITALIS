@@ -1,0 +1,104 @@
+{
+  "runAt": "2026-09-10T14:28:27.588Z",
+  "status": "PASS",
+  "nodeVersion": "v24.14.1",
+  "kind": "LIVE_TEST_APPLICATION",
+  "checks": [
+    "Real HTTP request crossed two Node HTTP services in one process",
+    "W3C parent context joined an actual CLIENT -> SERVER pair",
+    "Three actual SDK spans ingested",
+    "Missing inventory and rules remain UNKNOWN"
+  ],
+  "report": {
+    "schemaVersion": 1,
+    "traceId": "c9f00b1d23e37e70019ee1d7da69b7f0",
+    "evaluatedAt": "2026-09-10T14:28:27.570Z",
+    "inputHash": "a6d28334b74df69c9ef085cddf72aadfc7ed4dd128d6dbaaacd2fadf25487de8",
+    "ruleSetHash": "3ef4642420c0415449adb9f111580cd7c1d6574e1a7a6add614beb67a00d2eba",
+    "fixture": false,
+    "traceShape": {
+      "state": "OBSERVED_TREE",
+      "reasons": [],
+      "roots": [
+        "95308554d24fda28"
+      ]
+    },
+    "deployments": [
+      {
+        "spanId": "501d1434f52aa322",
+        "parentSpanId": "7e1def4b346ebd20",
+        "kind": 2,
+        "operation": "GET /catalog",
+        "observedAt": 1789050507512,
+        "service": "node-http-catalog",
+        "deployed": {
+          "provenance": "OBSERVED",
+          "basis": "Sender-reported resource attributes; not independently attested"
+        },
+        "declared": null,
+        "resolved": [],
+        "inventoryHash": null,
+        "state": "UNKNOWN",
+        "reason": "Missing or invalid deployed SHA-256 artifact digest"
+      },
+      {
+        "spanId": "7e1def4b346ebd20",
+        "parentSpanId": "95308554d24fda28",
+        "kind": 3,
+        "operation": "GET catalog",
+        "observedAt": 1789050507506,
+        "service": "node-http-api",
+        "deployed": {
+          "provenance": "OBSERVED",
+          "basis": "Sender-reported resource attributes; not independently attested"
+        },
+        "declared": null,
+        "resolved": [],
+        "inventoryHash": null,
+        "state": "UNKNOWN",
+        "reason": "Missing or invalid deployed SHA-256 artifact digest"
+      },
+      {
+        "spanId": "95308554d24fda28",
+        "kind": 2,
+        "operation": "GET /browse",
+        "observedAt": 1789050507506,
+        "service": "node-http-api",
+        "deployed": {
+          "provenance": "OBSERVED",
+          "basis": "Sender-reported resource attributes; not independently attested"
+        },
+        "declared": null,
+        "resolved": [],
+        "inventoryHash": null,
+        "state": "UNKNOWN",
+        "reason": "Missing or invalid deployed SHA-256 artifact digest"
+      }
+    ],
+    "relationships": [
+      {
+        "from": "node-http-api",
+        "to": "node-http-catalog",
+        "clientSpanId": "7e1def4b346ebd20",
+        "serverSpanId": "501d1434f52aa322",
+        "observed": "SERVER parentSpanId equals CLIENT spanId, across distinct services",
+        "provenance": "OBSERVED",
+        "status": "UNKNOWN",
+        "findings": [],
+        "causalClaim": "NONE: a prerequisite violation is not proof of the cause of this request outcome",
+        "reason": "No applicable sourced rule for this observed boundary; add a reviewed rule and exact inventory evidence"
+      }
+    ],
+    "unchecked": [],
+    "expectedCoverage": [],
+    "status": "UNKNOWN",
+    "coverage": {
+      "observedBoundaries": 1,
+      "checkedBoundaries": 0,
+      "unknownBoundaries": 1,
+      "uncheckedInteractions": 0
+    },
+    "limitation": "Only observed CLIENT -> SERVER boundaries and listed prerequisites are evaluated. Missing spans, async links, uninstrumented peers, unlisted rules and runtime behavior remain UNKNOWN. No whole-request compatibility or causal assurance.",
+    "evidenceContext": "Telemetry origin is not independently verified by this report"
+  }
+}

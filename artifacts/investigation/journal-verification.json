@@ -1,0 +1,18 @@
+{
+  "status": "PASS",
+  "runAt": "2026-09-10T14:19:16.323Z",
+  "checks": [
+    "Real journal open failure returns 503 without publishing the batch",
+    "Successful retry is framed and visible only after durable append",
+    "Malformed identity later in a batch cannot partially commit earlier spans",
+    "Partial write ENOSPC rolls back bytes and does not publish new evidence",
+    "Failed snapshot replacement preserves the previous readable snapshot",
+    "fsync failure refuses acknowledgment and rolls back the uncommitted batch",
+    "Restart retains conflicts; D2 preserves torn evidence and blocks further writes",
+    "Acknowledged batch survives forced process termination before snapshot"
+  ],
+  "limits": [
+    "Local filesystem/process crash boundary, not replicated durability or certified power-loss recovery",
+    "D2 adds visible recovery and capacity bounds; automated case-aware purge remains unfinished"
+  ]
+}

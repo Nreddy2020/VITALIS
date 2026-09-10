@@ -1,0 +1,11 @@
+{
+  "status": "PASS",
+  "runAt": "2026-09-10T14:28:45.297Z",
+  "checks": [
+    "Worklist exposes retained requests with evidence gaps",
+    "Real FIN root duration 358ms, not overlapping span sum",
+    "Functional result unknown and replay context visible",
+    "Gap-linked diagnostics with no invented execution progress",
+    "Hostile sender markup escaped and no browser JavaScript errors"
+  ]
+}

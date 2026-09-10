@@ -1,0 +1,169 @@
+{
+  "suite": "stage9-drift",
+  "startedAt": "2026-09-10T17:46:05.921Z",
+  "gates": {
+    "D1_realIncompatibilityCaught": "PASS",
+    "D2_correctPairingSatisfied": "PASS",
+    "D3_unknownSdkNotReportedHealthy": "PASS",
+    "D4_uncoveredCountedUnknown": "PASS",
+    "D5_unsourcedRuleRefused": "PASS",
+    "D6_noLockfileIsInferred": "PASS",
+    "D7_newArchMandatoryEnforced": "PASS",
+    "D8_unknownOperatorFailsClosed": "PASS",
+    "D9_deprecatedPackageCaught": "PASS"
+  },
+  "evidence": {
+    "D1": {
+      "ruleId": "expo-sdk-57-react-native",
+      "status": "VIOLATION",
+      "severity": "HIGH",
+      "summary": "Expo SDK 57 targets react-native 0.86",
+      "detail": "expo 57.0.0 → react-native is 0.85.0: 0.85.0 is not in the 0.86.x line",
+      "provenance": "OBSERVED",
+      "source": {
+        "url": "https://docs.expo.dev/versions/latest/",
+        "title": "Expo SDK reference — SDK / React Native / React / Node version table",
+        "recordedAt": "2026-09-09"
+      }
+    },
+    "D2": {
+      "rn": {
+        "ruleId": "expo-sdk-54-react-native",
+        "status": "SATISFIED",
+        "severity": "HIGH",
+        "summary": "Expo SDK 54 targets react-native 0.81",
+        "detail": "expo 54.0.35 → react-native is 0.81.5: 0.81.5 is in the 0.81.x line",
+        "provenance": "OBSERVED",
+        "source": {
+          "url": "https://docs.expo.dev/versions/latest/",
+          "title": "Expo SDK reference — SDK / React Native / React / Node version table",
+          "recordedAt": "2026-09-09"
+        }
+      },
+      "rc": {
+        "ruleId": "expo-sdk-54-react",
+        "status": "SATISFIED",
+        "severity": "HIGH",
+        "summary": "Expo SDK 54 targets react 19.1.0",
+        "detail": "expo 54.0.35 → react is 19.1.0: 19.1.0 exact 19.1.0",
+        "provenance": "OBSERVED",
+        "source": {
+          "url": "https://docs.expo.dev/versions/latest/",
+          "title": "Expo SDK reference — SDK / React Native / React / Node version table",
+          "recordedAt": "2026-09-09"
+        }
+      },
+      "violations": 0
+    },
+    "D3": {
+      "findings": 0,
+      "summary": "0 rule(s) applied: 0 VIOLATION, 0 SATISFIED, 0 UNKNOWN. 2 of 2 dependencies are covered by no rule — their compatibility is UNKNOWN, which is not the same as compatible. No violation was found among the rules that exist. That is a statement about the rules, not about the application.",
+      "uncovered": [
+        {
+          "ecosystem": "npm",
+          "name": "expo",
+          "version": "51.0.0",
+          "provenance": "OBSERVED"
+        },
+        {
+          "ecosystem": "npm",
+          "name": "react-native",
+          "version": "0.74.5",
+          "provenance": "OBSERVED"
+        }
+      ]
+    },
+    "D4": {
+      "coverage": {
+        "packagesRead": 5,
+        "packagesCovered": 4,
+        "packagesUncovered": 3,
+        "rulesLoaded": 40,
+        "rulesApplied": 4,
+        "violations": 0,
+        "satisfied": 2,
+        "unknown": 2,
+        "uncovered": [
+          {
+            "ecosystem": "npm",
+            "name": "axios",
+            "version": "1.18.1",
+            "provenance": "OBSERVED"
+          },
+          {
+            "ecosystem": "npm",
+            "name": "date-fns",
+            "version": "4.1.0",
+            "provenance": "OBSERVED"
+          },
+          {
+            "ecosystem": "npm",
+            "name": "clsx",
+            "version": "2.1.1",
+            "provenance": "OBSERVED"
+          }
+        ]
+      },
+      "summary": "4 rule(s) applied: 0 VIOLATION, 2 SATISFIED, 2 UNKNOWN. 3 of 5 dependencies are covered by no rule — their compatibility is UNKNOWN, which is not the same as compatible. No violation was found among the rules that exist. That is a statement about the rules, not about the application."
+    },
+    "D5": {
+      "rejection": "rule 'unsourced-claim' in pack 'inline' rejected: every rule must carry source.url — an unsourced compatibility claim is not admissible",
+      "shippedRulesLoaded": 40
+    },
+    "D6": {
+      "finding": {
+        "ruleId": "expo-sdk-54-react-native",
+        "status": "SATISFIED",
+        "severity": "HIGH",
+        "summary": "Expo SDK 54 targets react-native 0.81",
+        "detail": "expo 54.0.35 → react-native is 0.81.5: 0.81.5 is in the 0.81.x line [from a declared range, not a resolved version]",
+        "provenance": "INFERRED",
+        "source": {
+          "url": "https://docs.expo.dev/versions/latest/",
+          "title": "Expo SDK reference — SDK / React Native / React / Node version table",
+          "recordedAt": "2026-09-09"
+        }
+      },
+      "warnings": [
+        "C:\\Users\\nirwa\\AppData\\Local\\Temp\\vitalis-drift-nolock-t6KP72: no package-lock.json. npm versions from here are the FLOOR of a declared range, not the version that will install — findings are marked INFERRED."
+      ]
+    },
+    "D7": {
+      "ruleId": "expo-sdk-55-plus-new-architecture-mandatory",
+      "status": "VIOLATION",
+      "severity": "HIGH",
+      "summary": "From Expo SDK 55 the New Architecture cannot be disabled; the legacy architecture is supported only in SDK 54 and earlier",
+      "detail": "expo 55.0.0 → expo.newArchEnabled is false: is false, expected true",
+      "provenance": "OBSERVED",
+      "source": {
+        "url": "https://docs.expo.dev/guides/new-architecture/",
+        "title": "Expo — React Native New Architecture",
+        "recordedAt": "2026-09-09"
+      }
+    },
+    "D8": {
+      "bogus": {
+        "result": "UNKNOWN",
+        "reason": "unsupported operator 'approximatelyCompatibleWith' — not in the closed vocabulary [exact, majorEquals, minorMatch, gte, gt, lte, lt, boolEquals]"
+      },
+      "rangeAsVersion": {
+        "result": "UNKNOWN",
+        "reason": "observed value \"^0.81.0\" is not an exact version"
+      }
+    },
+    "D9": {
+      "ruleId": "deprecated-expo-random",
+      "status": "VIOLATION",
+      "severity": "MEDIUM",
+      "summary": "expo-random is deprecated by its publisher in favour of expo-crypto, which provides the same functionality",
+      "detail": "expo-random is declared as 14.0.1",
+      "provenance": "OBSERVED",
+      "source": {
+        "url": "https://registry.npmjs.org/expo-random",
+        "title": "npm registry metadata for expo-random (deprecated field)",
+        "recordedAt": "2026-09-09"
+      }
+    }
+  },
+  "finishedAt": "2026-09-10T17:46:05.998Z"
+}

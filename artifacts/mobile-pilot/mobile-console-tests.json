@@ -1,0 +1,11 @@
+{
+  "runAt": "2026-09-10T14:28:46.984Z",
+  "status": "PASS",
+  "traceId": "c4b6bfebbdf71a25e26d910fb1681aab",
+  "checks": [
+    "Actual capture replay label",
+    "Observed mobile/backend boundary",
+    "Database boundary unknown and no green compatibility",
+    "No browser errors"
+  ]
+}

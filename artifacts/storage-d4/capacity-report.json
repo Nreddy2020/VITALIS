@@ -1,0 +1,1877 @@
+{
+  "status": "PASS",
+  "runAt": "2026-09-10T14:25:54.234Z",
+  "workload": {
+    "type": "SYNTHETIC_LOCAL_HTTP",
+    "traceBatches": 200,
+    "spansPerBatch": 10,
+    "concurrency": 10,
+    "durable": true,
+    "payloadBytesPerBatch": 3018
+  },
+  "environment": {
+    "node": "v24.14.1",
+    "platform": "win32",
+    "osRelease": "10.0.26200",
+    "cpuModel": "Intel(R) Core(TM) i5-10400F CPU @ 2.90GHz",
+    "logicalCpus": 12,
+    "hostMemoryBytes": 51432239104
+  },
+  "disposableStore": "C:\\Users\\nirwa\\AppData\\Local\\Temp\\vitalis-storage-policy-rpOxcZ",
+  "phases": {
+    "ingest": {
+      "requests": 200,
+      "p50Ms": 91.75890000000004,
+      "p95Ms": 164.3046999999999,
+      "p99Ms": 179.1307999999999,
+      "maxMs": 181.38630000000012,
+      "elapsedMs": 1988.2785999999999,
+      "completedPerSecond": 100.58952502933946,
+      "results": [
+        {
+          "status": 200,
+          "ingested": 10
+        },
+        {
+          "status": 200,
+          "ingested": 10
+        },
+        {
+          "status": 200,
+          "ingested": 10
+        },
+        {
+          "status": 200,
+          "ingested": 10
+        },
+        {
+          "status": 200,
+          "ingested": 10
+        },
+        {
+          "status": 200,
+          "ingested": 10
+        },
+        {
+          "status": 200,
+          "ingested": 10
+        },
+        {
+          "status": 200,
+          "ingested": 10
+        },
+        {
+          "status": 200,
+          "ingested": 10
+        },
+        {
+          "status": 200,
+          "ingested": 10
+        },
+        {
+          "status": 200,
+          "ingested": 10
+        },
+        {
+          "status": 200,
+          "ingested": 10
+        },
+        {
+          "status": 200,
+          "ingested": 10
+        },
+        {
+          "status": 200,
+          "ingested": 10
+        },
+        {
+          "status": 200,
+          "ingested": 10
+        },
+        {
+          "status": 200,
+          "ingested": 10
+        },
+        {
+          "status": 200,
+          "ingested": 10
+        },
+        {
+          "status": 200,
+          "ingested": 10
+        },
+        {
+          "status": 200,
+          "ingested": 10
+        },
+        {
+          "status": 200,
+          "ingested": 10
+        },
+        {
+          "status": 200,
+          "ingested": 10
+        },
+        {
+          "status": 200,
+          "ingested": 10
+        },
+        {
+          "status": 200,
+          "ingested": 10
+        },
+        {
+          "status": 200,
+          "ingested": 10
+        },
+        {
+          "status": 200,
+          "ingested": 10
+        },
+        {
+          "status": 200,
+          "ingested": 10
+        },
+        {
+          "status": 200,
+          "ingested": 10
+        },
+        {
+          "status": 200,
+          "ingested": 10
+        },
+        {
+          "status": 200,
+          "ingested": 10
+        },
+        {
+          "status": 200,
+          "ingested": 10
+        },
+        {
+          "status": 200,
+          "ingested": 10
+        },
+        {
+          "status": 200,
+          "ingested": 10
+        },
+        {
+          "status": 200,
+          "ingested": 10
+        },
+        {
+          "status": 200,
+          "ingested": 10
+        },
+        {
+          "status": 200,
+          "ingested": 10
+        },
+        {
+          "status": 200,
+          "ingested": 10
+        },
+        {
+          "status": 200,
+          "ingested": 10
+        },
+        {
+          "status": 200,
+          "ingested": 10
+        },
+        {
+          "status": 200,
+          "ingested": 10
+        },
+        {
+          "status": 200,
+          "ingested": 10
+        },
+        {
+          "status": 200,
+          "ingested": 10
+        },
+        {
+          "status": 200,
+          "ingested": 10
+        },
+        {
+          "status": 200,
+          "ingested": 10
+        },
+        {
+          "status": 200,
+          "ingested": 10
+        },
+        {
+          "status": 200,
+          "ingested": 10
+        },
+        {
+          "status": 200,
+          "ingested": 10
+        },
+        {
+          "status": 200,
+          "ingested": 10
+        },
+        {
+          "status": 200,
+          "ingested": 10
+        },
+        {
+          "status": 200,
+          "ingested": 10
+        },
+        {
+          "status": 200,
+          "ingested": 10
+        },
+        {
+          "status": 200,
+          "ingested": 10
+        },
+        {
+          "status": 200,
+          "ingested": 10
+        },
+        {
+          "status": 200,
+          "ingested": 10
+        },
+        {
+          "status": 200,
+          "ingested": 10
+        },
+        {
+          "status": 200,
+          "ingested": 10
+        },
+        {
+          "status": 200,
+          "ingested": 10
+        },
+        {
+          "status": 200,
+          "ingested": 10
+        },
+        {
+          "status": 200,
+          "ingested": 10
+        },
+        {
+          "status": 200,
+          "ingested": 10
+        },
+        {
+          "status": 200,
+          "ingested": 10
+        },
+        {
+          "status": 200,
+          "ingested": 10
+        },
+        {
+          "status": 200,
+          "ingested": 10
+        },
+        {
+          "status": 200,
+          "ingested": 10
+        },
+        {
+          "status": 200,
+          "ingested": 10
+        },
+        {
+          "status": 200,
+          "ingested": 10
+        },
+        {
+          "status": 200,
+          "ingested": 10
+        },
+        {
+          "status": 200,
+          "ingested": 10
+        },
+        {
+          "status": 200,
+          "ingested": 10
+        },
+        {
+          "status": 200,
+          "ingested": 10
+        },
+        {
+          "status": 200,
+          "ingested": 10
+        },
+        {
+          "status": 200,
+          "ingested": 10
+        },
+        {
+          "status": 200,
+          "ingested": 10
+        },
+        {
+          "status": 200,
+          "ingested": 10
+        },
+        {
+          "status": 200,
+          "ingested": 10
+        },
+        {
+          "status": 200,
+          "ingested": 10
+        },
+        {
+          "status": 200,
+          "ingested": 10
+        },
+        {
+          "status": 200,
+          "ingested": 10
+        },
+        {
+          "status": 200,
+          "ingested": 10
+        },
+        {
+          "status": 200,
+          "ingested": 10
+        },
+        {
+          "status": 200,
+          "ingested": 10
+        },
+        {
+          "status": 200,
+          "ingested": 10
+        },
+        {
+          "status": 200,
+          "ingested": 10
+        },
+        {
+          "status": 200,
+          "ingested": 10
+        },
+        {
+          "status": 200,
+          "ingested": 10
+        },
+        {
+          "status": 200,
+          "ingested": 10
+        },
+        {
+          "status": 200,
+          "ingested": 10
+        },
+        {
+          "status": 200,
+          "ingested": 10
+        },
+        {
+          "status": 200,
+          "ingested": 10
+        },
+        {
+          "status": 200,
+          "ingested": 10
+        },
+        {
+          "status": 200,
+          "ingested": 10
+        },
+        {
+          "status": 200,
+          "ingested": 10
+        },
+        {
+          "status": 200,
+          "ingested": 10
+        },
+        {
+          "status": 200,
+          "ingested": 10
+        },
+        {
+          "status": 200,
+          "ingested": 10
+        },
+        {
+          "status": 200,
+          "ingested": 10
+        },
+        {
+          "status": 200,
+          "ingested": 10
+        },
+        {
+          "status": 200,
+          "ingested": 10
+        },
+        {
+          "status": 200,
+          "ingested": 10
+        },
+        {
+          "status": 200,
+          "ingested": 10
+        },
+        {
+          "status": 200,
+          "ingested": 10
+        },
+        {
+          "status": 200,
+          "ingested": 10
+        },
+        {
+          "status": 200,
+          "ingested": 10
+        },
+        {
+          "status": 200,
+          "ingested": 10
+        },
+        {
+          "status": 200,
+          "ingested": 10
+        },
+        {
+          "status": 200,
+          "ingested": 10
+        },
+        {
+          "status": 200,
+          "ingested": 10
+        },
+        {
+          "status": 200,
+          "ingested": 10
+        },
+        {
+          "status": 200,
+          "ingested": 10
+        },
+        {
+          "status": 200,
+          "ingested": 10
+        },
+        {
+          "status": 200,
+          "ingested": 10
+        },
+        {
+          "status": 200,
+          "ingested": 10
+        },
+        {
+          "status": 200,
+          "ingested": 10
+        },
+        {
+          "status": 200,
+          "ingested": 10
+        },
+        {
+          "status": 200,
+          "ingested": 10
+        },
+        {
+          "status": 200,
+          "ingested": 10
+        },
+        {
+          "status": 200,
+          "ingested": 10
+        },
+        {
+          "status": 200,
+          "ingested": 10
+        },
+        {
+          "status": 200,
+          "ingested": 10
+        },
+        {
+          "status": 200,
+          "ingested": 10
+        },
+        {
+          "status": 200,
+          "ingested": 10
+        },
+        {
+          "status": 200,
+          "ingested": 10
+        },
+        {
+          "status": 200,
+          "ingested": 10
+        },
+        {
+          "status": 200,
+          "ingested": 10
+        },
+        {
+          "status": 200,
+          "ingested": 10
+        },
+        {
+          "status": 200,
+          "ingested": 10
+        },
+        {
+          "status": 200,
+          "ingested": 10
+        },
+        {
+          "status": 200,
+          "ingested": 10
+        },
+        {
+          "status": 200,
+          "ingested": 10
+        },
+        {
+          "status": 200,
+          "ingested": 10
+        },
+        {
+          "status": 200,
+          "ingested": 10
+        },
+        {
+          "status": 200,
+          "ingested": 10
+        },
+        {
+          "status": 200,
+          "ingested": 10
+        },
+        {
+          "status": 200,
+          "ingested": 10
+        },
+        {
+          "status": 200,
+          "ingested": 10
+        },
+        {
+          "status": 200,
+          "ingested": 10
+        },
+        {
+          "status": 200,
+          "ingested": 10
+        },
+        {
+          "status": 200,
+          "ingested": 10
+        },
+        {
+          "status": 200,
+          "ingested": 10
+        },
+        {
+          "status": 200,
+          "ingested": 10
+        },
+        {
+          "status": 200,
+          "ingested": 10
+        },
+        {
+          "status": 200,
+          "ingested": 10
+        },
+        {
+          "status": 200,
+          "ingested": 10
+        },
+        {
+          "status": 200,
+          "ingested": 10
+        },
+        {
+          "status": 200,
+          "ingested": 10
+        },
+        {
+          "status": 200,
+          "ingested": 10
+        },
+        {
+          "status": 200,
+          "ingested": 10
+        },
+        {
+          "status": 200,
+          "ingested": 10
+        },
+        {
+          "status": 200,
+          "ingested": 10
+        },
+        {
+          "status": 200,
+          "ingested": 10
+        },
+        {
+          "status": 200,
+          "ingested": 10
+        },
+        {
+          "status": 200,
+          "ingested": 10
+        },
+        {
+          "status": 200,
+          "ingested": 10
+        },
+        {
+          "status": 200,
+          "ingested": 10
+        },
+        {
+          "status": 200,
+          "ingested": 10
+        },
+        {
+          "status": 200,
+          "ingested": 10
+        },
+        {
+          "status": 200,
+          "ingested": 10
+        },
+        {
+          "status": 200,
+          "ingested": 10
+        },
+        {
+          "status": 200,
+          "ingested": 10
+        },
+        {
+          "status": 200,
+          "ingested": 10
+        },
+        {
+          "status": 200,
+          "ingested": 10
+        },
+        {
+          "status": 200,
+          "ingested": 10
+        },
+        {
+          "status": 200,
+          "ingested": 10
+        },
+        {
+          "status": 200,
+          "ingested": 10
+        },
+        {
+          "status": 200,
+          "ingested": 10
+        },
+        {
+          "status": 200,
+          "ingested": 10
+        },
+        {
+          "status": 200,
+          "ingested": 10
+        },
+        {
+          "status": 200,
+          "ingested": 10
+        },
+        {
+          "status": 200,
+          "ingested": 10
+        },
+        {
+          "status": 200,
+          "ingested": 10
+        },
+        {
+          "status": 200,
+          "ingested": 10
+        },
+        {
+          "status": 200,
+          "ingested": 10
+        },
+        {
+          "status": 200,
+          "ingested": 10
+        },
+        {
+          "status": 200,
+          "ingested": 10
+        },
+        {
+          "status": 200,
+          "ingested": 10
+        },
+        {
+          "status": 200,
+          "ingested": 10
+        },
+        {
+          "status": 200,
+          "ingested": 10
+        },
+        {
+          "status": 200,
+          "ingested": 10
+        },
+        {
+          "status": 200,
+          "ingested": 10
+        },
+        {
+          "status": 200,
+          "ingested": 10
+        },
+        {
+          "status": 200,
+          "ingested": 10
+        },
+        {
+          "status": 200,
+          "ingested": 10
+        },
+        {
+          "status": 200,
+          "ingested": 10
+        },
+        {
+          "status": 200,
+          "ingested": 10
+        },
+        {
+          "status": 200,
+          "ingested": 10
+        },
+        {
+          "status": 200,
+          "ingested": 10
+        },
+        {
+          "status": 200,
+          "ingested": 10
+        },
+        {
+          "status": 200,
+          "ingested": 10
+        },
+        {
+          "status": 200,
+          "ingested": 10
+        },
+        {
+          "status": 200,
+          "ingested": 10
+        },
+        {
+          "status": 200,
+          "ingested": 10
+        },
+        {
+          "status": 200,
+          "ingested": 10
+        },
+        {
+          "status": 200,
+          "ingested": 10
+        },
+        {
+          "status": 200,
+          "ingested": 10
+        },
+        {
+          "status": 200,
+          "ingested": 10
+        },
+        {
+          "status": 200,
+          "ingested": 10
+        },
+        {
+          "status": 200,
+          "ingested": 10
+        },
+        {
+          "status": 200,
+          "ingested": 10
+        },
+        {
+          "status": 200,
+          "ingested": 10
+        },
+        {
+          "status": 200,
+          "ingested": 10
+        },
+        {
+          "status": 200,
+          "ingested": 10
+        }
+      ]
+    },
+    "retryAtQuota": {
+      "requests": 200,
+      "p50Ms": 64.58109999999988,
+      "p95Ms": 85.50600000000031,
+      "p99Ms": 127.0291000000002,
+      "maxMs": 130.20060000000012,
+      "elapsedMs": 1402.2165,
+      "completedPerSecond": 142.63132690279997,
+      "results": [
+        {
+          "status": 200,
+          "duplicates": 10
+        },
+        {
+          "status": 200,
+          "duplicates": 10
+        },
+        {
+          "status": 200,
+          "duplicates": 10
+        },
+        {
+          "status": 200,
+          "duplicates": 10
+        },
+        {
+          "status": 200,
+          "duplicates": 10
+        },
+        {
+          "status": 200,
+          "duplicates": 10
+        },
+        {
+          "status": 200,
+          "duplicates": 10
+        },
+        {
+          "status": 200,
+          "duplicates": 10
+        },
+        {
+          "status": 200,
+          "duplicates": 10
+        },
+        {
+          "status": 200,
+          "duplicates": 10
+        },
+        {
+          "status": 200,
+          "duplicates": 10
+        },
+        {
+          "status": 200,
+          "duplicates": 10
+        },
+        {
+          "status": 200,
+          "duplicates": 10
+        },
+        {
+          "status": 200,
+          "duplicates": 10
+        },
+        {
+          "status": 200,
+          "duplicates": 10
+        },
+        {
+          "status": 200,
+          "duplicates": 10
+        },
+        {
+          "status": 200,
+          "duplicates": 10
+        },
+        {
+          "status": 200,
+          "duplicates": 10
+        },
+        {
+          "status": 200,
+          "duplicates": 10
+        },
+        {
+          "status": 200,
+          "duplicates": 10
+        },
+        {
+          "status": 200,
+          "duplicates": 10
+        },
+        {
+          "status": 200,
+          "duplicates": 10
+        },
+        {
+          "status": 200,
+          "duplicates": 10
+        },
+        {
+          "status": 200,
+          "duplicates": 10
+        },
+        {
+          "status": 200,
+          "duplicates": 10
+        },
+        {
+          "status": 200,
+          "duplicates": 10
+        },
+        {
+          "status": 200,
+          "duplicates": 10
+        },
+        {
+          "status": 200,
+          "duplicates": 10
+        },
+        {
+          "status": 200,
+          "duplicates": 10
+        },
+        {
+          "status": 200,
+          "duplicates": 10
+        },
+        {
+          "status": 200,
+          "duplicates": 10
+        },
+        {
+          "status": 200,
+          "duplicates": 10
+        },
+        {
+          "status": 200,
+          "duplicates": 10
+        },
+        {
+          "status": 200,
+          "duplicates": 10
+        },
+        {
+          "status": 200,
+          "duplicates": 10
+        },
+        {
+          "status": 200,
+          "duplicates": 10
+        },
+        {
+          "status": 200,
+          "duplicates": 10
+        },
+        {
+          "status": 200,
+          "duplicates": 10
+        },
+        {
+          "status": 200,
+          "duplicates": 10
+        },
+        {
+          "status": 200,
+          "duplicates": 10
+        },
+        {
+          "status": 200,
+          "duplicates": 10
+        },
+        {
+          "status": 200,
+          "duplicates": 10
+        },
+        {
+          "status": 200,
+          "duplicates": 10
+        },
+        {
+          "status": 200,
+          "duplicates": 10
+        },
+        {
+          "status": 200,
+          "duplicates": 10
+        },
+        {
+          "status": 200,
+          "duplicates": 10
+        },
+        {
+          "status": 200,
+          "duplicates": 10
+        },
+        {
+          "status": 200,
+          "duplicates": 10
+        },
+        {
+          "status": 200,
+          "duplicates": 10
+        },
+        {
+          "status": 200,
+          "duplicates": 10
+        },
+        {
+          "status": 200,
+          "duplicates": 10
+        },
+        {
+          "status": 200,
+          "duplicates": 10
+        },
+        {
+          "status": 200,
+          "duplicates": 10
+        },
+        {
+          "status": 200,
+          "duplicates": 10
+        },
+        {
+          "status": 200,
+          "duplicates": 10
+        },
+        {
+          "status": 200,
+          "duplicates": 10
+        },
+        {
+          "status": 200,
+          "duplicates": 10
+        },
+        {
+          "status": 200,
+          "duplicates": 10
+        },
+        {
+          "status": 200,
+          "duplicates": 10
+        },
+        {
+          "status": 200,
+          "duplicates": 10
+        },
+        {
+          "status": 200,
+          "duplicates": 10
+        },
+        {
+          "status": 200,
+          "duplicates": 10
+        },
+        {
+          "status": 200,
+          "duplicates": 10
+        },
+        {
+          "status": 200,
+          "duplicates": 10
+        },
+        {
+          "status": 200,
+          "duplicates": 10
+        },
+        {
+          "status": 200,
+          "duplicates": 10
+        },
+        {
+          "status": 200,
+          "duplicates": 10
+        },
+        {
+          "status": 200,
+          "duplicates": 10
+        },
+        {
+          "status": 200,
+          "duplicates": 10
+        },
+        {
+          "status": 200,
+          "duplicates": 10
+        },
+        {
+          "status": 200,
+          "duplicates": 10
+        },
+        {
+          "status": 200,
+          "duplicates": 10
+        },
+        {
+          "status": 200,
+          "duplicates": 10
+        },
+        {
+          "status": 200,
+          "duplicates": 10
+        },
+        {
+          "status": 200,
+          "duplicates": 10
+        },
+        {
+          "status": 200,
+          "duplicates": 10
+        },
+        {
+          "status": 200,
+          "duplicates": 10
+        },
+        {
+          "status": 200,
+          "duplicates": 10
+        },
+        {
+          "status": 200,
+          "duplicates": 10
+        },
+        {
+          "status": 200,
+          "duplicates": 10
+        },
+        {
+          "status": 200,
+          "duplicates": 10
+        },
+        {
+          "status": 200,
+          "duplicates": 10
+        },
+        {
+          "status": 200,
+          "duplicates": 10
+        },
+        {
+          "status": 200,
+          "duplicates": 10
+        },
+        {
+          "status": 200,
+          "duplicates": 10
+        },
+        {
+          "status": 200,
+          "duplicates": 10
+        },
+        {
+          "status": 200,
+          "duplicates": 10
+        },
+        {
+          "status": 200,
+          "duplicates": 10
+        },
+        {
+          "status": 200,
+          "duplicates": 10
+        },
+        {
+          "status": 200,
+          "duplicates": 10
+        },
+        {
+          "status": 200,
+          "duplicates": 10
+        },
+        {
+          "status": 200,
+          "duplicates": 10
+        },
+        {
+          "status": 200,
+          "duplicates": 10
+        },
+        {
+          "status": 200,
+          "duplicates": 10
+        },
+        {
+          "status": 200,
+          "duplicates": 10
+        },
+        {
+          "status": 200,
+          "duplicates": 10
+        },
+        {
+          "status": 200,
+          "duplicates": 10
+        },
+        {
+          "status": 200,
+          "duplicates": 10
+        },
+        {
+          "status": 200,
+          "duplicates": 10
+        },
+        {
+          "status": 200,
+          "duplicates": 10
+        },
+        {
+          "status": 200,
+          "duplicates": 10
+        },
+        {
+          "status": 200,
+          "duplicates": 10
+        },
+        {
+          "status": 200,
+          "duplicates": 10
+        },
+        {
+          "status": 200,
+          "duplicates": 10
+        },
+        {
+          "status": 200,
+          "duplicates": 10
+        },
+        {
+          "status": 200,
+          "duplicates": 10
+        },
+        {
+          "status": 200,
+          "duplicates": 10
+        },
+        {
+          "status": 200,
+          "duplicates": 10
+        },
+        {
+          "status": 200,
+          "duplicates": 10
+        },
+        {
+          "status": 200,
+          "duplicates": 10
+        },
+        {
+          "status": 200,
+          "duplicates": 10
+        },
+        {
+          "status": 200,
+          "duplicates": 10
+        },
+        {
+          "status": 200,
+          "duplicates": 10
+        },
+        {
+          "status": 200,
+          "duplicates": 10
+        },
+        {
+          "status": 200,
+          "duplicates": 10
+        },
+        {
+          "status": 200,
+          "duplicates": 10
+        },
+        {
+          "status": 200,
+          "duplicates": 10
+        },
+        {
+          "status": 200,
+          "duplicates": 10
+        },
+        {
+          "status": 200,
+          "duplicates": 10
+        },
+        {
+          "status": 200,
+          "duplicates": 10
+        },
+        {
+          "status": 200,
+          "duplicates": 10
+        },
+        {
+          "status": 200,
+          "duplicates": 10
+        },
+        {
+          "status": 200,
+          "duplicates": 10
+        },
+        {
+          "status": 200,
+          "duplicates": 10
+        },
+        {
+          "status": 200,
+          "duplicates": 10
+        },
+        {
+          "status": 200,
+          "duplicates": 10
+        },
+        {
+          "status": 200,
+          "duplicates": 10
+        },
+        {
+          "status": 200,
+          "duplicates": 10
+        },
+        {
+          "status": 200,
+          "duplicates": 10
+        },
+        {
+          "status": 200,
+          "duplicates": 10
+        },
+        {
+          "status": 200,
+          "duplicates": 10
+        },
+        {
+          "status": 200,
+          "duplicates": 10
+        },
+        {
+          "status": 200,
+          "duplicates": 10
+        },
+        {
+          "status": 200,
+          "duplicates": 10
+        },
+        {
+          "status": 200,
+          "duplicates": 10
+        },
+        {
+          "status": 200,
+          "duplicates": 10
+        },
+        {
+          "status": 200,
+          "duplicates": 10
+        },
+        {
+          "status": 200,
+          "duplicates": 10
+        },
+        {
+          "status": 200,
+          "duplicates": 10
+        },
+        {
+          "status": 200,
+          "duplicates": 10
+        },
+        {
+          "status": 200,
+          "duplicates": 10
+        },
+        {
+          "status": 200,
+          "duplicates": 10
+        },
+        {
+          "status": 200,
+          "duplicates": 10
+        },
+        {
+          "status": 200,
+          "duplicates": 10
+        },
+        {
+          "status": 200,
+          "duplicates": 10
+        },
+        {
+          "status": 200,
+          "duplicates": 10
+        },
+        {
+          "status": 200,
+          "duplicates": 10
+        },
+        {
+          "status": 200,
+          "duplicates": 10
+        },
+        {
+          "status": 200,
+          "duplicates": 10
+        },
+        {
+          "status": 200,
+          "duplicates": 10
+        },
+        {
+          "status": 200,
+          "duplicates": 10
+        },
+        {
+          "status": 200,
+          "duplicates": 10
+        },
+        {
+          "status": 200,
+          "duplicates": 10
+        },
+        {
+          "status": 200,
+          "duplicates": 10
+        },
+        {
+          "status": 200,
+          "duplicates": 10
+        },
+        {
+          "status": 200,
+          "duplicates": 10
+        },
+        {
+          "status": 200,
+          "duplicates": 10
+        },
+        {
+          "status": 200,
+          "duplicates": 10
+        },
+        {
+          "status": 200,
+          "duplicates": 10
+        },
+        {
+          "status": 200,
+          "duplicates": 10
+        },
+        {
+          "status": 200,
+          "duplicates": 10
+        },
+        {
+          "status": 200,
+          "duplicates": 10
+        },
+        {
+          "status": 200,
+          "duplicates": 10
+        },
+        {
+          "status": 200,
+          "duplicates": 10
+        },
+        {
+          "status": 200,
+          "duplicates": 10
+        },
+        {
+          "status": 200,
+          "duplicates": 10
+        },
+        {
+          "status": 200,
+          "duplicates": 10
+        },
+        {
+          "status": 200,
+          "duplicates": 10
+        },
+        {
+          "status": 200,
+          "duplicates": 10
+        },
+        {
+          "status": 200,
+          "duplicates": 10
+        },
+        {
+          "status": 200,
+          "duplicates": 10
+        },
+        {
+          "status": 200,
+          "duplicates": 10
+        },
+        {
+          "status": 200,
+          "duplicates": 10
+        },
+        {
+          "status": 200,
+          "duplicates": 10
+        },
+        {
+          "status": 200,
+          "duplicates": 10
+        },
+        {
+          "status": 200,
+          "duplicates": 10
+        },
+        {
+          "status": 200,
+          "duplicates": 10
+        },
+        {
+          "status": 200,
+          "duplicates": 10
+        },
+        {
+          "status": 200,
+          "duplicates": 10
+        },
+        {
+          "status": 200,
+          "duplicates": 10
+        },
+        {
+          "status": 200,
+          "duplicates": 10
+        },
+        {
+          "status": 200,
+          "duplicates": 10
+        },
+        {
+          "status": 200,
+          "duplicates": 10
+        },
+        {
+          "status": 200,
+          "duplicates": 10
+        },
+        {
+          "status": 200,
+          "duplicates": 10
+        },
+        {
+          "status": 200,
+          "duplicates": 10
+        },
+        {
+          "status": 200,
+          "duplicates": 10
+        },
+        {
+          "status": 200,
+          "duplicates": 10
+        },
+        {
+          "status": 200,
+          "duplicates": 10
+        },
+        {
+          "status": 200,
+          "duplicates": 10
+        },
+        {
+          "status": 200,
+          "duplicates": 10
+        },
+        {
+          "status": 200,
+          "duplicates": 10
+        },
+        {
+          "status": 200,
+          "duplicates": 10
+        },
+        {
+          "status": 200,
+          "duplicates": 10
+        },
+        {
+          "status": 200,
+          "duplicates": 10
+        },
+        {
+          "status": 200,
+          "duplicates": 10
+        },
+        {
+          "status": 200,
+          "duplicates": 10
+        },
+        {
+          "status": 200,
+          "duplicates": 10
+        },
+        {
+          "status": 200,
+          "duplicates": 10
+        },
+        {
+          "status": 200,
+          "duplicates": 10
+        }
+      ]
+    },
+    "investigationRead": {
+      "requests": 20,
+      "p50Ms": 324.65529999999944,
+      "p95Ms": 343.9621000000002,
+      "p99Ms": 363.66470000000027,
+      "maxMs": 363.66470000000027,
+      "elapsedMs": 691.2444999999998,
+      "completedPerSecond": 28.933322435115226,
+      "results": [
+        {
+          "items": 100
+        },
+        {
+          "items": 100
+        },
+        {
+          "items": 100
+        },
+        {
+          "items": 100
+        },
+        {
+          "items": 100
+        },
+        {
+          "items": 100
+        },
+        {
+          "items": 100
+        },
+        {
+          "items": 100
+        },
+        {
+          "items": 100
+        },
+        {
+          "items": 100
+        },
+        {
+          "items": 100
+        },
+        {
+          "items": 100
+        },
+        {
+          "items": 100
+        },
+        {
+          "items": 100
+        },
+        {
+          "items": 100
+        },
+        {
+          "items": 100
+        },
+        {
+          "items": 100
+        },
+        {
+          "items": 100
+        },
+        {
+          "items": 100
+        },
+        {
+          "items": 100
+        }
+      ]
+    }
+  },
+  "memoryBefore": {
+    "current": {
+      "rss": 72462336,
+      "heapTotal": 10563584,
+      "heapUsed": 6171840,
+      "external": 2169893,
+      "arrayBuffers": 17104
+    },
+    "sampledMaxRss": 72462336,
+    "sampledMaxHeap": 6171840,
+    "samples": 1,
+    "cpuMicroseconds": {
+      "user": 62000,
+      "system": 15000
+    }
+  },
+  "limits": {
+    "traces": 200,
+    "spans": 2000,
+    "traceBytes": 33554432,
+    "journalBytes": 16777216,
+    "diskBytes": 134217728,
+    "auxiliaryBytes": 8388608,
+    "auxiliaryRecords": 10000,
+    "retentionMs": 2592000000
+  },
+  "quotaRejection": {
+    "status": "STORAGE_CAPACITY_EXCEEDED",
+    "error": "Storage limit exceeded: traces",
+    "details": {
+      "code": "STORAGE_CAPACITY_EXCEEDED",
+      "limit": "traces",
+      "current": 200,
+      "proposed": 201,
+      "at": "2026-09-10T14:25:57.796Z"
+    },
+    "retryable": false,
+    "nextStep": "Inspect /api/storage; retry after capacity, recovery or writer ownership is resolved."
+  },
+  "memoryAfter": {
+    "current": {
+      "rss": 153460736,
+      "heapTotal": 85274624,
+      "heapUsed": 38759600,
+      "external": 2178105,
+      "arrayBuffers": 25276
+    },
+    "sampledMaxRss": 153460736,
+    "sampledMaxHeap": 50433688,
+    "samples": 50,
+    "cpuMicroseconds": {
+      "user": 3203000,
+      "system": 984000
+    }
+  },
+  "storageBeforeCrash": {
+    "schemaVersion": 1,
+    "state": "AVAILABLE",
+    "writer": "EXCLUSIVE_PROCESS_LOCK",
+    "limits": {
+      "traces": 200,
+      "spans": 2000,
+      "traceBytes": 33554432,
+      "journalBytes": 16777216,
+      "diskBytes": 134217728,
+      "auxiliaryBytes": 8388608,
+      "auxiliaryRecords": 10000,
+      "retentionMs": 2592000000
+    },
+    "usage": {
+      "traces": 200,
+      "spans": 2000,
+      "traceBytes": 756601,
+      "diskBytes": 757113,
+      "auxiliaryRecords": 0,
+      "auxiliaryBytes": 2
+    },
+    "recovery": {
+      "issueCount": 0,
+      "issues": [],
+      "sourceFilesPreserved": true,
+      "mutationsBlocked": false,
+      "nextStep": null
+    },
+    "retention": {
+      "mode": "HOLD_FOR_REVIEW",
+      "horizonMs": 2592000000,
+      "reviewRequiredTraces": 0,
+      "unknownAgeTraces": 0,
+      "deletionEnabled": false,
+      "caseEvidence": "All traces held; no case-aware purge exists."
+    },
+    "rejectionsThisProcess": 1,
+    "lastRejection": {
+      "code": "STORAGE_CAPACITY_EXCEEDED",
+      "limit": "traces",
+      "current": 200,
+      "proposed": 201,
+      "at": "2026-09-10T14:25:57.796Z"
+    },
+    "limitation": "Local single-writer process. Status is not replicated durability, full disk health, or a production retention compliance guarantee."
+  },
+  "evidenceBeforeCrashSha256": "59a4fb3f533ef5c3e9d80c5ee19d8fca666e2761d9a1d69ddbc7a98f8d291796",
+  "restartMs": 150.36929999999938,
+  "evidenceAfterCrashSha256": "59a4fb3f533ef5c3e9d80c5ee19d8fca666e2761d9a1d69ddbc7a98f8d291796",
+  "storageAfterCrash": {
+    "schemaVersion": 1,
+    "state": "AVAILABLE",
+    "writer": "EXCLUSIVE_PROCESS_LOCK",
+    "limits": {
+      "traces": 200,
+      "spans": 2000,
+      "traceBytes": 33554432,
+      "journalBytes": 16777216,
+      "diskBytes": 134217728,
+      "auxiliaryBytes": 8388608,
+      "auxiliaryRecords": 10000,
+      "retentionMs": 2592000000
+    },
+    "usage": {
+      "traces": 200,
+      "spans": 2000,
+      "traceBytes": 756601,
+      "diskBytes": 757113,
+      "auxiliaryRecords": 0,
+      "auxiliaryBytes": 2
+    },
+    "recovery": {
+      "issueCount": 0,
+      "issues": [],
+      "sourceFilesPreserved": true,
+      "mutationsBlocked": false,
+      "nextStep": null
+    },
+    "retention": {
+      "mode": "HOLD_FOR_REVIEW",
+      "horizonMs": 2592000000,
+      "reviewRequiredTraces": 0,
+      "unknownAgeTraces": 0,
+      "deletionEnabled": false,
+      "caseEvidence": "All traces held; no case-aware purge exists."
+    },
+    "rejectionsThisProcess": 0,
+    "lastRejection": null,
+    "limitation": "Local single-writer process. Status is not replicated durability, full disk health, or a production retention compliance guarantee."
+  },
+  "correctness": {
+    "acknowledgedSpans": 2000,
+    "retainedSpans": 2000,
+    "acknowledgedLoss": 0,
+    "retriesAddedSpans": 0,
+    "revisionsIdenticalAfterRestart": true,
+    "completeRetainedEvidenceIdentical": true,
+    "newTraceAtQuotaRejected": true
+  },
+  "limitations": [
+    "One bounded synthetic local run; no production SLO or sustained-load capacity established",
+    "Client latency includes queueing/network/parsing; sampled memory is not an exact peak or leak test",
+    "Forced process exit, not host power loss; no physical disk-full test",
+    "Authentication is local API key; no tenant isolation or vendor connector tested"
+  ]
+}

@@ -1,0 +1,26 @@
+{
+  "completedAt": "2026-09-10T11:25:24.460Z",
+  "status": "PASS",
+  "mobileRequests": 3,
+  "checks": {
+    "fetchObserver": 8,
+    "relationshipGates": 34,
+    "mobileConsole": 4,
+    "healthReplayConsole": 3,
+    "fixtureConsole": 4,
+    "patchApplyCheck": true
+  },
+  "isolatedBackendStopped": true,
+  "isolatedMetroStopped": true,
+  "emulatorRestoredTo": "exp://127.0.0.1:8082/--/",
+  "originalFinSourceEditedByPilot": false,
+  "reviewPatch": "implementation.patch",
+  "recording": "run-002",
+  "limitations": [
+    "Isolated local runtime, not production",
+    "No artifact attestation",
+    "No database SERVER span",
+    "Read response may use backend fallback; no claim of current market data",
+    "No incompatibility incident or repair executed"
+  ]
+}

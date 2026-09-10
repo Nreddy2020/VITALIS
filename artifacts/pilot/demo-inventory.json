@@ -1,0 +1,18 @@
+{
+  "builds": [],
+  "expectedInteractions": [
+    {
+      "from": "fin-mobile-isolated",
+      "to": "fin-backend-isolated",
+      "declaredBy": "isolated FIN pilot operator",
+      "evidence": "Copied InflationService -> actual FastAPI GET /api/inflation routes"
+    },
+    {
+      "from": "fin-backend-isolated",
+      "to": "mongodb",
+      "declaredBy": "isolated FIN pilot operator",
+      "evidence": "Actual backend inflation service queries Mongo; database SERVER instrumentation unavailable"
+    }
+  ],
+  "evidenceContext": "REPLAY OF REAL ISOLATED FIN MOBILE CAPTURE — mobile to backend observed; Mongo CLIENT only; fallback inflation response; compatibility UNKNOWN"
+}

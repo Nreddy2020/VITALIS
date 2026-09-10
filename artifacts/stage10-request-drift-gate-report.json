@@ -1,0 +1,78 @@
+{
+  "suite": "stage10-request-drift",
+  "startedAt": "2026-09-10T17:46:06.114Z",
+  "gates": {
+    "R1_violationSurfacesOnPath": "PASS",
+    "R4_offPathRepoExcluded": "PASS",
+    "R2_unboundHopsAreUnknown": "PASS",
+    "R3_deployedVsDeclaredMismatch": "PASS",
+    "R5_ambiguousBindingRefused": "PASS",
+    "R7_versionConflictRecorded": "PASS",
+    "R6_liveOtlpVersionSurvivesIngest": "PASS"
+  },
+  "evidence": {
+    "R1": {
+      "summary": {
+        "componentsOnPath": 2,
+        "bound": 2,
+        "unbound": 0,
+        "componentsWithViolations": 1,
+        "violationsOnPath": 1,
+        "analysedAgainstDifferentBuild": 0
+      },
+      "brokenStatus": "VIOLATION",
+      "cleanStatus": "CHECKED"
+    },
+    "R2": {
+      "summary": "Request TX-R2 touched 3 component(s); 1 bound to a version source, 2 UNKNOWN. No violation was found among the components that could be checked. 2 component(s) on this path have no version source at all — this request has NOT been shown to be free of drift.",
+      "unbound": [
+        "mongo",
+        "third-party-kyc"
+      ]
+    },
+    "R3": {
+      "versionAgreement": {
+        "state": "DISAGREES",
+        "detail": "deployed 1.2.7 but the bound manifest declares 1.4.0 — the findings below describe 1.4.0, NOT the build that served this request"
+      },
+      "summary": "Request TX-R3 touched 1 component(s); 1 bound to a version source, 0 UNKNOWN. No violation was found among the components that could be checked. 1 component(s) reported a deployed version that does not match the source analysed; those findings describe a different build."
+    },
+    "R5": {
+      "dup": "binding for 'a' rejected: already bound to /x. Two bindings for one service is ambiguous; resolve it rather than letting one silently win.",
+      "unattributed": "binding for 'b' rejected: \"declaredBy\" is required — an unattributable binding is not admissible"
+    },
+    "R7": {
+      "versionConflict": true,
+      "hopCount": 2
+    },
+    "R6": {
+      "ingestStatus": 200,
+      "ledgerHop": {
+        "spanId": "0101010101010101",
+        "timingValid": false,
+        "service": "ledger-api",
+        "name": "POST /ledger",
+        "durationMs": 40,
+        "observedAt": 1789062366151,
+        "receivedAt": 1789062366160,
+        "status": "OK",
+        "attributes": [],
+        "serviceVersion": "1.2.7",
+        "deploymentEnvironment": "production"
+      },
+      "mongoHop": {
+        "spanId": "0202020202020202",
+        "timingValid": false,
+        "service": "mongo",
+        "name": "find accounts",
+        "durationMs": 25,
+        "observedAt": 1789062366161,
+        "receivedAt": 1789062366160,
+        "status": "OK",
+        "attributes": []
+      },
+      "summary": "Request aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa touched 2 component(s); 1 bound to a version source, 1 UNKNOWN. No violation was found among the components that could be checked. 1 component(s) on this path have no version source at all — this request has NOT been shown to be free of drift. 1 component(s) reported a deployed version that does not match the source analysed; those findings describe a different build."
+    }
+  },
+  "finishedAt": "2026-09-10T17:46:06.190Z"
+}

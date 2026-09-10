@@ -1,0 +1,85 @@
+{
+  "suite": "stage12-otlp-encoding",
+  "startedAt": "2026-09-10T17:46:06.392Z",
+  "gates": {
+    "E1_realPythonProtobufDecodes": "PASS",
+    "E2_spansDecodeCorrectly": "PASS",
+    "E3_liveProtobufIngest": "PASS",
+    "E4_mislabelledEncodingIsDiagnosable": "PASS",
+    "E5_corruptProtobufFailsClosed": "PASS",
+    "E6_jsonPathUnchanged": "PASS",
+    "E7_unsupportedSignalRefusedExplicitly": "PASS"
+  },
+  "evidence": {
+    "E1": {
+      "attributes": [
+        "telemetry.sdk.language=python",
+        "telemetry.sdk.name=opentelemetry",
+        "telemetry.sdk.version=1.44.0",
+        "service.instance.id=f016cfab-c95e-4ceb-8602-69481ab9221f",
+        "service.version=1.0.1",
+        "deployment.environment=local",
+        "service.name=finlife-api",
+        "telemetry.auto.version=0.65b0"
+      ]
+    },
+    "E2": {
+      "spanCount": 3,
+      "rootName": "GET /api/accounts/{acct}",
+      "durMs": 50,
+      "statusAttr": {
+        "key": "http.status_code",
+        "value": {
+          "intValue": "200"
+        }
+      }
+    },
+    "E3": {
+      "status": 200,
+      "body": "{\"status\":\"SUCCESS\",\"ingestedSpans\":3,\"duplicateSpans\":0,\"conflictingSpans\":0}",
+      "hopCount": 3
+    },
+    "E4": {
+      "status": "INVALID_OTLP_PAYLOAD",
+      "encoding": "json",
+      "contentType": "application/json",
+      "bytes": 1216,
+      "error": "Unexpected token '�', \"\n�\t\n�\u0002\n\"\n\u0016t\"... is not valid JSON",
+      "hint": "The body was read as JSON because Content-Type was not application/x-protobuf. If this sender emits protobuf, set the header; OTLP/JSON senders must send valid JSON."
+    },
+    "E5": {
+      "truncated": {
+        "status": "INVALID_OTLP_PAYLOAD",
+        "encoding": "protobuf",
+        "contentType": "application/x-protobuf",
+        "bytes": 600,
+        "error": "protobuf: length-delimited field overruns buffer",
+        "hint": "The body was read as OTLP/protobuf and could not be decoded. Confirm the sender targets /v1/traces with OTLP protobuf v1."
+      },
+      "garbageStatus": 400,
+      "tracesBefore": 1,
+      "tracesAfter": 1
+    },
+    "E6": {
+      "status": 200,
+      "hop": {
+        "spanId": "0f0f0f0f0f0f0f0f",
+        "timingValid": false,
+        "service": "json-sender",
+        "name": "GET /json",
+        "durationMs": 25,
+        "observedAt": 1789062366441,
+        "receivedAt": 1789062366442,
+        "status": "OK",
+        "attributes": [],
+        "serviceVersion": "9.9.9"
+      }
+    },
+    "E7": {
+      "status": "UNSUPPORTED_ENCODING",
+      "error": "OTLP protobuf is supported on /v1/traces only; /v1/metrics accepts JSON. Send this signal as application/json, or route it through an OpenTelemetry Collector."
+    }
+  },
+  "finishedAt": "2026-09-10T17:46:06.453Z",
+  "fixtureBytes": 1216
+}

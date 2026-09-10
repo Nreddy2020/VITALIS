@@ -1,0 +1,254 @@
+{
+  "suite": "stage11-generality",
+  "startedAt": "2026-09-10T17:46:06.264Z",
+  "gates": {
+    "G1_javaRepoReadWithNoJavaScript": "PASS",
+    "G2_pythonFoundAtArbitraryPath": "PASS",
+    "G3_newRulePackNoCodeChange": "PASS",
+    "G4_expoIsJustOnePack": "PASS",
+    "G5_noApplicationSpecificStringsInCore": "PASS",
+    "G6_mavenFailsClosed": "PASS",
+    "G7_polyglotRepoReadAsOne": "PASS"
+  },
+  "evidence": {
+    "G1": {
+      "ecosystemsFound": [
+        "maven"
+      ],
+      "packages": [
+        {
+          "ecosystem": "maven",
+          "name": "org.springframework.boot:spring-boot-starter-web",
+          "version": "3.2.0",
+          "declared": "3.2.0",
+          "dev": false,
+          "provenance": "OBSERVED",
+          "note": "literal <version> in C:\\Users\\nirwa\\AppData\\Local\\Temp\\vitalis-s11-java-hBCBVb\\pom.xml"
+        },
+        {
+          "ecosystem": "maven",
+          "name": "com.ibm.db2:jcc",
+          "version": "11.5.9.0",
+          "declared": "11.5.9.0",
+          "dev": false,
+          "provenance": "OBSERVED",
+          "note": "literal <version> in C:\\Users\\nirwa\\AppData\\Local\\Temp\\vitalis-s11-java-hBCBVb\\pom.xml"
+        },
+        {
+          "ecosystem": "maven",
+          "name": "org.junit.jupiter:junit-jupiter",
+          "version": "5.10.1",
+          "declared": "5.10.1",
+          "dev": true,
+          "provenance": "OBSERVED",
+          "note": "literal <version> in C:\\Users\\nirwa\\AppData\\Local\\Temp\\vitalis-s11-java-hBCBVb\\pom.xml"
+        }
+      ],
+      "selfVersion": {
+        "value": "2.4.1",
+        "provenance": "OBSERVED",
+        "source": "C:\\Users\\nirwa\\AppData\\Local\\Temp\\vitalis-s11-java-hBCBVb\\pom.xml <project><version>"
+      }
+    },
+    "G2": {
+      "ecosystemsFound": [
+        "pip"
+      ],
+      "packages": [
+        {
+          "ecosystem": "pip",
+          "name": "fastapi",
+          "version": "0.104.1",
+          "declared": "==0.104.1",
+          "provenance": "OBSERVED",
+          "note": "pinned in C:\\Users\\nirwa\\AppData\\Local\\Temp\\vitalis-s11-pypath-DrpyE3\\services\\ledger\\api\\requirements.txt"
+        },
+        {
+          "ecosystem": "pip",
+          "name": "motor",
+          "version": "3.3.2",
+          "declared": "==3.3.2",
+          "provenance": "OBSERVED",
+          "note": "pinned in C:\\Users\\nirwa\\AppData\\Local\\Temp\\vitalis-s11-pypath-DrpyE3\\services\\ledger\\api\\requirements.txt"
+        },
+        {
+          "ecosystem": "pip",
+          "name": "pymongo",
+          "version": "4.6",
+          "declared": ">=4.6",
+          "provenance": "INFERRED",
+          "note": "unpinned constraint in C:\\Users\\nirwa\\AppData\\Local\\Temp\\vitalis-s11-pypath-DrpyE3\\services\\ledger\\api\\requirements.txt; installed version not known from this file"
+        }
+      ]
+    },
+    "G3": {
+      "finding": {
+        "ruleId": "springboot-3-requires-jakarta-db2-driver",
+        "status": "VIOLATION",
+        "severity": "HIGH",
+        "summary": "Spring Boot 3.x requires the DB2 JCC driver 11.5.8 or later",
+        "detail": "org.springframework.boot:spring-boot-starter-web 3.2.0 → com.ibm.db2:jcc is 11.5.4.0: 11.5.4.0 is not gte 11.5.8.0",
+        "provenance": "OBSERVED",
+        "source": {
+          "url": "https://example.org/spring-compatibility",
+          "title": "Test source",
+          "recordedAt": "2026-09-09"
+        }
+      }
+    },
+    "G4": {
+      "coverage": {
+        "packagesRead": 2,
+        "packagesCovered": 0,
+        "packagesUncovered": 2,
+        "rulesLoaded": 0,
+        "rulesApplied": 0,
+        "violations": 0,
+        "satisfied": 0,
+        "unknown": 0,
+        "uncovered": [
+          {
+            "ecosystem": "npm",
+            "name": "expo",
+            "version": "54.0.35",
+            "provenance": "OBSERVED"
+          },
+          {
+            "ecosystem": "npm",
+            "name": "react-native",
+            "version": "0.81.5",
+            "provenance": "OBSERVED"
+          }
+        ]
+      },
+      "packsInstalled": [
+        {
+          "id": "expo",
+          "displayName": "Expo / React Native",
+          "origin": "C:\\Users\\nirwa\\Downloads\\spleenofrequest\\engine\\drift\\rulepacks\\expo.json",
+          "ruleCount": 19
+        },
+        {
+          "id": "pip-core",
+          "displayName": "Python core libraries (FastAPI / MongoDB stack)",
+          "origin": "C:\\Users\\nirwa\\Downloads\\spleenofrequest\\engine\\drift\\rulepacks\\pip-core.json",
+          "ruleCount": 9
+        },
+        {
+          "id": "spring-boot",
+          "displayName": "Spring Boot (Java / Maven)",
+          "origin": "C:\\Users\\nirwa\\Downloads\\spleenofrequest\\engine\\drift\\rulepacks\\spring-boot.json",
+          "ruleCount": 12
+        }
+      ]
+    },
+    "G5": {
+      "filesChecked": [
+        "manifest_reader.js",
+        "drift_checker.js",
+        "version_ops.js",
+        "request_drift.js",
+        "component_bindings.js",
+        "rulepack_loader.js"
+      ],
+      "offences": []
+    },
+    "G6": {
+      "prop": {
+        "ecosystem": "maven",
+        "name": "a:b",
+        "version": null,
+        "declared": "${spring.version}",
+        "dev": false,
+        "provenance": "UNKNOWN",
+        "note": "version is the property ${spring.version}; property resolution needs parent poms and profiles this reader cannot see, so it is not guessed"
+      },
+      "range": {
+        "ecosystem": "maven",
+        "name": "c:d",
+        "version": null,
+        "declared": "[1.0,2.0)",
+        "dev": false,
+        "provenance": "UNKNOWN",
+        "note": "version range [1.0,2.0) — the resolved version depends on what is in the repository at build time"
+      },
+      "managed": {
+        "ecosystem": "maven",
+        "name": "e:f",
+        "version": null,
+        "declared": null,
+        "dev": false,
+        "provenance": "UNKNOWN",
+        "note": "no <version> in pom.xml — supplied by dependencyManagement or a parent pom, which this reader does not resolve"
+      },
+      "literal": {
+        "ecosystem": "maven",
+        "name": "g:h",
+        "version": "9.9.9",
+        "declared": "9.9.9",
+        "dev": false,
+        "provenance": "OBSERVED",
+        "note": "literal <version> in pom.xml"
+      }
+    },
+    "G7": {
+      "ecosystemsFound": [
+        "pip",
+        "maven",
+        "npm"
+      ],
+      "names": [
+        "expo",
+        "fastapi",
+        "com.ibm.mq:com.ibm.mq.allclient"
+      ]
+    }
+  },
+  "finishedAt": "2026-09-10T17:46:06.306Z",
+  "registeredEcosystems": [
+    {
+      "id": "npm",
+      "displayName": "npm / Node.js",
+      "manifestFiles": [
+        "package.json",
+        "package-lock.json"
+      ]
+    },
+    {
+      "id": "pip",
+      "displayName": "Python / pip",
+      "manifestFiles": [
+        "requirements.txt",
+        "requirements-dev.txt",
+        "pyproject.toml"
+      ]
+    },
+    {
+      "id": "maven",
+      "displayName": "Java / Maven",
+      "manifestFiles": [
+        "pom.xml"
+      ]
+    }
+  ],
+  "installedRulePacks": [
+    {
+      "id": "expo",
+      "displayName": "Expo / React Native",
+      "origin": "C:\\Users\\nirwa\\Downloads\\spleenofrequest\\engine\\drift\\rulepacks\\expo.json",
+      "ruleCount": 19
+    },
+    {
+      "id": "pip-core",
+      "displayName": "Python core libraries (FastAPI / MongoDB stack)",
+      "origin": "C:\\Users\\nirwa\\Downloads\\spleenofrequest\\engine\\drift\\rulepacks\\pip-core.json",
+      "ruleCount": 9
+    },
+    {
+      "id": "spring-boot",
+      "displayName": "Spring Boot (Java / Maven)",
+      "origin": "C:\\Users\\nirwa\\Downloads\\spleenofrequest\\engine\\drift\\rulepacks\\spring-boot.json",
+      "ruleCount": 12
+    }
+  ]
+}

@@ -1,0 +1,50 @@
+[
+  {
+    "file": "capture-000.bin",
+    "contentType": "application/x-protobuf",
+    "sha256": "f3fa1e2294db18bdc1d132ff03f9119383b8d8f7a2889a6799ee51fe402a6fc3",
+    "receivedAt": 1789038920.3012688
+  },
+  {
+    "file": "capture-001.bin",
+    "contentType": "application/x-protobuf",
+    "sha256": "5f3f30cd89bea8a3831c30e58163881d20a54c8355730e925de04d97082c86a4",
+    "receivedAt": 1789038921.5784018
+  },
+  {
+    "file": "capture-002.bin",
+    "contentType": "application/x-protobuf",
+    "sha256": "68b413b1314bdebd99c7d8e3c8144e21f4cb841eb8aa0c3c3a746e9355840e80",
+    "receivedAt": 1789039157.4086432
+  },
+  {
+    "file": "capture-003.json",
+    "contentType": "application/json",
+    "sha256": "bae384e9b9c9b0565691452301c36b60598c40474a51442d2a89c23647b4406b",
+    "receivedAt": 1789039157.7279866
+  },
+  {
+    "file": "capture-004.json",
+    "contentType": "application/json",
+    "sha256": "85f26e2aa898295f35ef940af84c28584f22b6010d72a9020905dab1c108fc4d",
+    "receivedAt": 1789039157.7756355
+  },
+  {
+    "file": "capture-005.bin",
+    "contentType": "application/x-protobuf",
+    "sha256": "0804101df4a6b70833252fb0ca78310159112cb25fe18f7e5cee41f16c44af64",
+    "receivedAt": 1789039157.8028836
+  },
+  {
+    "file": "capture-006.json",
+    "contentType": "application/json",
+    "sha256": "32009d3df91c50e8f2e03ad2262d835fdf49fcd000914aee56b7572bd94299f8",
+    "receivedAt": 1789039157.8569164
+  },
+  {
+    "file": "capture-007.bin",
+    "contentType": "application/x-protobuf",
+    "sha256": "df6c92d322aa825705dafe576b5346a09f71f55a65650fd990331bf98fb652d0",
+    "receivedAt": 1789039233.1113927
+  }
+]

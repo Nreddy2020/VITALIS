@@ -1,0 +1,47 @@
+{
+  "capturedAt": "2026-09-10T10:18:17Z",
+  "application": "/mnt/e/fintech-mobile/backend",
+  "sourceMainSha256": "78a08a1f53ef38fb2c1246df8cb803ae77661f9727f5706bc625fbb804f177fc",
+  "kind": "REAL_FIN_HEALTH_CAPTURE",
+  "requests": [
+    {
+      "httpStatus": 200,
+      "body": {
+        "status": "healthy"
+      }
+    },
+    {
+      "httpStatus": 200,
+      "body": {
+        "status": "healthy"
+      }
+    }
+  ],
+  "captures": [
+    {
+      "file": "fin-health-otlp-0.bin",
+      "sha256": "a8a9eb8fdb792da6a7d07351f777108fb5bb9add64dbb7a397d5dae56e377104",
+      "bytes": 2506
+    },
+    {
+      "file": "fin-health-otlp-1.bin",
+      "sha256": "2a3644320fd48069526927e05721905544d746d748cb2608fca9dd4cf67ddfbe",
+      "bytes": 555
+    }
+  ],
+  "instrumentation": "Explicit FastAPI and PyMongo instrumentation in isolated harness; no FIN source edits",
+  "versions": {
+    "fastapi": "0.104.1",
+    "pymongo": "4.6.1",
+    "motor": "3.3.2",
+    "opentelemetry-sdk": "1.44.0",
+    "opentelemetry-instrumentation-fastapi": "0.65b0",
+    "opentelemetry-instrumentation-pymongo": "0.65b0"
+  },
+  "unknowns": [
+    "Mobile UI and network edge not captured",
+    "No deployed artifact digest or build attestation",
+    "No database SERVER span or immutable database build identity",
+    "Not a real incident or end-to-end mobile transaction"
+  ]
+}

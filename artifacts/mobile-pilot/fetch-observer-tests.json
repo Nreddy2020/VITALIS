@@ -1,0 +1,14 @@
+{
+  "runAt": "2026-09-10T11:24:51.150Z",
+  "status": "PASS",
+  "checks": [
+    "Injects valid W3C identity and exports only configured route and observed status",
+    "Existing trace context remains untouched, no fabricated span",
+    "Non-allowlisted requests and exporter recursion are not traced",
+    "Exporter failure never fails the app request and reports a gap",
+    "Original network error preserved and reported without sensitive error text",
+    "Invalid RNG fails open for app, closed for invented trace evidence",
+    "Request objects are not consumed or rewritten",
+    "Real Node HTTP request carries the same identity exported by the mobile-capable observer"
+  ]
+}

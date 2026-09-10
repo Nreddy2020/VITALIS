@@ -1,0 +1,310 @@
+[
+  {
+    "path": "server.js",
+    "baselineSha256": "758c32af97d5277bcc392d489d9e015474829353ec7bb71435ace039bf745d08",
+    "sha256": "1a96a9f8cf07b6acf85731ec31411e3ab8a62cf146e7e0b40dcc13e44d4217c5",
+    "importHashVerified": true,
+    "newFile": false
+  },
+  {
+    "path": "index.html",
+    "baselineSha256": "0c2224dec8881861c261b4f3e214186c5f13f5e4bad98dce2beaef4b1e0c756a",
+    "sha256": "de0e7cd74bb4cb04019145890cf8e37df09e2176b7b51306a93a0ff76eb3288a",
+    "importHashVerified": true,
+    "newFile": false
+  },
+  {
+    "path": "package.json",
+    "baselineSha256": "b467aee884680625af1149407b3b149c1e6fce8f57ce7715a4eece88c8dca665",
+    "sha256": "75038c268e673bdc09284f492509e5651deff3f32116683d6804963e3cb574f1",
+    "importHashVerified": true,
+    "newFile": false
+  },
+  {
+    "path": "README.md",
+    "baselineSha256": "34ab8cdcdd695b62ef572e891668095b20b5bbbf22f40ef493f312ef00c1e68d",
+    "sha256": "978e7d450e3d6f486ccab0ada3d571ca27d19fd9c88ebde70d20d715ac0b5192",
+    "importHashVerified": false,
+    "newFile": false
+  },
+  {
+    "path": "engine/drift/request_drift.js",
+    "baselineSha256": "4b28081373c18aa418af36a2faa764627c605d0e133bae8dde5fd4fe2a0d506f",
+    "sha256": "ca84375b02ef8d13f12ff06a27b516caa09dc5c1298310f210d881259c193239",
+    "importHashVerified": true,
+    "newFile": false
+  },
+  {
+    "path": "engine/drift/relationships.js",
+    "baselineSha256": null,
+    "sha256": "729a230d364ddbfed70f6e9d459e4d07bcef533045dca8caca19e45dfbaedc9b",
+    "importHashVerified": false,
+    "newFile": true
+  },
+  {
+    "path": "engine/drift/relationship_rules.json",
+    "baselineSha256": null,
+    "sha256": "7f747be351d0b6399c756e60caecd7132be225491ac8d6e1665f9ef3568f4ef7",
+    "importHashVerified": false,
+    "newFile": true
+  },
+  {
+    "path": "docs/00_START_HERE.md",
+    "baselineSha256": "eb60dd6ede4856a3f9408f3acd331eabc90d5e521e23c2d246b63fe5296725ab",
+    "sha256": "2243871d82cb49e59dd66fb5ccf280cc5c89d6b15ec551be409e589b3f765b76",
+    "importHashVerified": true,
+    "newFile": false
+  },
+  {
+    "path": "docs/01_CHARTER_read_this_first.md",
+    "baselineSha256": "ba8f62a5944993852f42b6505e14eed807bcab135153dbfe510801a628746a0b",
+    "sha256": "82245defb9c1628665770b24e9f67ac59a36304adaf1d835033be6d2eb4b0ec7",
+    "importHashVerified": true,
+    "newFile": false
+  },
+  {
+    "path": "docs/03_Competitive_Reality.md",
+    "baselineSha256": "2a58d31cf06d6969970a993477d4ee42143add8cd256ffeabc33268b0d30fbd9",
+    "sha256": "df882afee292d38d707358222cac35d658c89e4804778db7a5df77f456c0ff68",
+    "importHashVerified": true,
+    "newFile": false
+  },
+  {
+    "path": "docs/09_Internal_Adoption_Proposal.md",
+    "baselineSha256": "0153a6589005f5177ed00397479852c92c3a3bd76a5b187c8165673727dcc3cb",
+    "sha256": "9127bb8a3ecd7f3cdf0c2a9308301e88dfbd58d04d6f39f37af0077d2176ed13",
+    "importHashVerified": true,
+    "newFile": false
+  },
+  {
+    "path": "docs/17_Stage9_Compatibility_Drift.md",
+    "baselineSha256": "ab1e2e2116e72f4e96bb0eddee053937129649819e099ad9875e33cc4a5a5a41",
+    "sha256": "d758fbdd7b2a1e7843907235aa91ff2b345f51fb3a798bdaee551280568fd90e",
+    "importHashVerified": true,
+    "newFile": false
+  },
+  {
+    "path": "docs/18_Stage10_Request_Path_Drift.md",
+    "baselineSha256": "e60d1979c3caf4d30d6c221b83e7579d3bee5edc25c64d76868e1a703e699af4",
+    "sha256": "7fab4346ed194d9aa5a9d48b3f5ac6823ccb1125cc90640db5603cb912aa0aa3",
+    "importHashVerified": true,
+    "newFile": false
+  },
+  {
+    "path": "docs/28_Request_Compatibility_Pilot.md",
+    "baselineSha256": null,
+    "sha256": "fc27bb53ded007f37d6b9ca6ddf80126c6049726fade60ceb381d5a5e7638977",
+    "importHashVerified": false,
+    "newFile": true
+  },
+  {
+    "path": "tests/fixtures/relationship_pilot.js",
+    "baselineSha256": null,
+    "sha256": "44127edac7966e5b8476fadf46a79ed4c9c5baeebfcca86ff7abb802ce390247",
+    "importHashVerified": false,
+    "newFile": true
+  },
+  {
+    "path": "tests/verify_relationship_pilot.js",
+    "baselineSha256": null,
+    "sha256": "f0d0f6df98927d4f692af16aea85e61497cdf052cb463afca9d4ba314816bbe7",
+    "importHashVerified": false,
+    "newFile": true
+  },
+  {
+    "path": "tests/verify_relationship_console.js",
+    "baselineSha256": null,
+    "sha256": "c923989e08d8c5d5caa2e552251c62e27b8b4d69e25a55ea6f6d862b382f8cc8",
+    "importHashVerified": false,
+    "newFile": true
+  },
+  {
+    "path": "tests/serve_relationship_pilot.js",
+    "baselineSha256": null,
+    "sha256": "9612776f4c4c5c9db5fb292b0addc8acd2f8afb48a2f90fe035dbdca6e8ddd85",
+    "importHashVerified": false,
+    "newFile": true
+  },
+  {
+    "path": "tests/capture_fin_health.py",
+    "baselineSha256": null,
+    "sha256": "55708b130320783019443b55639fc3d20e63272d897e2225772daf4a82ac0436",
+    "importHashVerified": false,
+    "newFile": true
+  },
+  {
+    "path": "tests/verify_fin_capture.js",
+    "baselineSha256": null,
+    "sha256": "10b3fae535d5b029e556230e623566ffd5a6c5cd72da19996a69d12f07630bdf",
+    "importHashVerified": false,
+    "newFile": true
+  },
+  {
+    "path": "tests/verify_node_live_capture.js",
+    "baselineSha256": null,
+    "sha256": "baee4f58b99b79219f0e213aae84d9fd9166cbd180987dcfe67166e981a44e0c",
+    "importHashVerified": false,
+    "newFile": true
+  },
+  {
+    "path": "tests/run_pilot_regressions.js",
+    "baselineSha256": null,
+    "sha256": "ff6c42bdc0f4fa61a2977f032758a7de62e52a1050112750a0aca2b08691fd07",
+    "importHashVerified": false,
+    "newFile": true
+  },
+  {
+    "path": "tests/build_pilot_review.py",
+    "baselineSha256": null,
+    "sha256": "96db4dc1bf3fa940cbad1529d50c06798da51e757662ec126fad566acc3265c1",
+    "importHashVerified": false,
+    "newFile": true
+  },
+  {
+    "path": ".gitignore",
+    "baselineSha256": "66c7cbf03e04e4f9b7dd7e30c383d9bbbff3de9f992d39114d46f49b56303af2",
+    "sha256": "a99ab251dda542237228fb95fdbd861438a9b8e2b249ca7ed2fff6f8aaa8c7b3",
+    "importHashVerified": false,
+    "newFile": false
+  },
+  {
+    "path": "engine/ingestion/fetch_observer.js",
+    "baselineSha256": null,
+    "sha256": "ce80047f8fd70def0b8dfab2adea9ce9b29f6a5b53a7ff98f581457c6a8a7521",
+    "importHashVerified": false,
+    "newFile": true
+  },
+  {
+    "path": "docs/29_Mobile_Origin_Pilot.md",
+    "baselineSha256": null,
+    "sha256": "15b79e6a4145c0ec5d7062db2e3545fc50b7498b5486f094c7180056a0fca4f0",
+    "importHashVerified": false,
+    "newFile": true
+  },
+  {
+    "path": "tests/prepare_fin_mobile.py",
+    "baselineSha256": null,
+    "sha256": "35f76546a9dd9ef406df1b233072526671333f613e3c2097a68dd80a18c4a6b8",
+    "importHashVerified": false,
+    "newFile": true
+  },
+  {
+    "path": "tests/prepare_fin_mobile_dependencies.ps1",
+    "baselineSha256": null,
+    "sha256": "7301626efbfb09fc728fdfa0c2f422ce1870bdba3452b74357dbc31c349f85b7",
+    "importHashVerified": false,
+    "newFile": true
+  },
+  {
+    "path": "tests/capture_fin_mobile_backend.py",
+    "baselineSha256": null,
+    "sha256": "f7172387059359305cb0f4c747bb43c375b9693e280eeb753e75c4fb514595b2",
+    "importHashVerified": false,
+    "newFile": true
+  },
+  {
+    "path": "tests/verify_fetch_observer.js",
+    "baselineSha256": null,
+    "sha256": "016aa6eca0b797cb8cfcdbe08e992ddbba433bc7f66a5b43ecf7c53c1d61fe28",
+    "importHashVerified": false,
+    "newFile": true
+  },
+  {
+    "path": "tests/verify_fin_mobile_capture.js",
+    "baselineSha256": null,
+    "sha256": "a026c5a6e18a527acdb856e7a7fc49c846dc1b33df1b3d784cf840f7e7167f92",
+    "importHashVerified": false,
+    "newFile": true
+  },
+  {
+    "path": "engine/ingestion/otlp_protobuf.js",
+    "baselineSha256": "f20a7a85d5e878454b601cd607548913c789c309b2341d68d9c4855151477aaf",
+    "sha256": "107db60648bda6b651e03d3fed75bd4f844e1527c302d992bd44c00e67521769",
+    "importHashVerified": true,
+    "newFile": false
+  },
+  {
+    "path": "engine/investigation/request_investigation.js",
+    "baselineSha256": null,
+    "sha256": "28990981934c40d7383a3bd6bb7cff2fc40fbc0a5d2977804ec5b96091e19c10",
+    "importHashVerified": false,
+    "newFile": true
+  },
+  {
+    "path": "engine/storage/trace_journal.js",
+    "baselineSha256": null,
+    "sha256": "33e23daf246814fcfd2566dc8dd8492a22164d490c52f184dc3f06e1b3bfecba",
+    "importHashVerified": false,
+    "newFile": true
+  },
+  {
+    "path": "docs/31_Target_Architecture.md",
+    "baselineSha256": null,
+    "sha256": "71df184140a0e337069cba61d03d8e0b35bfd0dbb11ea7921d52800fcf77c993",
+    "importHashVerified": false,
+    "newFile": true
+  },
+  {
+    "path": "docs/32_Implementation_Plan.md",
+    "baselineSha256": null,
+    "sha256": "8f9bd9dbbdfa2a49a6af9fe151d00090b7a5d9cec8632617cd45a85f86f1f2ab",
+    "importHashVerified": false,
+    "newFile": true
+  },
+  {
+    "path": "docs/33_Investigation_Implementation.md",
+    "baselineSha256": null,
+    "sha256": "d2b10eb30bb60296fbb26d25f0d74daa64278e8426f20c8530da3c260b5528f7",
+    "importHashVerified": false,
+    "newFile": true
+  },
+  {
+    "path": "tests/verify_investigation.js",
+    "baselineSha256": null,
+    "sha256": "b4762c4e7193099fbb77ea8824215253afe0db8aa9cc071ec35507b55fb85028",
+    "importHashVerified": false,
+    "newFile": true
+  },
+  {
+    "path": "tests/verify_investigation_console.js",
+    "baselineSha256": null,
+    "sha256": "5e2a6b30e31a4db820f172759555b17a583ab6b50bc8e89bcd1c83f4fcbd44ef",
+    "importHashVerified": false,
+    "newFile": true
+  },
+  {
+    "path": "tests/verify_trace_journal.js",
+    "baselineSha256": null,
+    "sha256": "4cf23ad45a5c38cec34cddd422e803e93283e656f5f714d5c05526ad501470f3",
+    "importHashVerified": false,
+    "newFile": true
+  },
+  {
+    "path": "engine/storage/storage_policy.js",
+    "baselineSha256": null,
+    "sha256": "ed8ad186671a25fb877b545a6d7fa8edd0ebce7c34c07cdeb110e8196443103a",
+    "importHashVerified": false,
+    "newFile": true
+  },
+  {
+    "path": "docs/34_Storage_Recovery_D2.md",
+    "baselineSha256": null,
+    "sha256": "41530263c6586f52513c82733562411446ecb02688e16a7bc6aa152109fed855",
+    "importHashVerified": false,
+    "newFile": true
+  },
+  {
+    "path": "tests/verify_storage_policy.js",
+    "baselineSha256": null,
+    "sha256": "056a847cb2cb23eea112dd7c738c1380193c4e65e852491b233d8788fa4d7e94",
+    "importHashVerified": false,
+    "newFile": true
+  },
+  {
+    "path": "tests/verify_storage_console.js",
+    "baselineSha256": null,
+    "sha256": "56ed2887ddf69af507416396d39ba9108db4808685a6c0b21a11c59b9ed78745",
+    "importHashVerified": false,
+    "newFile": true
+  }
+]

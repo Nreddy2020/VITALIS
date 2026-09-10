@@ -1,0 +1,129 @@
+{
+  "suite": "stage13-rulepacks",
+  "startedAt": "2026-09-10T17:46:06.523Z",
+  "gates": {
+    "C1_pythonIncompatibilityCaught": "PASS",
+    "C2_correctPythonPairingSatisfied": "PASS",
+    "C3_javaIncompatibilityCaught": "PASS",
+    "C4_correctJavaPairingSatisfied": "PASS",
+    "C5_transitiveDependencyIsUnknown": "PASS",
+    "C6_everyShippedRuleIsSourced": "PASS"
+  },
+  "evidence": {
+    "C1": {
+      "ruleId": "motor-3.3-pymongo-max",
+      "status": "VIOLATION",
+      "severity": "HIGH",
+      "summary": "motor 3.3.x requires pymongo < 5.0.0",
+      "detail": "motor 3.3.2 → pymongo is 5.0.0: 5.0.0 is not lt 5.0.0",
+      "provenance": "OBSERVED",
+      "source": {
+        "url": "https://pypi.org/pypi/motor/3.3.2/json",
+        "title": "PyPI metadata for motor 3.3.2 (requires_dist)",
+        "recordedAt": "2026-09-09"
+      }
+    },
+    "C2": {
+      "min": {
+        "ruleId": "motor-3.3-pymongo-min",
+        "status": "SATISFIED",
+        "severity": "HIGH",
+        "summary": "motor 3.3.x requires pymongo >= 4.5.0",
+        "detail": "motor 3.3.2 → pymongo is 4.6.1: 4.6.1 gte 4.5.0",
+        "provenance": "OBSERVED",
+        "source": {
+          "url": "https://pypi.org/pypi/motor/3.3.2/json",
+          "title": "PyPI metadata for motor 3.3.2 (requires_dist)",
+          "recordedAt": "2026-09-09"
+        }
+      },
+      "max": {
+        "ruleId": "motor-3.3-pymongo-max",
+        "status": "SATISFIED",
+        "severity": "HIGH",
+        "summary": "motor 3.3.x requires pymongo < 5.0.0",
+        "detail": "motor 3.3.2 → pymongo is 4.6.1: 4.6.1 lt 5.0.0",
+        "provenance": "OBSERVED",
+        "source": {
+          "url": "https://pypi.org/pypi/motor/3.3.2/json",
+          "title": "PyPI metadata for motor 3.3.2 (requires_dist)",
+          "recordedAt": "2026-09-09"
+        }
+      },
+      "pyd": {
+        "ruleId": "fastapi-0.104-pydantic-min",
+        "status": "SATISFIED",
+        "severity": "HIGH",
+        "summary": "fastapi 0.104.x requires pydantic >= 1.7.4",
+        "detail": "fastapi 0.104.1 → pydantic is 2.5.0: 2.5.0 gte 1.7.4",
+        "provenance": "OBSERVED",
+        "source": {
+          "url": "https://pypi.org/pypi/fastapi/0.104.1/json",
+          "title": "PyPI metadata for fastapi 0.104.1 (requires_dist)",
+          "recordedAt": "2026-09-09"
+        }
+      },
+      "violations": 0
+    },
+    "C3": {
+      "ruleId": "springboot-3.4-spring-boot-starter-web-spring-core",
+      "status": "VIOLATION",
+      "severity": "HIGH",
+      "summary": "Spring Boot 3.4.x requires Spring Framework 6.2.15 or above",
+      "detail": "org.springframework.boot:spring-boot-starter-web 3.4.2 → org.springframework:spring-core is 6.1.0: 6.1.0 is not gte 6.2.15",
+      "provenance": "OBSERVED",
+      "source": {
+        "url": "https://docs.spring.io/spring-boot/3.4/system-requirements.html",
+        "title": "Spring Boot 3.4.13 system requirements",
+        "recordedAt": "2026-09-09"
+      }
+    },
+    "C4": {
+      "ruleId": "springboot-4.0-spring-boot-starter-web-spring-core",
+      "status": "SATISFIED",
+      "severity": "HIGH",
+      "summary": "Spring Boot 4.0.x requires Spring Framework 7.0.9 or above",
+      "detail": "org.springframework.boot:spring-boot-starter-web 4.0.8 → org.springframework:spring-core is 7.0.9: 7.0.9 gte 7.0.9",
+      "provenance": "OBSERVED",
+      "source": {
+        "url": "https://docs.spring.io/spring-boot/4.0/system-requirements.html",
+        "title": "Spring Boot 4.0.8 system requirements",
+        "recordedAt": "2026-09-09"
+      }
+    },
+    "C5": {
+      "ruleId": "fastapi-0.104-starlette-min",
+      "status": "UNKNOWN",
+      "severity": "HIGH",
+      "summary": "fastapi 0.104.x requires starlette >= 0.27.0 — could not be checked",
+      "detail": "starlette: not present in the manifests",
+      "provenance": "UNKNOWN",
+      "source": {
+        "url": "https://pypi.org/pypi/fastapi/0.104.1/json",
+        "title": "PyPI metadata for fastapi 0.104.1 (requires_dist)",
+        "recordedAt": "2026-09-09"
+      }
+    },
+    "C6": {
+      "packs": [
+        {
+          "id": "expo",
+          "rules": 19,
+          "origin": "C:\\Users\\nirwa\\Downloads\\spleenofrequest\\engine\\drift\\rulepacks\\expo.json"
+        },
+        {
+          "id": "pip-core",
+          "rules": 9,
+          "origin": "C:\\Users\\nirwa\\Downloads\\spleenofrequest\\engine\\drift\\rulepacks\\pip-core.json"
+        },
+        {
+          "id": "spring-boot",
+          "rules": 12,
+          "origin": "C:\\Users\\nirwa\\Downloads\\spleenofrequest\\engine\\drift\\rulepacks\\spring-boot.json"
+        }
+      ],
+      "unsourced": 0
+    }
+  },
+  "finishedAt": "2026-09-10T17:46:06.558Z"
+}

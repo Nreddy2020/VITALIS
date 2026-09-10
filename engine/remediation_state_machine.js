@@ -1,89 +1,47 @@
 /**
- * VITALIS BETA-1A: Controlled Closed-Loop Remediation State Machine
- * States:
- * DETECTED -> DIAGNOSED -> RECOMMENDED -> RISK_ASSESSED -> AWAITING_APPROVAL -> APPROVED -> EXECUTING -> VERIFYING -> COMPLETED / ROLLBACK -> VERIFIED
+ * QUARANTINED — replaced in Stage 4 by engine/governed_remediation.js
+ *
+ * This module governed the only operation in VITALIS that can call a real
+ * control-plane API, and it was unsafe. Six defects, each proven by running it
+ * (tests/verify_stage4_governance_gates.js, gate D0, exploits them against the
+ * preserved copy at engine/_deprecated/remediation_state_machine.legacy.js):
+ *
+ *   1. `signature: sig-${Math.random()...}` — the "cryptographic signature" was
+ *      a random string, and nothing ever verified it.
+ *   2. `approve(operatorId = "sre-lead@bank.corp", ticketId = "INC-884192")` —
+ *      approval defaulted to the SRE lead's identity and checked nothing, so any
+ *      caller could approve any action as anyone.
+ *   3. No transition guards: `new RemediationStateMachine(...).execute()` moved
+ *      DETECTED -> EXECUTING directly, skipping diagnosis, risk assessment and
+ *      approval entirely.
+ *   4. The tamper-evident ledger was taken in the constructor and never written
+ *      to — zero audit entries for the highest-risk operation in the product.
+ *   5. `verifyPostAction(isHealthy = true)` defaulted to success, so an
+ *      unverified action self-reported COMPLETED.
+ *   6. `assessRisk(riskLevel = "LOW")` defaulted to low risk.
+ *
+ * The replacement fails closed on every one of these: real Ed25519 approval
+ * bound to a specific action/target/incident/ticket with nonce and expiry, RBAC,
+ * a narrow action allowlist, enforced legal transitions, a real hash-chained
+ * audit trail, measured (never assumed) verification with automatic rollback,
+ * and execution disabled by default.
  */
 
-const REMEDIATION_STATES = {
-  DETECTED: "DETECTED",
-  DIAGNOSED: "DIAGNOSED",
-  RECOMMENDED: "RECOMMENDED",
-  RISK_ASSESSED: "RISK_ASSESSED",
-  AWAITING_APPROVAL: "AWAITING_APPROVAL",
-  APPROVED: "APPROVED",
-  EXECUTING: "EXECUTING",
-  VERIFYING: "VERIFYING",
-  COMPLETED: "COMPLETED",
-  ROLLBACK: "ROLLBACK",
-  VERIFIED: "VERIFIED"
-};
-
 class RemediationStateMachine {
-  constructor(incidentId, targetAction, ledger) {
-    this.incidentId = incidentId;
-    this.targetAction = targetAction;
-    this.ledger = ledger;
-    this.state = REMEDIATION_STATES.DETECTED;
-    this.history = [];
-    this.recordTransition(REMEDIATION_STATES.DETECTED, "Incident detected by RIE baseline monitor");
-  }
-
-  recordTransition(toState, reason, metadata = {}) {
-    const transition = {
-      fromState: this.state,
-      toState,
-      timestamp: new Date().toISOString(),
-      reason,
-      metadata,
-      signature: `sig-${Math.random().toString(36).substring(2, 10)}`
-    };
-
-    this.state = toState;
-    this.history.push(transition);
-    return transition;
-  }
-
-  diagnose(rcaCandidate) {
-    return this.recordTransition(REMEDIATION_STATES.DIAGNOSED, `Root cause inferred: ${rcaCandidate.title}`);
-  }
-
-  recommend(actionPlan) {
-    return this.recordTransition(REMEDIATION_STATES.RECOMMENDED, `Action recommended: ${actionPlan}`);
-  }
-
-  assessRisk(riskLevel = "LOW", blastRadius = "Checkout API") {
-    return this.recordTransition(REMEDIATION_STATES.RISK_ASSESSED, `Risk evaluated as ${riskLevel}`, { riskLevel, blastRadius });
-  }
-
-  requestApproval() {
-    return this.recordTransition(REMEDIATION_STATES.AWAITING_APPROVAL, "Awaiting cryptographic human approval from on-call engineer");
-  }
-
-  approve(operatorId = "sre-lead@bank.corp", ticketId = "INC-884192") {
-    return this.recordTransition(REMEDIATION_STATES.APPROVED, `Approved by ${operatorId} for ticket ${ticketId}`, { operatorId, ticketId });
-  }
-
-  execute() {
-    return this.recordTransition(REMEDIATION_STATES.EXECUTING, "Dispatching remediation command to cluster API");
-  }
-
-  verifyPostAction(isHealthy = true) {
-    this.recordTransition(REMEDIATION_STATES.VERIFYING, "Verifying post-remediation telemetry against Golden Baseline");
-    if (isHealthy) {
-      return this.recordTransition(REMEDIATION_STATES.COMPLETED, "Telemetry confirmed healthy; transaction latency returned to baseline");
-    } else {
-      this.recordTransition(REMEDIATION_STATES.ROLLBACK, "Telemetry failed verification; triggering automatic canary rollback");
-      return this.recordTransition(REMEDIATION_STATES.VERIFIED, "Rollback verified and stable");
-    }
-  }
-
-  getStatus() {
-    return {
-      incidentId: this.incidentId,
-      currentState: this.state,
-      history: this.history
-    };
+  constructor() {
+    throw new Error(
+      'RemediationStateMachine is quarantined: it allowed unapproved execution and used a ' +
+      'Math.random() value as a "cryptographic signature". Use { GovernedRemediation } from ' +
+      'engine/governed_remediation.js instead.'
+    );
   }
 }
+
+const REMEDIATION_STATES = Object.freeze({
+  DETECTED: 'DETECTED', DIAGNOSED: 'DIAGNOSED', RECOMMENDED: 'RECOMMENDED',
+  RISK_ASSESSED: 'RISK_ASSESSED', AWAITING_APPROVAL: 'AWAITING_APPROVAL',
+  APPROVED: 'APPROVED', EXECUTING: 'EXECUTING', VERIFYING: 'VERIFYING',
+  COMPLETED: 'COMPLETED', ROLLBACK: 'ROLLBACK', VERIFIED: 'VERIFIED'
+});
 
 module.exports = { RemediationStateMachine, REMEDIATION_STATES };

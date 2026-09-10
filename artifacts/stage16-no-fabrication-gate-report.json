@@ -1,0 +1,90 @@
+{
+  "suite": "stage16-no-fabricated-facts",
+  "startedAt": "2026-09-10T17:46:06.714Z",
+  "gates": {
+    "F1_noDemoStringsInRealRequest": "PASS",
+    "F2_dependenciesAreObserved": "PASS",
+    "F3_environmentOnlyFromResource": "PASS",
+    "F4_statusOnlyWhenObserved": "PASS",
+    "F5_noInventedChangeContext": "PASS",
+    "F6_noHardcodedBudgetOrStandardFlag": "PASS"
+  },
+  "evidence": {
+    "F1": {
+      "found": [],
+      "dna": {
+        "traceId": "cccccccccccccccccccccccccccccccc",
+        "structure": {
+          "path": "finlife-api",
+          "hopCount": 1
+        },
+        "performance": {
+          "totalDurationMs": 3000,
+          "hopLatencies": [
+            {
+              "service": "finlife-api",
+              "ms": 3000
+            }
+          ]
+        },
+        "semantics": {
+          "status": 200,
+          "statusProvenance": "OBSERVED",
+          "headersProvenance": "UNKNOWN — VITALIS does not ingest request headers"
+        },
+        "dependencies": [
+          "finlife-api"
+        ],
+        "dependenciesProvenance": "OBSERVED — services seen on this request",
+        "environment": {
+          "serviceVersions": {
+            "finlife-api": "1.0.1"
+          },
+          "deploymentEnvironment": "dev"
+        },
+        "environmentProvenance": "OBSERVED — from OTel resource attributes only; runtime and host are not ingested"
+      }
+    },
+    "F2": {
+      "dependencies": [
+        "finlife-api"
+      ],
+      "provenance": "OBSERVED — services seen on this request"
+    },
+    "F3": {
+      "environment": {
+        "serviceVersions": {
+          "finlife-api": "1.0.1"
+        },
+        "deploymentEnvironment": "dev"
+      },
+      "provenance": "OBSERVED — from OTel resource attributes only; runtime and host are not ingested"
+    },
+    "F4": {
+      "observed": {
+        "status": 200,
+        "statusProvenance": "OBSERVED",
+        "headersProvenance": "UNKNOWN — VITALIS does not ingest request headers"
+      },
+      "slow": {
+        "statusProvenance": "UNKNOWN — no http.status_code attribute was ingested",
+        "headersProvenance": "UNKNOWN — VITALIS does not ingest request headers"
+      },
+      "slowMs": 9000
+    },
+    "F5": {
+      "hasRealCorrelation": true
+    },
+    "F6": {
+      "performanceKeys": [
+        "totalDurationMs",
+        "hopLatencies"
+      ],
+      "structureKeys": [
+        "path",
+        "hopCount"
+      ]
+    }
+  },
+  "finishedAt": "2026-09-10T17:46:06.726Z"
+}

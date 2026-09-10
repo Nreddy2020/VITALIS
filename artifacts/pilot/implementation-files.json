@@ -1,0 +1,163 @@
+[
+  {
+    "path": "server.js",
+    "baselineSha256": "758c32af97d5277bcc392d489d9e015474829353ec7bb71435ace039bf745d08",
+    "sha256": "81e15d8c638b5c910627c564f89244c6a81773ba515d1508d2fb634d8a27bdf0",
+    "importHashVerified": true,
+    "newFile": false
+  },
+  {
+    "path": "index.html",
+    "baselineSha256": "0c2224dec8881861c261b4f3e214186c5f13f5e4bad98dce2beaef4b1e0c756a",
+    "sha256": "1d8a82c5eec941466080fa443748caf309fdadbd1a6e341d52e7bc73e0385dfd",
+    "importHashVerified": true,
+    "newFile": false
+  },
+  {
+    "path": "package.json",
+    "baselineSha256": "b467aee884680625af1149407b3b149c1e6fce8f57ce7715a4eece88c8dca665",
+    "sha256": "393de6fb6359e8a669fd580973c9e68b9ee8803e1528d9944b5307c681bbce43",
+    "importHashVerified": true,
+    "newFile": false
+  },
+  {
+    "path": "README.md",
+    "baselineSha256": "34ab8cdcdd695b62ef572e891668095b20b5bbbf22f40ef493f312ef00c1e68d",
+    "sha256": "3236f74a4b01bf770a2f6dd4bb0ffc9b9134e61797831b0bd6d89d72f7a8ba80",
+    "importHashVerified": false,
+    "newFile": false
+  },
+  {
+    "path": "engine/drift/request_drift.js",
+    "baselineSha256": "4b28081373c18aa418af36a2faa764627c605d0e133bae8dde5fd4fe2a0d506f",
+    "sha256": "ca84375b02ef8d13f12ff06a27b516caa09dc5c1298310f210d881259c193239",
+    "importHashVerified": true,
+    "newFile": false
+  },
+  {
+    "path": "engine/drift/relationships.js",
+    "baselineSha256": null,
+    "sha256": "729a230d364ddbfed70f6e9d459e4d07bcef533045dca8caca19e45dfbaedc9b",
+    "importHashVerified": false,
+    "newFile": true
+  },
+  {
+    "path": "engine/drift/relationship_rules.json",
+    "baselineSha256": null,
+    "sha256": "7f747be351d0b6399c756e60caecd7132be225491ac8d6e1665f9ef3568f4ef7",
+    "importHashVerified": false,
+    "newFile": true
+  },
+  {
+    "path": "docs/00_START_HERE.md",
+    "baselineSha256": "eb60dd6ede4856a3f9408f3acd331eabc90d5e521e23c2d246b63fe5296725ab",
+    "sha256": "87f49dbf4f76ee85fa9de44e8fea60273da8f6e97e26586fab4456d07c43bcc8",
+    "importHashVerified": true,
+    "newFile": false
+  },
+  {
+    "path": "docs/01_CHARTER_read_this_first.md",
+    "baselineSha256": "ba8f62a5944993852f42b6505e14eed807bcab135153dbfe510801a628746a0b",
+    "sha256": "82245defb9c1628665770b24e9f67ac59a36304adaf1d835033be6d2eb4b0ec7",
+    "importHashVerified": true,
+    "newFile": false
+  },
+  {
+    "path": "docs/03_Competitive_Reality.md",
+    "baselineSha256": "2a58d31cf06d6969970a993477d4ee42143add8cd256ffeabc33268b0d30fbd9",
+    "sha256": "df882afee292d38d707358222cac35d658c89e4804778db7a5df77f456c0ff68",
+    "importHashVerified": true,
+    "newFile": false
+  },
+  {
+    "path": "docs/09_Internal_Adoption_Proposal.md",
+    "baselineSha256": "0153a6589005f5177ed00397479852c92c3a3bd76a5b187c8165673727dcc3cb",
+    "sha256": "9127bb8a3ecd7f3cdf0c2a9308301e88dfbd58d04d6f39f37af0077d2176ed13",
+    "importHashVerified": true,
+    "newFile": false
+  },
+  {
+    "path": "docs/17_Stage9_Compatibility_Drift.md",
+    "baselineSha256": "ab1e2e2116e72f4e96bb0eddee053937129649819e099ad9875e33cc4a5a5a41",
+    "sha256": "d758fbdd7b2a1e7843907235aa91ff2b345f51fb3a798bdaee551280568fd90e",
+    "importHashVerified": true,
+    "newFile": false
+  },
+  {
+    "path": "docs/18_Stage10_Request_Path_Drift.md",
+    "baselineSha256": "e60d1979c3caf4d30d6c221b83e7579d3bee5edc25c64d76868e1a703e699af4",
+    "sha256": "7fab4346ed194d9aa5a9d48b3f5ac6823ccb1125cc90640db5603cb912aa0aa3",
+    "importHashVerified": true,
+    "newFile": false
+  },
+  {
+    "path": "docs/28_Request_Compatibility_Pilot.md",
+    "baselineSha256": null,
+    "sha256": "fc27bb53ded007f37d6b9ca6ddf80126c6049726fade60ceb381d5a5e7638977",
+    "importHashVerified": false,
+    "newFile": true
+  },
+  {
+    "path": "tests/fixtures/relationship_pilot.js",
+    "baselineSha256": null,
+    "sha256": "44127edac7966e5b8476fadf46a79ed4c9c5baeebfcca86ff7abb802ce390247",
+    "importHashVerified": false,
+    "newFile": true
+  },
+  {
+    "path": "tests/verify_relationship_pilot.js",
+    "baselineSha256": null,
+    "sha256": "cbf215737c78abf09e311c295fecd7fc86bd559aeaed71938db14e54fc7ed76a",
+    "importHashVerified": false,
+    "newFile": true
+  },
+  {
+    "path": "tests/verify_relationship_console.js",
+    "baselineSha256": null,
+    "sha256": "67d3f38d62d23a87ecaa5ee3684a8a3632169d5b97d2e09783a18b5a7020a752",
+    "importHashVerified": false,
+    "newFile": true
+  },
+  {
+    "path": "tests/serve_relationship_pilot.js",
+    "baselineSha256": null,
+    "sha256": "31cfad09bfbf5708fab06ab1130a4d1f4502b7ad265829e120536a3aa78551f9",
+    "importHashVerified": false,
+    "newFile": true
+  },
+  {
+    "path": "tests/capture_fin_health.py",
+    "baselineSha256": null,
+    "sha256": "55708b130320783019443b55639fc3d20e63272d897e2225772daf4a82ac0436",
+    "importHashVerified": false,
+    "newFile": true
+  },
+  {
+    "path": "tests/verify_fin_capture.js",
+    "baselineSha256": null,
+    "sha256": "10b3fae535d5b029e556230e623566ffd5a6c5cd72da19996a69d12f07630bdf",
+    "importHashVerified": false,
+    "newFile": true
+  },
+  {
+    "path": "tests/verify_node_live_capture.js",
+    "baselineSha256": null,
+    "sha256": "baee4f58b99b79219f0e213aae84d9fd9166cbd180987dcfe67166e981a44e0c",
+    "importHashVerified": false,
+    "newFile": true
+  },
+  {
+    "path": "tests/run_pilot_regressions.js",
+    "baselineSha256": null,
+    "sha256": "ff6c42bdc0f4fa61a2977f032758a7de62e52a1050112750a0aca2b08691fd07",
+    "importHashVerified": false,
+    "newFile": true
+  },
+  {
+    "path": "tests/build_pilot_review.py",
+    "baselineSha256": null,
+    "sha256": "2b271126b1639e62e8fac9c0255dd8d0eeaf939dedc55bbbdaeb8201723218c3",
+    "importHashVerified": false,
+    "newFile": true
+  }
+]

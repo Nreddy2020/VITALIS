@@ -1,0 +1,11 @@
+{
+  "runAt": "2026-09-10T14:28:50.571Z",
+  "status": "PASS",
+  "checks": [
+    "Live fixture path, verdict, provenance, sources and next evidence rendered",
+    "Missing identity remains UNKNOWN with zero green elements",
+    "Sender HTML is escaped",
+    "No browser JavaScript errors"
+  ],
+  "browser": "153.0.8010.36"
+}

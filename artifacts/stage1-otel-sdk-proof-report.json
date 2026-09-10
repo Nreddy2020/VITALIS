@@ -1,0 +1,9 @@
+{
+  "version": "1.0",
+  "testRun": "VITALIS-STAGE1-OTEL-1789050502175",
+  "timestamp": "2026-09-10T14:28:22.175Z",
+  "gates": {
+    "realOtelSpansIngestedWithZeroAdapterCode": "PASS",
+    "realOtelAttributesReachRcaEngine": "PASS"
+  }
+}

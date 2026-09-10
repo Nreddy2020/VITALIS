@@ -1,0 +1,365 @@
+{
+  "runAt": "2026-09-10T17:46:07.100Z",
+  "status": "PASS",
+  "metadata": {
+    "capturedAt": "2026-09-10T10:18:17Z",
+    "application": "/mnt/e/fintech-mobile/backend",
+    "sourceMainSha256": "78a08a1f53ef38fb2c1246df8cb803ae77661f9727f5706bc625fbb804f177fc",
+    "kind": "REAL_FIN_HEALTH_CAPTURE",
+    "requests": [
+      {
+        "httpStatus": 200,
+        "body": {
+          "status": "healthy"
+        }
+      },
+      {
+        "httpStatus": 200,
+        "body": {
+          "status": "healthy"
+        }
+      }
+    ],
+    "captures": [
+      {
+        "file": "fin-health-otlp-0.bin",
+        "sha256": "a8a9eb8fdb792da6a7d07351f777108fb5bb9add64dbb7a397d5dae56e377104",
+        "bytes": 2506
+      },
+      {
+        "file": "fin-health-otlp-1.bin",
+        "sha256": "2a3644320fd48069526927e05721905544d746d748cb2608fca9dd4cf67ddfbe",
+        "bytes": 555
+      }
+    ],
+    "instrumentation": "Explicit FastAPI and PyMongo instrumentation in isolated harness; no FIN source edits",
+    "versions": {
+      "fastapi": "0.104.1",
+      "pymongo": "4.6.1",
+      "motor": "3.3.2",
+      "opentelemetry-sdk": "1.44.0",
+      "opentelemetry-instrumentation-fastapi": "0.65b0",
+      "opentelemetry-instrumentation-pymongo": "0.65b0"
+    },
+    "unknowns": [
+      "Mobile UI and network edge not captured",
+      "No deployed artifact digest or build attestation",
+      "No database SERVER span or immutable database build identity",
+      "Not a real incident or end-to-end mobile transaction"
+    ]
+  },
+  "healthRequests": 2,
+  "checks": [
+    "Two actual FIN health HTTP 200 responses",
+    "Two independent request traces with MongoDB client spans",
+    "No artifact identity or server spans means UNKNOWN",
+    "Expected mobile/database boundaries remain unchecked",
+    "No causal candidates from missing evidence"
+  ],
+  "reports": [
+    {
+      "traceId": "b24964f07ad4fab58f6da5dd72db1020",
+      "observedHops": [
+        {
+          "spanId": "bfbbb5a9a70719ba",
+          "parentSpanId": "183b01fc14b263d4",
+          "name": "admin.ping",
+          "kind": 3,
+          "service": "fin-health-pilot"
+        },
+        {
+          "spanId": "4ff53f019d63a8b6",
+          "parentSpanId": "183b01fc14b263d4",
+          "name": "GET /health http send",
+          "kind": 1,
+          "service": "fin-health-pilot"
+        },
+        {
+          "spanId": "50bf47eeadb280d7",
+          "parentSpanId": "183b01fc14b263d4",
+          "name": "GET /health http send",
+          "kind": 1,
+          "service": "fin-health-pilot"
+        },
+        {
+          "spanId": "183b01fc14b263d4",
+          "name": "GET /health",
+          "kind": 2,
+          "service": "fin-health-pilot"
+        }
+      ],
+      "compatibility": {
+        "schemaVersion": 1,
+        "traceId": "b24964f07ad4fab58f6da5dd72db1020",
+        "evaluatedAt": "2026-09-10T17:46:07.075Z",
+        "inputHash": "51be68ceb3ff778152d342a8244a2abf63c341afcd9277185ad19fc618ca778d",
+        "ruleSetHash": "3ef4642420c0415449adb9f111580cd7c1d6574e1a7a6add614beb67a00d2eba",
+        "fixture": false,
+        "traceShape": {
+          "state": "OBSERVED_TREE",
+          "reasons": [],
+          "roots": [
+            "183b01fc14b263d4"
+          ]
+        },
+        "deployments": [
+          {
+            "spanId": "bfbbb5a9a70719ba",
+            "parentSpanId": "183b01fc14b263d4",
+            "kind": 3,
+            "operation": "admin.ping",
+            "observedAt": 1789035497003,
+            "service": "fin-health-pilot",
+            "deployed": {
+              "provenance": "OBSERVED",
+              "basis": "Sender-reported resource attributes; not independently attested"
+            },
+            "declared": null,
+            "resolved": [],
+            "inventoryHash": null,
+            "state": "UNKNOWN",
+            "reason": "Missing or invalid deployed SHA-256 artifact digest"
+          },
+          {
+            "spanId": "4ff53f019d63a8b6",
+            "parentSpanId": "183b01fc14b263d4",
+            "kind": 1,
+            "operation": "GET /health http send",
+            "observedAt": 1789035497004,
+            "service": "fin-health-pilot",
+            "deployed": {
+              "provenance": "OBSERVED",
+              "basis": "Sender-reported resource attributes; not independently attested"
+            },
+            "declared": null,
+            "resolved": [],
+            "inventoryHash": null,
+            "state": "UNKNOWN",
+            "reason": "Missing or invalid deployed SHA-256 artifact digest"
+          },
+          {
+            "spanId": "50bf47eeadb280d7",
+            "parentSpanId": "183b01fc14b263d4",
+            "kind": 1,
+            "operation": "GET /health http send",
+            "observedAt": 1789035497004,
+            "service": "fin-health-pilot",
+            "deployed": {
+              "provenance": "OBSERVED",
+              "basis": "Sender-reported resource attributes; not independently attested"
+            },
+            "declared": null,
+            "resolved": [],
+            "inventoryHash": null,
+            "state": "UNKNOWN",
+            "reason": "Missing or invalid deployed SHA-256 artifact digest"
+          },
+          {
+            "spanId": "183b01fc14b263d4",
+            "kind": 2,
+            "operation": "GET /health",
+            "observedAt": 1789035497002,
+            "service": "fin-health-pilot",
+            "deployed": {
+              "provenance": "OBSERVED",
+              "basis": "Sender-reported resource attributes; not independently attested"
+            },
+            "declared": null,
+            "resolved": [],
+            "inventoryHash": null,
+            "state": "UNKNOWN",
+            "reason": "Missing or invalid deployed SHA-256 artifact digest"
+          }
+        ],
+        "relationships": [],
+        "unchecked": [
+          {
+            "spanId": "bfbbb5a9a70719ba",
+            "reason": "Client span has no unique remote SERVER child; peer identity and compatibility UNKNOWN"
+          }
+        ],
+        "expectedCoverage": [
+          {
+            "from": "mobile-client",
+            "to": "fin-health-pilot",
+            "declaredBy": "pilot operator",
+            "evidence": "FIN app architecture; mobile path not exercised by this harness",
+            "provenance": "DECLARED",
+            "state": "UNKNOWN",
+            "reason": "Expectation does not create an edge or establish compatibility"
+          },
+          {
+            "from": "fin-health-pilot",
+            "to": "mongodb",
+            "declaredBy": "pilot operator",
+            "evidence": "FIN backend/main.py health -> MongoDB.client.admin.command(ping)",
+            "provenance": "DECLARED",
+            "state": "UNKNOWN",
+            "reason": "Expectation does not create an edge or establish compatibility"
+          }
+        ],
+        "status": "UNKNOWN",
+        "coverage": {
+          "observedBoundaries": 0,
+          "checkedBoundaries": 0,
+          "unknownBoundaries": 0,
+          "uncheckedInteractions": 1
+        },
+        "limitation": "Only observed CLIENT -> SERVER boundaries and listed prerequisites are evaluated. Missing spans, async links, uninstrumented peers, unlisted rules and runtime behavior remain UNKNOWN. No whole-request compatibility or causal assurance.",
+        "evidenceContext": "Telemetry origin is not independently verified by this report"
+      }
+    },
+    {
+      "traceId": "79fb0babb0bbf6e9ace2c5f632efc29b",
+      "observedHops": [
+        {
+          "spanId": "1f6d5dfb23bc9021",
+          "parentSpanId": "f9ffc5a3db1782af",
+          "name": "admin.ping",
+          "kind": 3,
+          "service": "fin-health-pilot"
+        },
+        {
+          "spanId": "855d49c4ca994c47",
+          "parentSpanId": "f9ffc5a3db1782af",
+          "name": "GET /health http send",
+          "kind": 1,
+          "service": "fin-health-pilot"
+        },
+        {
+          "spanId": "dca638c6ba26a27d",
+          "parentSpanId": "f9ffc5a3db1782af",
+          "name": "GET /health http send",
+          "kind": 1,
+          "service": "fin-health-pilot"
+        },
+        {
+          "spanId": "f9ffc5a3db1782af",
+          "name": "GET /health",
+          "kind": 2,
+          "service": "fin-health-pilot"
+        }
+      ],
+      "compatibility": {
+        "schemaVersion": 1,
+        "traceId": "79fb0babb0bbf6e9ace2c5f632efc29b",
+        "evaluatedAt": "2026-09-10T17:46:07.091Z",
+        "inputHash": "c8e9c73fae7b31a632a75d2f8d62a51fb455ea8b3e66487d04cdd5c4e28c233f",
+        "ruleSetHash": "3ef4642420c0415449adb9f111580cd7c1d6574e1a7a6add614beb67a00d2eba",
+        "fixture": false,
+        "traceShape": {
+          "state": "OBSERVED_TREE",
+          "reasons": [],
+          "roots": [
+            "f9ffc5a3db1782af"
+          ]
+        },
+        "deployments": [
+          {
+            "spanId": "1f6d5dfb23bc9021",
+            "parentSpanId": "f9ffc5a3db1782af",
+            "kind": 3,
+            "operation": "admin.ping",
+            "observedAt": 1789035497008,
+            "service": "fin-health-pilot",
+            "deployed": {
+              "provenance": "OBSERVED",
+              "basis": "Sender-reported resource attributes; not independently attested"
+            },
+            "declared": null,
+            "resolved": [],
+            "inventoryHash": null,
+            "state": "UNKNOWN",
+            "reason": "Missing or invalid deployed SHA-256 artifact digest"
+          },
+          {
+            "spanId": "855d49c4ca994c47",
+            "parentSpanId": "f9ffc5a3db1782af",
+            "kind": 1,
+            "operation": "GET /health http send",
+            "observedAt": 1789035497009,
+            "service": "fin-health-pilot",
+            "deployed": {
+              "provenance": "OBSERVED",
+              "basis": "Sender-reported resource attributes; not independently attested"
+            },
+            "declared": null,
+            "resolved": [],
+            "inventoryHash": null,
+            "state": "UNKNOWN",
+            "reason": "Missing or invalid deployed SHA-256 artifact digest"
+          },
+          {
+            "spanId": "dca638c6ba26a27d",
+            "parentSpanId": "f9ffc5a3db1782af",
+            "kind": 1,
+            "operation": "GET /health http send",
+            "observedAt": 1789035497009,
+            "service": "fin-health-pilot",
+            "deployed": {
+              "provenance": "OBSERVED",
+              "basis": "Sender-reported resource attributes; not independently attested"
+            },
+            "declared": null,
+            "resolved": [],
+            "inventoryHash": null,
+            "state": "UNKNOWN",
+            "reason": "Missing or invalid deployed SHA-256 artifact digest"
+          },
+          {
+            "spanId": "f9ffc5a3db1782af",
+            "kind": 2,
+            "operation": "GET /health",
+            "observedAt": 1789035497008,
+            "service": "fin-health-pilot",
+            "deployed": {
+              "provenance": "OBSERVED",
+              "basis": "Sender-reported resource attributes; not independently attested"
+            },
+            "declared": null,
+            "resolved": [],
+            "inventoryHash": null,
+            "state": "UNKNOWN",
+            "reason": "Missing or invalid deployed SHA-256 artifact digest"
+          }
+        ],
+        "relationships": [],
+        "unchecked": [
+          {
+            "spanId": "1f6d5dfb23bc9021",
+            "reason": "Client span has no unique remote SERVER child; peer identity and compatibility UNKNOWN"
+          }
+        ],
+        "expectedCoverage": [
+          {
+            "from": "mobile-client",
+            "to": "fin-health-pilot",
+            "declaredBy": "pilot operator",
+            "evidence": "FIN app architecture; mobile path not exercised by this harness",
+            "provenance": "DECLARED",
+            "state": "UNKNOWN",
+            "reason": "Expectation does not create an edge or establish compatibility"
+          },
+          {
+            "from": "fin-health-pilot",
+            "to": "mongodb",
+            "declaredBy": "pilot operator",
+            "evidence": "FIN backend/main.py health -> MongoDB.client.admin.command(ping)",
+            "provenance": "DECLARED",
+            "state": "UNKNOWN",
+            "reason": "Expectation does not create an edge or establish compatibility"
+          }
+        ],
+        "status": "UNKNOWN",
+        "coverage": {
+          "observedBoundaries": 0,
+          "checkedBoundaries": 0,
+          "unknownBoundaries": 0,
+          "uncheckedInteractions": 1
+        },
+        "limitation": "Only observed CLIENT -> SERVER boundaries and listed prerequisites are evaluated. Missing spans, async links, uninstrumented peers, unlisted rules and runtime behavior remain UNKNOWN. No whole-request compatibility or causal assurance.",
+        "evidenceContext": "Telemetry origin is not independently verified by this report"
+      }
+    }
+  ]
+}

@@ -1,60 +1,28 @@
 /**
- * VITALIS BETA: Change Intelligence Engine
- * Connects changes (Deploys, Configs, Certs) to downstream telemetry anomalies and business impact.
+ * DEPRECATED — replaced in Stage 3 by engine/change_correlator.js
+ *
+ * The previous contents of this file were a demo module, and they were unsafe to
+ * keep loadable. It held two hardcoded change events, returned
+ * `hasChangeCorrelation: true` unconditionally, and ended its lookup with
+ * `|| this.changeEvents[0]` — so it could never fail to "find" a cause. Pointed
+ * at any incident, it would confidently name a deployment that had nothing to do
+ * with it. Nothing in the codebase referenced it, so it was replaced rather than
+ * repaired.
+ *
+ * Use engine/change_correlator.js instead. It correlates REAL change events
+ * (from engine/adapters/git_change_adapter.js, a CI/CD webhook, or a
+ * change-management system) against the REAL observed time of a request, returns
+ * nothing when nothing qualifies, and labels every match CORRELATED rather than
+ * causal. See tests/verify_stage3_correlation_gates.js gate C2, which exists
+ * specifically to prove it can say "no".
  */
 
 class ChangeIntelligenceEngine {
   constructor() {
-    this.changeEvents = [
-      {
-        id: "CHG-2026-0819-01",
-        timestamp: "21:30:00 UTC",
-        minutesAgo: 14,
-        type: "DEPLOYMENT",
-        service: "WebSphere-CoreApp",
-        version: "v2.4.1",
-        commit: "8a4f91e",
-        description: "Introduced batch inventory lock query on checkout path without index on sku_id.",
-        author: "deploy-pipeline@bank.corp"
-      },
-      {
-        id: "CHG-2026-0819-02",
-        timestamp: "04:00:00 UTC",
-        minutesAgo: 1080,
-        type: "CERTIFICATE_RENEWAL",
-        service: "ReportMicroservice",
-        version: "N/A",
-        commit: "N/A",
-        description: "Auto-renewal cron job hit API rate limit; X.509 cert expired.",
-        author: "cert-manager@k8s.internal"
-      }
-    ];
-  }
-
-  correlateAnomalyWithChanges(failedSpan, anomalyTimeMinutesAgo = 14) {
-    const relevantChange = this.changeEvents.find(c => 
-      c.service.toLowerCase().includes(failedSpan.service.toLowerCase()) || 
-      failedSpan.service.toLowerCase().includes("postgres") ||
-      failedSpan.service.toLowerCase().includes("db")
-    ) || this.changeEvents[0];
-
-    return {
-      hasChangeCorrelation: true,
-      changeId: relevantChange.id,
-      changeType: relevantChange.type,
-      timeBeforeAnomaly: `${relevantChange.minutesAgo} minutes earlier`,
-      changeSummary: relevantChange.description,
-      causalLineage: [
-        `1. CHANGE: ${relevantChange.type} ${relevantChange.version} deployed at ${relevantChange.timestamp}`,
-        `2. DEVIATION: Query Q-847 latency spiked to ${failedSpan.durationMs || 3982}ms 7 minutes post-deployment`,
-        `3. DEPENDENCY: Connection pool reached 98% saturation`,
-        `4. IMPACT: Checkout API timeouts initiated across ${failedSpan.service}`
-      ]
-    };
-  }
-
-  getRecentChanges() {
-    return [...this.changeEvents];
+    throw new Error(
+      'ChangeIntelligenceEngine is deprecated: it produced fabricated correlations. ' +
+      'Use { ChangeCorrelator } from engine/change_correlator.js instead.'
+    );
   }
 }
 

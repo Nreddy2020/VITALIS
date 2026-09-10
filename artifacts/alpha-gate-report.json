@@ -1,7 +1,7 @@
 {
   "version": "1.0",
-  "testRun": "VITALIS-ALPHA-001",
-  "timestamp": "2026-08-19T16:21:40.000Z",
+  "testRun": "VITALIS-ALPHA-1789062361971",
+  "timestamp": "2026-09-10T17:46:01.971Z",
   "gates": {
     "otlpIngestion": "PASS",
     "traceReconstruction": "PASS",
@@ -21,7 +21,7 @@
   },
   "rca": {
     "candidate": "Database Lock Contention & Connection Pool Saturation",
-    "confidence": 0.937,
-    "scoringFormula": "50(base) + 20(latency 156x) + 15(pool 98%) + 10(query match) - 1.3(cpu 62%) = 93.7%"
+    "confidence": 0.9,
+    "scoringFormula": "base 50 | latency: +20 (122x this hop's learned p95) | connectionPool: +15 (pool saturation 98%) | queryFingerprint: +10 (a blocking query fingerprint was reported) | cpu: -5 (DB server CPU 62%) = 90 support, 4 of 4 factors observed"
   }
 }

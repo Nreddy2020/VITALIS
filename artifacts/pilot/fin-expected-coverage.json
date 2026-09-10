@@ -1,0 +1,17 @@
+{
+  "builds": [],
+  "expectedInteractions": [
+    {
+      "from": "mobile-client",
+      "to": "fin-health-pilot",
+      "declaredBy": "pilot operator",
+      "evidence": "FIN app architecture; mobile path not exercised by this harness"
+    },
+    {
+      "from": "fin-health-pilot",
+      "to": "mongodb",
+      "declaredBy": "pilot operator",
+      "evidence": "FIN backend/main.py health -> MongoDB.client.admin.command(ping)"
+    }
+  ]
+}

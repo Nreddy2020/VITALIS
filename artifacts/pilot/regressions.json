@@ -1,0 +1,107 @@
+{
+  "runAt": "2026-09-10T17:46:07.176Z",
+  "results": [
+    {
+      "file": "verify_alpha_gates.js",
+      "status": "PASS",
+      "exitCode": 0,
+      "log": "verify_alpha_gates.js.log"
+    },
+    {
+      "file": "verify_security_gates.js",
+      "status": "PASS",
+      "exitCode": 0,
+      "log": "verify_security_gates.js.log"
+    },
+    {
+      "file": "verify_stage1_evidence_gates.js",
+      "status": "PASS",
+      "exitCode": 0,
+      "log": "verify_stage1_evidence_gates.js.log"
+    },
+    {
+      "file": "verify_stage1_otel_sdk_proof.js",
+      "status": "FAIL",
+      "exitCode": 1,
+      "log": "verify_stage1_otel_sdk_proof.js.log"
+    },
+    {
+      "file": "verify_stage4_governance_gates.js",
+      "status": "PASS",
+      "exitCode": 0,
+      "log": "verify_stage4_governance_gates.js.log"
+    },
+    {
+      "file": "verify_stage5_durability_gates.js",
+      "status": "PASS",
+      "exitCode": 0,
+      "log": "verify_stage5_durability_gates.js.log"
+    },
+    {
+      "file": "verify_stage6_ibm_adapter_gates.js",
+      "status": "PASS",
+      "exitCode": 0,
+      "log": "verify_stage6_ibm_adapter_gates.js.log"
+    },
+    {
+      "file": "verify_stage9_drift_gates.js",
+      "status": "PASS",
+      "exitCode": 0,
+      "log": "verify_stage9_drift_gates.js.log"
+    },
+    {
+      "file": "verify_stage10_request_drift_gates.js",
+      "status": "PASS",
+      "exitCode": 0,
+      "log": "verify_stage10_request_drift_gates.js.log"
+    },
+    {
+      "file": "verify_stage11_generality_gates.js",
+      "status": "PASS",
+      "exitCode": 0,
+      "log": "verify_stage11_generality_gates.js.log"
+    },
+    {
+      "file": "verify_stage12_otlp_encoding_gates.js",
+      "status": "PASS",
+      "exitCode": 0,
+      "log": "verify_stage12_otlp_encoding_gates.js.log"
+    },
+    {
+      "file": "verify_stage13_rulepack_coverage_gates.js",
+      "status": "PASS",
+      "exitCode": 0,
+      "log": "verify_stage13_rulepack_coverage_gates.js.log"
+    },
+    {
+      "file": "verify_stage14_learned_baseline_gates.js",
+      "status": "PASS",
+      "exitCode": 0,
+      "log": "verify_stage14_learned_baseline_gates.js.log"
+    },
+    {
+      "file": "verify_stage16_no_fabricated_facts_gates.js",
+      "status": "PASS",
+      "exitCode": 0,
+      "log": "verify_stage16_no_fabricated_facts_gates.js.log"
+    },
+    {
+      "file": "verify_relationship_pilot.js",
+      "status": "PASS",
+      "exitCode": 0,
+      "log": "verify_relationship_pilot.js.log"
+    },
+    {
+      "file": "verify_fin_capture.js",
+      "status": "PASS",
+      "exitCode": 0,
+      "log": "verify_fin_capture.js.log"
+    },
+    {
+      "file": "verify_node_live_capture.js",
+      "status": "FAIL",
+      "exitCode": 1,
+      "log": "verify_node_live_capture.js.log"
+    }
+  ]
+}

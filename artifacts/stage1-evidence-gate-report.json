@@ -1,0 +1,9 @@
+{
+  "version": "1.0",
+  "testRun": "VITALIS-STAGE1-1789062363637",
+  "timestamp": "2026-09-10T17:46:03.637Z",
+  "gates": {
+    "realEvidenceUsedWhenPresent": "PASS",
+    "honestWhenEvidenceMissing": "PASS"
+  }
+}

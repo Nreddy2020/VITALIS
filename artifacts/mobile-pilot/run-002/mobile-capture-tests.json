@@ -1,0 +1,1464 @@
+{
+  "status": "PASS",
+  "runAt": "2026-09-10T13:45:18.035Z",
+  "mobileRequests": 3,
+  "checks": [
+    "Raw OTLP hashes verified",
+    "Mobile CLIENT -> backend SERVER exact parent link",
+    "Mongo CLIENT in each request tree",
+    "Expected mobile boundary observed; database SERVER boundary unknown",
+    "Compatibility unknown; zero fabricated causal candidates"
+  ],
+  "limitations": [
+    "Isolated local runtime, not production",
+    "No artifact attestation",
+    "No database SERVER span",
+    "Read response may use backend fallback; no claim of current market data",
+    "No incompatibility incident or repair executed"
+  ],
+  "reports": [
+    {
+      "traceId": "c4b6bfebbdf71a25e26d910fb1681aab",
+      "hops": [
+        {
+          "spanId": "c2ea1b55637523a9",
+          "parentSpanId": "eb499d797756ecd6",
+          "kind": 3,
+          "timingValid": true,
+          "startTimeUnixNano": "1789039157391725635",
+          "endTimeUnixNano": "1789039157392882269",
+          "service": "fin-backend-isolated",
+          "name": "fintech_core.find",
+          "durationMs": 1,
+          "observedAt": 1789039157392,
+          "status": "OK",
+          "attributes": [
+            {
+              "key": "db.system",
+              "value": {
+                "stringValue": "mongodb"
+              }
+            },
+            {
+              "key": "db.name",
+              "value": {
+                "stringValue": "fintech_core"
+              }
+            },
+            {
+              "key": "db.statement",
+              "value": {
+                "stringValue": "find"
+              }
+            },
+            {
+              "key": "db.mongodb.collection",
+              "value": {
+                "stringValue": "inflation_rates"
+              }
+            },
+            {
+              "key": "net.peer.name",
+              "value": {
+                "stringValue": "localhost"
+              }
+            },
+            {
+              "key": "net.peer.port",
+              "value": {
+                "intValue": "27017"
+              }
+            }
+          ]
+        },
+        {
+          "spanId": "51f257783014d58b",
+          "kind": 3,
+          "timingValid": true,
+          "startTimeUnixNano": "1789039155439000000",
+          "endTimeUnixNano": "1789039155797000000",
+          "otelStatusCode": 1,
+          "service": "fin-mobile-isolated",
+          "name": "GET /api/inflation/current",
+          "durationMs": 358,
+          "observedAt": 1789039155439,
+          "status": "OK",
+          "attributes": [
+            {
+              "key": "http.request.method",
+              "value": {
+                "stringValue": "GET"
+              }
+            },
+            {
+              "key": "http.response.status_code",
+              "value": {
+                "intValue": 200
+              }
+            }
+          ]
+        },
+        {
+          "spanId": "d4ee091cf694e56f",
+          "parentSpanId": "eb499d797756ecd6",
+          "kind": 1,
+          "timingValid": true,
+          "startTimeUnixNano": "1789039157403180275",
+          "endTimeUnixNano": "1789039157403204176",
+          "service": "fin-backend-isolated",
+          "name": "GET /api/inflation/current http receive",
+          "durationMs": 0,
+          "observedAt": 1789039157403,
+          "status": "OK",
+          "attributes": [
+            {
+              "key": "asgi.event.type",
+              "value": {
+                "stringValue": "http.request"
+              }
+            }
+          ]
+        },
+        {
+          "spanId": "14c60bd7cf458cb9",
+          "parentSpanId": "eb499d797756ecd6",
+          "kind": 1,
+          "timingValid": true,
+          "startTimeUnixNano": "1789039157403480284",
+          "endTimeUnixNano": "1789039157403513885",
+          "service": "fin-backend-isolated",
+          "name": "GET /api/inflation/current http send",
+          "durationMs": 0,
+          "observedAt": 1789039157403,
+          "status": "OK",
+          "attributes": [
+            {
+              "key": "asgi.event.type",
+              "value": {
+                "stringValue": "http.response.start"
+              }
+            },
+            {
+              "key": "http.status_code",
+              "value": {
+                "intValue": "200"
+              }
+            }
+          ]
+        },
+        {
+          "spanId": "8dc9bc2c902f8568",
+          "parentSpanId": "eb499d797756ecd6",
+          "kind": 1,
+          "timingValid": true,
+          "startTimeUnixNano": "1789039157403696090",
+          "endTimeUnixNano": "1789039157403708491",
+          "service": "fin-backend-isolated",
+          "name": "GET /api/inflation/current http send",
+          "durationMs": 0,
+          "observedAt": 1789039157404,
+          "status": "OK",
+          "attributes": [
+            {
+              "key": "asgi.event.type",
+              "value": {
+                "stringValue": "http.response.body"
+              }
+            }
+          ]
+        },
+        {
+          "spanId": "86139e0307bc33d0",
+          "parentSpanId": "eb499d797756ecd6",
+          "kind": 1,
+          "timingValid": true,
+          "startTimeUnixNano": "1789039157404080302",
+          "endTimeUnixNano": "1789039157404099902",
+          "service": "fin-backend-isolated",
+          "name": "GET /api/inflation/current http send",
+          "durationMs": 0,
+          "observedAt": 1789039157404,
+          "status": "OK",
+          "attributes": [
+            {
+              "key": "asgi.event.type",
+              "value": {
+                "stringValue": "http.response.body"
+              }
+            }
+          ]
+        },
+        {
+          "spanId": "eb499d797756ecd6",
+          "parentSpanId": "51f257783014d58b",
+          "kind": 2,
+          "timingValid": true,
+          "startTimeUnixNano": "1789039157362778874",
+          "endTimeUnixNano": "1789039157404146004",
+          "service": "fin-backend-isolated",
+          "name": "GET /api/inflation/current",
+          "durationMs": 41,
+          "observedAt": 1789039157363,
+          "status": "OK",
+          "attributes": [
+            {
+              "key": "http.scheme",
+              "value": {
+                "stringValue": "http"
+              }
+            },
+            {
+              "key": "http.host",
+              "value": {
+                "stringValue": "127.0.0.1:8362"
+              }
+            },
+            {
+              "key": "net.host.port",
+              "value": {
+                "intValue": "8362"
+              }
+            },
+            {
+              "key": "http.flavor",
+              "value": {
+                "stringValue": "1.1"
+              }
+            },
+            {
+              "key": "http.target",
+              "value": {
+                "stringValue": "/api/inflation/current"
+              }
+            },
+            {
+              "key": "http.url",
+              "value": {
+                "stringValue": "http://127.0.0.1:8362/api/inflation/current?source=RBI&category=overall&country_code=IND"
+              }
+            },
+            {
+              "key": "http.method",
+              "value": {
+                "stringValue": "GET"
+              }
+            },
+            {
+              "key": "http.server_name",
+              "value": {
+                "stringValue": "127.0.0.1:8362"
+              }
+            },
+            {
+              "key": "http.user_agent",
+              "value": {
+                "stringValue": "okhttp/4.12.0"
+              }
+            },
+            {
+              "key": "net.peer.ip",
+              "value": {
+                "stringValue": "127.0.0.1"
+              }
+            },
+            {
+              "key": "net.peer.port",
+              "value": {
+                "intValue": "61634"
+              }
+            },
+            {
+              "key": "http.route",
+              "value": {
+                "stringValue": "/api/inflation/current"
+              }
+            },
+            {
+              "key": "http.status_code",
+              "value": {
+                "intValue": "200"
+              }
+            }
+          ]
+        },
+        {
+          "spanId": "2cd72dac88012868",
+          "parentSpanId": "eb499d797756ecd6",
+          "kind": 1,
+          "timingValid": true,
+          "startTimeUnixNano": "1789039157403241877",
+          "endTimeUnixNano": "1789039157404215106",
+          "service": "fin-backend-isolated",
+          "name": "GET /api/inflation/current http receive",
+          "durationMs": 1,
+          "observedAt": 1789039157403,
+          "status": "OK",
+          "attributes": []
+        }
+      ],
+      "compatibility": {
+        "schemaVersion": 1,
+        "traceId": "c4b6bfebbdf71a25e26d910fb1681aab",
+        "evaluatedAt": "2026-09-10T13:45:18.000Z",
+        "inputHash": "abf2aa0528d77f7df6b7045f970892174c3bce8d6fc4dae2af5bd749f2fbc8b1",
+        "ruleSetHash": "3ef4642420c0415449adb9f111580cd7c1d6574e1a7a6add614beb67a00d2eba",
+        "fixture": false,
+        "traceShape": {
+          "state": "OBSERVED_TREE",
+          "reasons": [],
+          "roots": [
+            "51f257783014d58b"
+          ]
+        },
+        "deployments": [
+          {
+            "spanId": "c2ea1b55637523a9",
+            "parentSpanId": "eb499d797756ecd6",
+            "kind": 3,
+            "operation": "fintech_core.find",
+            "observedAt": 1789039157392,
+            "service": "fin-backend-isolated",
+            "deployed": {
+              "provenance": "OBSERVED",
+              "basis": "Sender-reported resource attributes; not independently attested"
+            },
+            "declared": null,
+            "resolved": [],
+            "inventoryHash": null,
+            "state": "UNKNOWN",
+            "reason": "Missing or invalid deployed SHA-256 artifact digest"
+          },
+          {
+            "spanId": "51f257783014d58b",
+            "kind": 3,
+            "operation": "GET /api/inflation/current",
+            "observedAt": 1789039155439,
+            "service": "fin-mobile-isolated",
+            "deployed": {
+              "provenance": "OBSERVED",
+              "basis": "Sender-reported resource attributes; not independently attested"
+            },
+            "declared": null,
+            "resolved": [],
+            "inventoryHash": null,
+            "state": "UNKNOWN",
+            "reason": "Missing or invalid deployed SHA-256 artifact digest"
+          },
+          {
+            "spanId": "d4ee091cf694e56f",
+            "parentSpanId": "eb499d797756ecd6",
+            "kind": 1,
+            "operation": "GET /api/inflation/current http receive",
+            "observedAt": 1789039157403,
+            "service": "fin-backend-isolated",
+            "deployed": {
+              "provenance": "OBSERVED",
+              "basis": "Sender-reported resource attributes; not independently attested"
+            },
+            "declared": null,
+            "resolved": [],
+            "inventoryHash": null,
+            "state": "UNKNOWN",
+            "reason": "Missing or invalid deployed SHA-256 artifact digest"
+          },
+          {
+            "spanId": "14c60bd7cf458cb9",
+            "parentSpanId": "eb499d797756ecd6",
+            "kind": 1,
+            "operation": "GET /api/inflation/current http send",
+            "observedAt": 1789039157403,
+            "service": "fin-backend-isolated",
+            "deployed": {
+              "provenance": "OBSERVED",
+              "basis": "Sender-reported resource attributes; not independently attested"
+            },
+            "declared": null,
+            "resolved": [],
+            "inventoryHash": null,
+            "state": "UNKNOWN",
+            "reason": "Missing or invalid deployed SHA-256 artifact digest"
+          },
+          {
+            "spanId": "8dc9bc2c902f8568",
+            "parentSpanId": "eb499d797756ecd6",
+            "kind": 1,
+            "operation": "GET /api/inflation/current http send",
+            "observedAt": 1789039157404,
+            "service": "fin-backend-isolated",
+            "deployed": {
+              "provenance": "OBSERVED",
+              "basis": "Sender-reported resource attributes; not independently attested"
+            },
+            "declared": null,
+            "resolved": [],
+            "inventoryHash": null,
+            "state": "UNKNOWN",
+            "reason": "Missing or invalid deployed SHA-256 artifact digest"
+          },
+          {
+            "spanId": "86139e0307bc33d0",
+            "parentSpanId": "eb499d797756ecd6",
+            "kind": 1,
+            "operation": "GET /api/inflation/current http send",
+            "observedAt": 1789039157404,
+            "service": "fin-backend-isolated",
+            "deployed": {
+              "provenance": "OBSERVED",
+              "basis": "Sender-reported resource attributes; not independently attested"
+            },
+            "declared": null,
+            "resolved": [],
+            "inventoryHash": null,
+            "state": "UNKNOWN",
+            "reason": "Missing or invalid deployed SHA-256 artifact digest"
+          },
+          {
+            "spanId": "eb499d797756ecd6",
+            "parentSpanId": "51f257783014d58b",
+            "kind": 2,
+            "operation": "GET /api/inflation/current",
+            "observedAt": 1789039157363,
+            "service": "fin-backend-isolated",
+            "deployed": {
+              "provenance": "OBSERVED",
+              "basis": "Sender-reported resource attributes; not independently attested"
+            },
+            "declared": null,
+            "resolved": [],
+            "inventoryHash": null,
+            "state": "UNKNOWN",
+            "reason": "Missing or invalid deployed SHA-256 artifact digest"
+          },
+          {
+            "spanId": "2cd72dac88012868",
+            "parentSpanId": "eb499d797756ecd6",
+            "kind": 1,
+            "operation": "GET /api/inflation/current http receive",
+            "observedAt": 1789039157403,
+            "service": "fin-backend-isolated",
+            "deployed": {
+              "provenance": "OBSERVED",
+              "basis": "Sender-reported resource attributes; not independently attested"
+            },
+            "declared": null,
+            "resolved": [],
+            "inventoryHash": null,
+            "state": "UNKNOWN",
+            "reason": "Missing or invalid deployed SHA-256 artifact digest"
+          }
+        ],
+        "relationships": [
+          {
+            "from": "fin-mobile-isolated",
+            "to": "fin-backend-isolated",
+            "clientSpanId": "51f257783014d58b",
+            "serverSpanId": "eb499d797756ecd6",
+            "observed": "SERVER parentSpanId equals CLIENT spanId, across distinct services",
+            "provenance": "OBSERVED",
+            "status": "UNKNOWN",
+            "findings": [],
+            "causalClaim": "NONE: a prerequisite violation is not proof of the cause of this request outcome",
+            "reason": "No applicable sourced rule for this observed boundary; add a reviewed rule and exact inventory evidence"
+          }
+        ],
+        "unchecked": [
+          {
+            "spanId": "c2ea1b55637523a9",
+            "reason": "Client span has no unique remote SERVER child; peer identity and compatibility UNKNOWN"
+          }
+        ],
+        "expectedCoverage": [
+          {
+            "from": "fin-mobile-isolated",
+            "to": "fin-backend-isolated",
+            "declaredBy": "isolated FIN pilot operator",
+            "evidence": "Copied InflationService -> actual FastAPI GET /api/inflation routes",
+            "provenance": "DECLARED",
+            "state": "OBSERVED_BOUNDARY",
+            "reason": "Expectation does not create an edge or establish compatibility"
+          },
+          {
+            "from": "fin-backend-isolated",
+            "to": "mongodb",
+            "declaredBy": "isolated FIN pilot operator",
+            "evidence": "Actual backend inflation service queries Mongo; database SERVER instrumentation unavailable",
+            "provenance": "DECLARED",
+            "state": "UNKNOWN",
+            "reason": "Expectation does not create an edge or establish compatibility"
+          }
+        ],
+        "status": "UNKNOWN",
+        "coverage": {
+          "observedBoundaries": 1,
+          "checkedBoundaries": 0,
+          "unknownBoundaries": 1,
+          "uncheckedInteractions": 1
+        },
+        "limitation": "Only observed CLIENT -> SERVER boundaries and listed prerequisites are evaluated. Missing spans, async links, uninstrumented peers, unlisted rules and runtime behavior remain UNKNOWN. No whole-request compatibility or causal assurance.",
+        "evidenceContext": "REPLAY OF REAL ISOLATED FIN MOBILE CAPTURE; no verified artifact identities or database SERVER spans"
+      }
+    },
+    {
+      "traceId": "3899a7f8ce7f48b498b01bdd140d2d2a",
+      "hops": [
+        {
+          "spanId": "88318aeaf52726c7",
+          "parentSpanId": "611bef3fad8a518f",
+          "kind": 1,
+          "timingValid": true,
+          "startTimeUnixNano": "1789039157755984965",
+          "endTimeUnixNano": "1789039157756015166",
+          "service": "fin-backend-isolated",
+          "name": "GET /api/inflation/personalized/{user_id} http receive",
+          "durationMs": 0,
+          "observedAt": 1789039157756,
+          "status": "OK",
+          "attributes": [
+            {
+              "key": "asgi.event.type",
+              "value": {
+                "stringValue": "http.request"
+              }
+            }
+          ]
+        },
+        {
+          "spanId": "68f0ff3fd8c91017",
+          "parentSpanId": "611bef3fad8a518f",
+          "kind": 1,
+          "timingValid": true,
+          "startTimeUnixNano": "1789039157756124969",
+          "endTimeUnixNano": "1789039157756157770",
+          "service": "fin-backend-isolated",
+          "name": "GET /api/inflation/personalized/{user_id} http send",
+          "durationMs": 0,
+          "observedAt": 1789039157756,
+          "status": "OK",
+          "attributes": [
+            {
+              "key": "asgi.event.type",
+              "value": {
+                "stringValue": "http.response.start"
+              }
+            },
+            {
+              "key": "http.status_code",
+              "value": {
+                "intValue": "200"
+              }
+            }
+          ]
+        },
+        {
+          "spanId": "deea488ce0608921",
+          "parentSpanId": "611bef3fad8a518f",
+          "kind": 1,
+          "timingValid": true,
+          "startTimeUnixNano": "1789039157756346476",
+          "endTimeUnixNano": "1789039157756363376",
+          "service": "fin-backend-isolated",
+          "name": "GET /api/inflation/personalized/{user_id} http send",
+          "durationMs": 0,
+          "observedAt": 1789039157756,
+          "status": "OK",
+          "attributes": [
+            {
+              "key": "asgi.event.type",
+              "value": {
+                "stringValue": "http.response.body"
+              }
+            }
+          ]
+        },
+        {
+          "spanId": "1b41c1289c174c38",
+          "parentSpanId": "611bef3fad8a518f",
+          "kind": 1,
+          "timingValid": true,
+          "startTimeUnixNano": "1789039157756567782",
+          "endTimeUnixNano": "1789039157756584983",
+          "service": "fin-backend-isolated",
+          "name": "GET /api/inflation/personalized/{user_id} http send",
+          "durationMs": 0,
+          "observedAt": 1789039157757,
+          "status": "OK",
+          "attributes": [
+            {
+              "key": "asgi.event.type",
+              "value": {
+                "stringValue": "http.response.body"
+              }
+            }
+          ]
+        },
+        {
+          "spanId": "611bef3fad8a518f",
+          "parentSpanId": "f916ed0671faf4de",
+          "kind": 2,
+          "timingValid": true,
+          "startTimeUnixNano": "1789039157753426889",
+          "endTimeUnixNano": "1789039157756619684",
+          "service": "fin-backend-isolated",
+          "name": "GET /api/inflation/personalized/{user_id}",
+          "durationMs": 3,
+          "observedAt": 1789039157753,
+          "status": "OK",
+          "attributes": [
+            {
+              "key": "http.scheme",
+              "value": {
+                "stringValue": "http"
+              }
+            },
+            {
+              "key": "http.host",
+              "value": {
+                "stringValue": "127.0.0.1:8362"
+              }
+            },
+            {
+              "key": "net.host.port",
+              "value": {
+                "intValue": "8362"
+              }
+            },
+            {
+              "key": "http.flavor",
+              "value": {
+                "stringValue": "1.1"
+              }
+            },
+            {
+              "key": "http.target",
+              "value": {
+                "stringValue": "/api/inflation/personalized/current_user"
+              }
+            },
+            {
+              "key": "http.url",
+              "value": {
+                "stringValue": "http://127.0.0.1:8362/api/inflation/personalized/current_user?source=RBI"
+              }
+            },
+            {
+              "key": "http.method",
+              "value": {
+                "stringValue": "GET"
+              }
+            },
+            {
+              "key": "http.server_name",
+              "value": {
+                "stringValue": "127.0.0.1:8362"
+              }
+            },
+            {
+              "key": "http.user_agent",
+              "value": {
+                "stringValue": "okhttp/4.12.0"
+              }
+            },
+            {
+              "key": "net.peer.ip",
+              "value": {
+                "stringValue": "127.0.0.1"
+              }
+            },
+            {
+              "key": "net.peer.port",
+              "value": {
+                "intValue": "61634"
+              }
+            },
+            {
+              "key": "http.route",
+              "value": {
+                "stringValue": "/api/inflation/personalized/{user_id}"
+              }
+            },
+            {
+              "key": "http.status_code",
+              "value": {
+                "intValue": "200"
+              }
+            }
+          ]
+        },
+        {
+          "spanId": "5199d466d28a5010",
+          "parentSpanId": "611bef3fad8a518f",
+          "kind": 1,
+          "timingValid": true,
+          "startTimeUnixNano": "1789039157756069067",
+          "endTimeUnixNano": "1789039157756661085",
+          "service": "fin-backend-isolated",
+          "name": "GET /api/inflation/personalized/{user_id} http receive",
+          "durationMs": 1,
+          "observedAt": 1789039157756,
+          "status": "OK",
+          "attributes": []
+        },
+        {
+          "spanId": "f3202e3b1e60f541",
+          "parentSpanId": "611bef3fad8a518f",
+          "kind": 3,
+          "timingValid": true,
+          "startTimeUnixNano": "1789039157754389417",
+          "endTimeUnixNano": "1789039157755281244",
+          "service": "fin-backend-isolated",
+          "name": "fintech_core.find",
+          "durationMs": 1,
+          "observedAt": 1789039157754,
+          "status": "OK",
+          "attributes": [
+            {
+              "key": "db.system",
+              "value": {
+                "stringValue": "mongodb"
+              }
+            },
+            {
+              "key": "db.name",
+              "value": {
+                "stringValue": "fintech_core"
+              }
+            },
+            {
+              "key": "db.statement",
+              "value": {
+                "stringValue": "find"
+              }
+            },
+            {
+              "key": "db.mongodb.collection",
+              "value": {
+                "stringValue": "inflation_rates"
+              }
+            },
+            {
+              "key": "net.peer.name",
+              "value": {
+                "stringValue": "localhost"
+              }
+            },
+            {
+              "key": "net.peer.port",
+              "value": {
+                "intValue": "27017"
+              }
+            }
+          ]
+        },
+        {
+          "spanId": "f916ed0671faf4de",
+          "kind": 3,
+          "timingValid": true,
+          "startTimeUnixNano": "1789039155843000000",
+          "endTimeUnixNano": "1789039155933000000",
+          "otelStatusCode": 1,
+          "service": "fin-mobile-isolated",
+          "name": "GET /api/inflation/personalized/{user_id}",
+          "durationMs": 90,
+          "observedAt": 1789039155843,
+          "status": "OK",
+          "attributes": [
+            {
+              "key": "http.request.method",
+              "value": {
+                "stringValue": "GET"
+              }
+            },
+            {
+              "key": "http.response.status_code",
+              "value": {
+                "intValue": 200
+              }
+            }
+          ]
+        }
+      ],
+      "compatibility": {
+        "schemaVersion": 1,
+        "traceId": "3899a7f8ce7f48b498b01bdd140d2d2a",
+        "evaluatedAt": "2026-09-10T13:45:18.022Z",
+        "inputHash": "3f70768b793ac825c0a4e46a7af1a474a6ba06ace59c8422bded650fb1d1cac4",
+        "ruleSetHash": "3ef4642420c0415449adb9f111580cd7c1d6574e1a7a6add614beb67a00d2eba",
+        "fixture": false,
+        "traceShape": {
+          "state": "OBSERVED_TREE",
+          "reasons": [],
+          "roots": [
+            "f916ed0671faf4de"
+          ]
+        },
+        "deployments": [
+          {
+            "spanId": "88318aeaf52726c7",
+            "parentSpanId": "611bef3fad8a518f",
+            "kind": 1,
+            "operation": "GET /api/inflation/personalized/{user_id} http receive",
+            "observedAt": 1789039157756,
+            "service": "fin-backend-isolated",
+            "deployed": {
+              "provenance": "OBSERVED",
+              "basis": "Sender-reported resource attributes; not independently attested"
+            },
+            "declared": null,
+            "resolved": [],
+            "inventoryHash": null,
+            "state": "UNKNOWN",
+            "reason": "Missing or invalid deployed SHA-256 artifact digest"
+          },
+          {
+            "spanId": "68f0ff3fd8c91017",
+            "parentSpanId": "611bef3fad8a518f",
+            "kind": 1,
+            "operation": "GET /api/inflation/personalized/{user_id} http send",
+            "observedAt": 1789039157756,
+            "service": "fin-backend-isolated",
+            "deployed": {
+              "provenance": "OBSERVED",
+              "basis": "Sender-reported resource attributes; not independently attested"
+            },
+            "declared": null,
+            "resolved": [],
+            "inventoryHash": null,
+            "state": "UNKNOWN",
+            "reason": "Missing or invalid deployed SHA-256 artifact digest"
+          },
+          {
+            "spanId": "deea488ce0608921",
+            "parentSpanId": "611bef3fad8a518f",
+            "kind": 1,
+            "operation": "GET /api/inflation/personalized/{user_id} http send",
+            "observedAt": 1789039157756,
+            "service": "fin-backend-isolated",
+            "deployed": {
+              "provenance": "OBSERVED",
+              "basis": "Sender-reported resource attributes; not independently attested"
+            },
+            "declared": null,
+            "resolved": [],
+            "inventoryHash": null,
+            "state": "UNKNOWN",
+            "reason": "Missing or invalid deployed SHA-256 artifact digest"
+          },
+          {
+            "spanId": "1b41c1289c174c38",
+            "parentSpanId": "611bef3fad8a518f",
+            "kind": 1,
+            "operation": "GET /api/inflation/personalized/{user_id} http send",
+            "observedAt": 1789039157757,
+            "service": "fin-backend-isolated",
+            "deployed": {
+              "provenance": "OBSERVED",
+              "basis": "Sender-reported resource attributes; not independently attested"
+            },
+            "declared": null,
+            "resolved": [],
+            "inventoryHash": null,
+            "state": "UNKNOWN",
+            "reason": "Missing or invalid deployed SHA-256 artifact digest"
+          },
+          {
+            "spanId": "611bef3fad8a518f",
+            "parentSpanId": "f916ed0671faf4de",
+            "kind": 2,
+            "operation": "GET /api/inflation/personalized/{user_id}",
+            "observedAt": 1789039157753,
+            "service": "fin-backend-isolated",
+            "deployed": {
+              "provenance": "OBSERVED",
+              "basis": "Sender-reported resource attributes; not independently attested"
+            },
+            "declared": null,
+            "resolved": [],
+            "inventoryHash": null,
+            "state": "UNKNOWN",
+            "reason": "Missing or invalid deployed SHA-256 artifact digest"
+          },
+          {
+            "spanId": "5199d466d28a5010",
+            "parentSpanId": "611bef3fad8a518f",
+            "kind": 1,
+            "operation": "GET /api/inflation/personalized/{user_id} http receive",
+            "observedAt": 1789039157756,
+            "service": "fin-backend-isolated",
+            "deployed": {
+              "provenance": "OBSERVED",
+              "basis": "Sender-reported resource attributes; not independently attested"
+            },
+            "declared": null,
+            "resolved": [],
+            "inventoryHash": null,
+            "state": "UNKNOWN",
+            "reason": "Missing or invalid deployed SHA-256 artifact digest"
+          },
+          {
+            "spanId": "f3202e3b1e60f541",
+            "parentSpanId": "611bef3fad8a518f",
+            "kind": 3,
+            "operation": "fintech_core.find",
+            "observedAt": 1789039157754,
+            "service": "fin-backend-isolated",
+            "deployed": {
+              "provenance": "OBSERVED",
+              "basis": "Sender-reported resource attributes; not independently attested"
+            },
+            "declared": null,
+            "resolved": [],
+            "inventoryHash": null,
+            "state": "UNKNOWN",
+            "reason": "Missing or invalid deployed SHA-256 artifact digest"
+          },
+          {
+            "spanId": "f916ed0671faf4de",
+            "kind": 3,
+            "operation": "GET /api/inflation/personalized/{user_id}",
+            "observedAt": 1789039155843,
+            "service": "fin-mobile-isolated",
+            "deployed": {
+              "provenance": "OBSERVED",
+              "basis": "Sender-reported resource attributes; not independently attested"
+            },
+            "declared": null,
+            "resolved": [],
+            "inventoryHash": null,
+            "state": "UNKNOWN",
+            "reason": "Missing or invalid deployed SHA-256 artifact digest"
+          }
+        ],
+        "relationships": [
+          {
+            "from": "fin-mobile-isolated",
+            "to": "fin-backend-isolated",
+            "clientSpanId": "f916ed0671faf4de",
+            "serverSpanId": "611bef3fad8a518f",
+            "observed": "SERVER parentSpanId equals CLIENT spanId, across distinct services",
+            "provenance": "OBSERVED",
+            "status": "UNKNOWN",
+            "findings": [],
+            "causalClaim": "NONE: a prerequisite violation is not proof of the cause of this request outcome",
+            "reason": "No applicable sourced rule for this observed boundary; add a reviewed rule and exact inventory evidence"
+          }
+        ],
+        "unchecked": [
+          {
+            "spanId": "f3202e3b1e60f541",
+            "reason": "Client span has no unique remote SERVER child; peer identity and compatibility UNKNOWN"
+          }
+        ],
+        "expectedCoverage": [
+          {
+            "from": "fin-mobile-isolated",
+            "to": "fin-backend-isolated",
+            "declaredBy": "isolated FIN pilot operator",
+            "evidence": "Copied InflationService -> actual FastAPI GET /api/inflation routes",
+            "provenance": "DECLARED",
+            "state": "OBSERVED_BOUNDARY",
+            "reason": "Expectation does not create an edge or establish compatibility"
+          },
+          {
+            "from": "fin-backend-isolated",
+            "to": "mongodb",
+            "declaredBy": "isolated FIN pilot operator",
+            "evidence": "Actual backend inflation service queries Mongo; database SERVER instrumentation unavailable",
+            "provenance": "DECLARED",
+            "state": "UNKNOWN",
+            "reason": "Expectation does not create an edge or establish compatibility"
+          }
+        ],
+        "status": "UNKNOWN",
+        "coverage": {
+          "observedBoundaries": 1,
+          "checkedBoundaries": 0,
+          "unknownBoundaries": 1,
+          "uncheckedInteractions": 1
+        },
+        "limitation": "Only observed CLIENT -> SERVER boundaries and listed prerequisites are evaluated. Missing spans, async links, uninstrumented peers, unlisted rules and runtime behavior remain UNKNOWN. No whole-request compatibility or causal assurance.",
+        "evidenceContext": "REPLAY OF REAL ISOLATED FIN MOBILE CAPTURE; no verified artifact identities or database SERVER spans"
+      }
+    },
+    {
+      "traceId": "3aed136713d6d55078921aa63bc0b3c6",
+      "hops": [
+        {
+          "spanId": "62f2b612f077d4aa",
+          "kind": 3,
+          "timingValid": true,
+          "startTimeUnixNano": "1789039155807000000",
+          "endTimeUnixNano": "1789039155840000000",
+          "otelStatusCode": 1,
+          "service": "fin-mobile-isolated",
+          "name": "GET /api/inflation/categories",
+          "durationMs": 33,
+          "observedAt": 1789039155807,
+          "status": "OK",
+          "attributes": [
+            {
+              "key": "http.request.method",
+              "value": {
+                "stringValue": "GET"
+              }
+            },
+            {
+              "key": "http.response.status_code",
+              "value": {
+                "intValue": 200
+              }
+            }
+          ]
+        },
+        {
+          "spanId": "3456a629c05e68f4",
+          "parentSpanId": "c52b83b406b7daa1",
+          "kind": 1,
+          "timingValid": true,
+          "startTimeUnixNano": "1789039157719969694",
+          "endTimeUnixNano": "1789039157720005495",
+          "service": "fin-backend-isolated",
+          "name": "GET /api/inflation/categories http receive",
+          "durationMs": 0,
+          "observedAt": 1789039157720,
+          "status": "OK",
+          "attributes": [
+            {
+              "key": "asgi.event.type",
+              "value": {
+                "stringValue": "http.request"
+              }
+            }
+          ]
+        },
+        {
+          "spanId": "92a6f33575d51156",
+          "parentSpanId": "c52b83b406b7daa1",
+          "kind": 1,
+          "timingValid": true,
+          "startTimeUnixNano": "1789039157720114098",
+          "endTimeUnixNano": "1789039157720148899",
+          "service": "fin-backend-isolated",
+          "name": "GET /api/inflation/categories http send",
+          "durationMs": 0,
+          "observedAt": 1789039157720,
+          "status": "OK",
+          "attributes": [
+            {
+              "key": "asgi.event.type",
+              "value": {
+                "stringValue": "http.response.start"
+              }
+            },
+            {
+              "key": "http.status_code",
+              "value": {
+                "intValue": "200"
+              }
+            }
+          ]
+        },
+        {
+          "spanId": "ba40fe1b5251f918",
+          "parentSpanId": "c52b83b406b7daa1",
+          "kind": 1,
+          "timingValid": true,
+          "startTimeUnixNano": "1789039157720348405",
+          "endTimeUnixNano": "1789039157720359106",
+          "service": "fin-backend-isolated",
+          "name": "GET /api/inflation/categories http send",
+          "durationMs": 0,
+          "observedAt": 1789039157720,
+          "status": "OK",
+          "attributes": [
+            {
+              "key": "asgi.event.type",
+              "value": {
+                "stringValue": "http.response.body"
+              }
+            }
+          ]
+        },
+        {
+          "spanId": "2e6d46d6a71c241c",
+          "parentSpanId": "c52b83b406b7daa1",
+          "kind": 1,
+          "timingValid": true,
+          "startTimeUnixNano": "1789039157720512510",
+          "endTimeUnixNano": "1789039157720536111",
+          "service": "fin-backend-isolated",
+          "name": "GET /api/inflation/categories http send",
+          "durationMs": 0,
+          "observedAt": 1789039157721,
+          "status": "OK",
+          "attributes": [
+            {
+              "key": "asgi.event.type",
+              "value": {
+                "stringValue": "http.response.body"
+              }
+            }
+          ]
+        },
+        {
+          "spanId": "c52b83b406b7daa1",
+          "parentSpanId": "62f2b612f077d4aa",
+          "kind": 2,
+          "timingValid": true,
+          "startTimeUnixNano": "1789039157716930004",
+          "endTimeUnixNano": "1789039157720576912",
+          "service": "fin-backend-isolated",
+          "name": "GET /api/inflation/categories",
+          "durationMs": 4,
+          "observedAt": 1789039157717,
+          "status": "OK",
+          "attributes": [
+            {
+              "key": "http.scheme",
+              "value": {
+                "stringValue": "http"
+              }
+            },
+            {
+              "key": "http.host",
+              "value": {
+                "stringValue": "127.0.0.1:8362"
+              }
+            },
+            {
+              "key": "net.host.port",
+              "value": {
+                "intValue": "8362"
+              }
+            },
+            {
+              "key": "http.flavor",
+              "value": {
+                "stringValue": "1.1"
+              }
+            },
+            {
+              "key": "http.target",
+              "value": {
+                "stringValue": "/api/inflation/categories"
+              }
+            },
+            {
+              "key": "http.url",
+              "value": {
+                "stringValue": "http://127.0.0.1:8362/api/inflation/categories?source=RBI&country_code=IND"
+              }
+            },
+            {
+              "key": "http.method",
+              "value": {
+                "stringValue": "GET"
+              }
+            },
+            {
+              "key": "http.server_name",
+              "value": {
+                "stringValue": "127.0.0.1:8362"
+              }
+            },
+            {
+              "key": "http.user_agent",
+              "value": {
+                "stringValue": "okhttp/4.12.0"
+              }
+            },
+            {
+              "key": "net.peer.ip",
+              "value": {
+                "stringValue": "127.0.0.1"
+              }
+            },
+            {
+              "key": "net.peer.port",
+              "value": {
+                "intValue": "61634"
+              }
+            },
+            {
+              "key": "http.route",
+              "value": {
+                "stringValue": "/api/inflation/categories"
+              }
+            },
+            {
+              "key": "http.status_code",
+              "value": {
+                "intValue": "200"
+              }
+            }
+          ]
+        },
+        {
+          "spanId": "def010600bd1aaec",
+          "parentSpanId": "c52b83b406b7daa1",
+          "kind": 1,
+          "timingValid": true,
+          "startTimeUnixNano": "1789039157720058597",
+          "endTimeUnixNano": "1789039157720622713",
+          "service": "fin-backend-isolated",
+          "name": "GET /api/inflation/categories http receive",
+          "durationMs": 1,
+          "observedAt": 1789039157720,
+          "status": "OK",
+          "attributes": []
+        },
+        {
+          "spanId": "8d106cfea0064c40",
+          "parentSpanId": "c52b83b406b7daa1",
+          "kind": 3,
+          "timingValid": true,
+          "startTimeUnixNano": "1789039157717896632",
+          "endTimeUnixNano": "1789039157719150970",
+          "service": "fin-backend-isolated",
+          "name": "fintech_core.aggregate",
+          "durationMs": 1,
+          "observedAt": 1789039157718,
+          "status": "OK",
+          "attributes": [
+            {
+              "key": "db.system",
+              "value": {
+                "stringValue": "mongodb"
+              }
+            },
+            {
+              "key": "db.name",
+              "value": {
+                "stringValue": "fintech_core"
+              }
+            },
+            {
+              "key": "db.statement",
+              "value": {
+                "stringValue": "aggregate"
+              }
+            },
+            {
+              "key": "db.mongodb.collection",
+              "value": {
+                "stringValue": "inflation_rates"
+              }
+            },
+            {
+              "key": "net.peer.name",
+              "value": {
+                "stringValue": "localhost"
+              }
+            },
+            {
+              "key": "net.peer.port",
+              "value": {
+                "intValue": "27017"
+              }
+            }
+          ]
+        }
+      ],
+      "compatibility": {
+        "schemaVersion": 1,
+        "traceId": "3aed136713d6d55078921aa63bc0b3c6",
+        "evaluatedAt": "2026-09-10T13:45:18.024Z",
+        "inputHash": "529856a123321c7a20d2e69ea11f5d18d3b77a4c859a4be824aa6705356da7f8",
+        "ruleSetHash": "3ef4642420c0415449adb9f111580cd7c1d6574e1a7a6add614beb67a00d2eba",
+        "fixture": false,
+        "traceShape": {
+          "state": "OBSERVED_TREE",
+          "reasons": [],
+          "roots": [
+            "62f2b612f077d4aa"
+          ]
+        },
+        "deployments": [
+          {
+            "spanId": "62f2b612f077d4aa",
+            "kind": 3,
+            "operation": "GET /api/inflation/categories",
+            "observedAt": 1789039155807,
+            "service": "fin-mobile-isolated",
+            "deployed": {
+              "provenance": "OBSERVED",
+              "basis": "Sender-reported resource attributes; not independently attested"
+            },
+            "declared": null,
+            "resolved": [],
+            "inventoryHash": null,
+            "state": "UNKNOWN",
+            "reason": "Missing or invalid deployed SHA-256 artifact digest"
+          },
+          {
+            "spanId": "3456a629c05e68f4",
+            "parentSpanId": "c52b83b406b7daa1",
+            "kind": 1,
+            "operation": "GET /api/inflation/categories http receive",
+            "observedAt": 1789039157720,
+            "service": "fin-backend-isolated",
+            "deployed": {
+              "provenance": "OBSERVED",
+              "basis": "Sender-reported resource attributes; not independently attested"
+            },
+            "declared": null,
+            "resolved": [],
+            "inventoryHash": null,
+            "state": "UNKNOWN",
+            "reason": "Missing or invalid deployed SHA-256 artifact digest"
+          },
+          {
+            "spanId": "92a6f33575d51156",
+            "parentSpanId": "c52b83b406b7daa1",
+            "kind": 1,
+            "operation": "GET /api/inflation/categories http send",
+            "observedAt": 1789039157720,
+            "service": "fin-backend-isolated",
+            "deployed": {
+              "provenance": "OBSERVED",
+              "basis": "Sender-reported resource attributes; not independently attested"
+            },
+            "declared": null,
+            "resolved": [],
+            "inventoryHash": null,
+            "state": "UNKNOWN",
+            "reason": "Missing or invalid deployed SHA-256 artifact digest"
+          },
+          {
+            "spanId": "ba40fe1b5251f918",
+            "parentSpanId": "c52b83b406b7daa1",
+            "kind": 1,
+            "operation": "GET /api/inflation/categories http send",
+            "observedAt": 1789039157720,
+            "service": "fin-backend-isolated",
+            "deployed": {
+              "provenance": "OBSERVED",
+              "basis": "Sender-reported resource attributes; not independently attested"
+            },
+            "declared": null,
+            "resolved": [],
+            "inventoryHash": null,
+            "state": "UNKNOWN",
+            "reason": "Missing or invalid deployed SHA-256 artifact digest"
+          },
+          {
+            "spanId": "2e6d46d6a71c241c",
+            "parentSpanId": "c52b83b406b7daa1",
+            "kind": 1,
+            "operation": "GET /api/inflation/categories http send",
+            "observedAt": 1789039157721,
+            "service": "fin-backend-isolated",
+            "deployed": {
+              "provenance": "OBSERVED",
+              "basis": "Sender-reported resource attributes; not independently attested"
+            },
+            "declared": null,
+            "resolved": [],
+            "inventoryHash": null,
+            "state": "UNKNOWN",
+            "reason": "Missing or invalid deployed SHA-256 artifact digest"
+          },
+          {
+            "spanId": "c52b83b406b7daa1",
+            "parentSpanId": "62f2b612f077d4aa",
+            "kind": 2,
+            "operation": "GET /api/inflation/categories",
+            "observedAt": 1789039157717,
+            "service": "fin-backend-isolated",
+            "deployed": {
+              "provenance": "OBSERVED",
+              "basis": "Sender-reported resource attributes; not independently attested"
+            },
+            "declared": null,
+            "resolved": [],
+            "inventoryHash": null,
+            "state": "UNKNOWN",
+            "reason": "Missing or invalid deployed SHA-256 artifact digest"
+          },
+          {
+            "spanId": "def010600bd1aaec",
+            "parentSpanId": "c52b83b406b7daa1",
+            "kind": 1,
+            "operation": "GET /api/inflation/categories http receive",
+            "observedAt": 1789039157720,
+            "service": "fin-backend-isolated",
+            "deployed": {
+              "provenance": "OBSERVED",
+              "basis": "Sender-reported resource attributes; not independently attested"
+            },
+            "declared": null,
+            "resolved": [],
+            "inventoryHash": null,
+            "state": "UNKNOWN",
+            "reason": "Missing or invalid deployed SHA-256 artifact digest"
+          },
+          {
+            "spanId": "8d106cfea0064c40",
+            "parentSpanId": "c52b83b406b7daa1",
+            "kind": 3,
+            "operation": "fintech_core.aggregate",
+            "observedAt": 1789039157718,
+            "service": "fin-backend-isolated",
+            "deployed": {
+              "provenance": "OBSERVED",
+              "basis": "Sender-reported resource attributes; not independently attested"
+            },
+            "declared": null,
+            "resolved": [],
+            "inventoryHash": null,
+            "state": "UNKNOWN",
+            "reason": "Missing or invalid deployed SHA-256 artifact digest"
+          }
+        ],
+        "relationships": [
+          {
+            "from": "fin-mobile-isolated",
+            "to": "fin-backend-isolated",
+            "clientSpanId": "62f2b612f077d4aa",
+            "serverSpanId": "c52b83b406b7daa1",
+            "observed": "SERVER parentSpanId equals CLIENT spanId, across distinct services",
+            "provenance": "OBSERVED",
+            "status": "UNKNOWN",
+            "findings": [],
+            "causalClaim": "NONE: a prerequisite violation is not proof of the cause of this request outcome",
+            "reason": "No applicable sourced rule for this observed boundary; add a reviewed rule and exact inventory evidence"
+          }
+        ],
+        "unchecked": [
+          {
+            "spanId": "8d106cfea0064c40",
+            "reason": "Client span has no unique remote SERVER child; peer identity and compatibility UNKNOWN"
+          }
+        ],
+        "expectedCoverage": [
+          {
+            "from": "fin-mobile-isolated",
+            "to": "fin-backend-isolated",
+            "declaredBy": "isolated FIN pilot operator",
+            "evidence": "Copied InflationService -> actual FastAPI GET /api/inflation routes",
+            "provenance": "DECLARED",
+            "state": "OBSERVED_BOUNDARY",
+            "reason": "Expectation does not create an edge or establish compatibility"
+          },
+          {
+            "from": "fin-backend-isolated",
+            "to": "mongodb",
+            "declaredBy": "isolated FIN pilot operator",
+            "evidence": "Actual backend inflation service queries Mongo; database SERVER instrumentation unavailable",
+            "provenance": "DECLARED",
+            "state": "UNKNOWN",
+            "reason": "Expectation does not create an edge or establish compatibility"
+          }
+        ],
+        "status": "UNKNOWN",
+        "coverage": {
+          "observedBoundaries": 1,
+          "checkedBoundaries": 0,
+          "unknownBoundaries": 1,
+          "uncheckedInteractions": 1
+        },
+        "limitation": "Only observed CLIENT -> SERVER boundaries and listed prerequisites are evaluated. Missing spans, async links, uninstrumented peers, unlisted rules and runtime behavior remain UNKNOWN. No whole-request compatibility or causal assurance.",
+        "evidenceContext": "REPLAY OF REAL ISOLATED FIN MOBILE CAPTURE; no verified artifact identities or database SERVER spans"
+      }
+    }
+  ]
+}

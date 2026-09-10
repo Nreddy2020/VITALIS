@@ -1,0 +1,36 @@
+==================================================================
+       VITALIS STAGE 0 — SECURITY GATE VERIFICATION HARNESS       
+==================================================================
+
+[INIT] Vitalis Test Ingest Server running on port 4321
+
+--- [GATE S1] Authentication required on ingestion & API endpoints ---
+> No key:      HTTP 401 (expected 401)
+> Wrong key:   HTTP 401 (expected 401)
+> Correct key: HTTP 200 (expected 200)
+> /health (public by design): HTTP 200 (expected 200)
+RESULT GATE S1: [PASS]
+
+--- [GATE S2] Oversized payload rejection ---
+> 3MB payload (cap is 2MB): HTTP CONN_ERROR (expected 413)
+RESULT GATE S2: [FAIL]
+
+--- [GATE S3] PII/secret redaction on the real ingestion path ---
+> password field masked by name:   true
+> bearer token masked by pattern:   true
+> SSN masked by pattern:            true
+> card PAN masked by pattern:        true
+RESULT GATE S3: [PASS]
+
+[CLEANUP] In-process test server stopped.
+
+--- [GATE S4] Evidence survives a real process kill + restart ---
+> Ingested pre-restart, killed process (SIGKILL, not graceful), respawned
+> Hop recovered after restart: true (1 hop(s) found)
+RESULT GATE S4: [PASS]
+
+==================================================================
+OVERALL: ONE OR MORE SECURITY GATES FAILED
+==================================================================
+(node:2644) [DEP0169] DeprecationWarning: `url.parse()` behavior is not standardized and prone to errors that have security implications. Use the WHATWG URL API instead. CVEs are not issued for `url.parse()` vulnerabilities.
+(Use `node --trace-deprecation ...` to show where the warning was created)

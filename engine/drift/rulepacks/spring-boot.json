@@ -1,0 +1,265 @@
+{
+  "id": "spring-boot",
+  "displayName": "Spring Boot (Java / Maven)",
+  "ecosystem": "maven",
+  "_readme": "Sourced from the official Spring Boot system-requirements pages. Rules fire only when a Boot artifact AND spring-core are both DIRECT dependencies — the real-world case being a pom that pins a Spring Framework version alongside a Boot starter. Where spring-core arrives transitively it is reported UNKNOWN, which is honest: this reader does not resolve transitive trees. Java-version rules are absent because the Java version cannot be observed from a pom by this reader; asserting one would be a guess.",
+  "sources": {
+    "src1": {
+      "url": "https://docs.spring.io/spring-boot/system-requirements.html",
+      "title": "Spring Boot 4.1.1 system requirements",
+      "recordedAt": "2026-09-09"
+    },
+    "src2": {
+      "url": "https://docs.spring.io/spring-boot/4.0/system-requirements.html",
+      "title": "Spring Boot 4.0.8 system requirements",
+      "recordedAt": "2026-09-09"
+    },
+    "src3": {
+      "url": "https://docs.spring.io/spring-boot/3.4/system-requirements.html",
+      "title": "Spring Boot 3.4.13 system requirements",
+      "recordedAt": "2026-09-09"
+    }
+  },
+  "rules": [
+    {
+      "id": "springboot-4.1-spring-boot-starter-web-spring-core",
+      "description": "Spring Boot 4.1.x requires Spring Framework 7.0.9 or above",
+      "when": {
+        "package": "org.springframework.boot:spring-boot-starter-web",
+        "constraint": {
+          "op": "minorMatch",
+          "value": "4.1"
+        }
+      },
+      "require": {
+        "package": "org.springframework:spring-core",
+        "constraint": {
+          "op": "gte",
+          "value": "7.0.9"
+        }
+      },
+      "severity": "HIGH",
+      "source": "src1"
+    },
+    {
+      "id": "springboot-4.1-spring-boot-starter-spring-core",
+      "description": "Spring Boot 4.1.x requires Spring Framework 7.0.9 or above",
+      "when": {
+        "package": "org.springframework.boot:spring-boot-starter",
+        "constraint": {
+          "op": "minorMatch",
+          "value": "4.1"
+        }
+      },
+      "require": {
+        "package": "org.springframework:spring-core",
+        "constraint": {
+          "op": "gte",
+          "value": "7.0.9"
+        }
+      },
+      "severity": "HIGH",
+      "source": "src1"
+    },
+    {
+      "id": "springboot-4.1-spring-boot-starter-data-jpa-spring-core",
+      "description": "Spring Boot 4.1.x requires Spring Framework 7.0.9 or above",
+      "when": {
+        "package": "org.springframework.boot:spring-boot-starter-data-jpa",
+        "constraint": {
+          "op": "minorMatch",
+          "value": "4.1"
+        }
+      },
+      "require": {
+        "package": "org.springframework:spring-core",
+        "constraint": {
+          "op": "gte",
+          "value": "7.0.9"
+        }
+      },
+      "severity": "HIGH",
+      "source": "src1"
+    },
+    {
+      "id": "springboot-4.1-spring-boot-spring-core",
+      "description": "Spring Boot 4.1.x requires Spring Framework 7.0.9 or above",
+      "when": {
+        "package": "org.springframework.boot:spring-boot",
+        "constraint": {
+          "op": "minorMatch",
+          "value": "4.1"
+        }
+      },
+      "require": {
+        "package": "org.springframework:spring-core",
+        "constraint": {
+          "op": "gte",
+          "value": "7.0.9"
+        }
+      },
+      "severity": "HIGH",
+      "source": "src1"
+    },
+    {
+      "id": "springboot-4.0-spring-boot-starter-web-spring-core",
+      "description": "Spring Boot 4.0.x requires Spring Framework 7.0.9 or above",
+      "when": {
+        "package": "org.springframework.boot:spring-boot-starter-web",
+        "constraint": {
+          "op": "minorMatch",
+          "value": "4.0"
+        }
+      },
+      "require": {
+        "package": "org.springframework:spring-core",
+        "constraint": {
+          "op": "gte",
+          "value": "7.0.9"
+        }
+      },
+      "severity": "HIGH",
+      "source": "src2"
+    },
+    {
+      "id": "springboot-4.0-spring-boot-starter-spring-core",
+      "description": "Spring Boot 4.0.x requires Spring Framework 7.0.9 or above",
+      "when": {
+        "package": "org.springframework.boot:spring-boot-starter",
+        "constraint": {
+          "op": "minorMatch",
+          "value": "4.0"
+        }
+      },
+      "require": {
+        "package": "org.springframework:spring-core",
+        "constraint": {
+          "op": "gte",
+          "value": "7.0.9"
+        }
+      },
+      "severity": "HIGH",
+      "source": "src2"
+    },
+    {
+      "id": "springboot-4.0-spring-boot-starter-data-jpa-spring-core",
+      "description": "Spring Boot 4.0.x requires Spring Framework 7.0.9 or above",
+      "when": {
+        "package": "org.springframework.boot:spring-boot-starter-data-jpa",
+        "constraint": {
+          "op": "minorMatch",
+          "value": "4.0"
+        }
+      },
+      "require": {
+        "package": "org.springframework:spring-core",
+        "constraint": {
+          "op": "gte",
+          "value": "7.0.9"
+        }
+      },
+      "severity": "HIGH",
+      "source": "src2"
+    },
+    {
+      "id": "springboot-4.0-spring-boot-spring-core",
+      "description": "Spring Boot 4.0.x requires Spring Framework 7.0.9 or above",
+      "when": {
+        "package": "org.springframework.boot:spring-boot",
+        "constraint": {
+          "op": "minorMatch",
+          "value": "4.0"
+        }
+      },
+      "require": {
+        "package": "org.springframework:spring-core",
+        "constraint": {
+          "op": "gte",
+          "value": "7.0.9"
+        }
+      },
+      "severity": "HIGH",
+      "source": "src2"
+    },
+    {
+      "id": "springboot-3.4-spring-boot-starter-web-spring-core",
+      "description": "Spring Boot 3.4.x requires Spring Framework 6.2.15 or above",
+      "when": {
+        "package": "org.springframework.boot:spring-boot-starter-web",
+        "constraint": {
+          "op": "minorMatch",
+          "value": "3.4"
+        }
+      },
+      "require": {
+        "package": "org.springframework:spring-core",
+        "constraint": {
+          "op": "gte",
+          "value": "6.2.15"
+        }
+      },
+      "severity": "HIGH",
+      "source": "src3"
+    },
+    {
+      "id": "springboot-3.4-spring-boot-starter-spring-core",
+      "description": "Spring Boot 3.4.x requires Spring Framework 6.2.15 or above",
+      "when": {
+        "package": "org.springframework.boot:spring-boot-starter",
+        "constraint": {
+          "op": "minorMatch",
+          "value": "3.4"
+        }
+      },
+      "require": {
+        "package": "org.springframework:spring-core",
+        "constraint": {
+          "op": "gte",
+          "value": "6.2.15"
+        }
+      },
+      "severity": "HIGH",
+      "source": "src3"
+    },
+    {
+      "id": "springboot-3.4-spring-boot-starter-data-jpa-spring-core",
+      "description": "Spring Boot 3.4.x requires Spring Framework 6.2.15 or above",
+      "when": {
+        "package": "org.springframework.boot:spring-boot-starter-data-jpa",
+        "constraint": {
+          "op": "minorMatch",
+          "value": "3.4"
+        }
+      },
+      "require": {
+        "package": "org.springframework:spring-core",
+        "constraint": {
+          "op": "gte",
+          "value": "6.2.15"
+        }
+      },
+      "severity": "HIGH",
+      "source": "src3"
+    },
+    {
+      "id": "springboot-3.4-spring-boot-spring-core",
+      "description": "Spring Boot 3.4.x requires Spring Framework 6.2.15 or above",
+      "when": {
+        "package": "org.springframework.boot:spring-boot",
+        "constraint": {
+          "op": "minorMatch",
+          "value": "3.4"
+        }
+      },
+      "require": {
+        "package": "org.springframework:spring-core",
+        "constraint": {
+          "op": "gte",
+          "value": "6.2.15"
+        }
+      },
+      "severity": "HIGH",
+      "source": "src3"
+    }
+  ]
+}
